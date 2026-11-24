@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!--
+    Si servís la app desde un sub-path (ej: example.com/libreria/),
+    cambiá el href de <base> a ese path con barra inicial y final.
+    Para la raíz del dominio dejalo tal como está.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="description" content="Librería Central — catálogo de libros, historia del local e información de contacto. Tu librería de barrio de toda la vida.">
+  <meta name="keywords" content="librería, libros, catálogo, barrio, Librería Central">
+  <meta name="author" content="Librería Central">
+
+  <!-- PWA / Android (Chrome) -->
+  <meta name="theme-color" content="#3B2A20">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- PWA / iOS (Safari) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Lib. Central">
+  <link rel="apple-touch-icon" href="icons/Icon-maskable-192.png">
+  <!-- Tamaños adicionales para iPad y Retina -->
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/Icon-maskable-512.png">
+
+  <!-- Pantalla de inicio iOS (splash) — color de fondo mientras carga Flutter -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Open Graph (para compartir por WhatsApp / Instagram) -->
+  <meta property="og:title" content="Librería Central">
+  <meta property="og:description" content="Tu librería de barrio — catálogo, historia y contacto.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icons/Icon-512.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>Librería Central</title>
+</head>
+<body>
+  <!--
+    flutter_bootstrap.js: carga el motor Flutter y registra el service worker
+    automáticamente cuando corrés `flutter build web`.
+    El atributo `async` no bloquea el HTML mientras descarga el script.
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
