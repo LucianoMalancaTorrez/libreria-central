@@ -1,20 +1,4 @@
 import 'package:flutter/material.dart';
-import 'theme/app_theme.dart';
-import 'screens/home_screen.dart';
+import 'package:libreria/app/app.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Librería',
-      theme: AppTheme.light,
-      home: const HomeScreen(),
-    );
-  }
-}
+void main() => runApp(const LibreriaApp());
