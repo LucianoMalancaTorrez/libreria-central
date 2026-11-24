@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Necesario en la versión release para descargar tipografías y datos. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="libreria"
+        android:label="Librería Central"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
