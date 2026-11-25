@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:libreria/app/app.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/services/avisos.dart';
+import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/data/local/libros_dao.dart';
 import 'package:libreria/data/repositories/libro_repository_con_copia_local.dart';
 import 'package:libreria/domain/logic/recordatorio.dart';
@@ -151,5 +152,10 @@ void main() {
     final contexto = tester.element(find.text('Librería Central Winterbach'));
     expect(Theme.of(contexto).brightness, Brightness.dark);
     expect(tester.takeException(), isNull);
+  });
+
+  test('el indicador de navegación usa la paleta en los dos temas', () {
+    expect(AppTheme.light.colorScheme.secondaryContainer, Colores.claro.brass);
+    expect(AppTheme.dark.colorScheme.secondaryContainer, Colores.oscuro.brass);
   });
 }

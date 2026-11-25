@@ -116,7 +116,8 @@ class AppTheme {
     return base.copyWith(
       extensions: [c],
       scaffoldBackgroundColor: c.parchment,
-      colorScheme: base.colorScheme.copyWith(
+      colorScheme: ColorScheme(
+        brightness: base.brightness,
         primary: c.bottleGreen,
         onPrimary: c.parchment,
         secondary: c.brass,
