@@ -83,7 +83,7 @@ class HistoriaScreen extends StatelessWidget {
                 child: Text(
                   'Belgrano 742 (al lado de la farmacia) · Mendoza',
                   textAlign: TextAlign.center,
-                  style: AppTheme.stampLabel(color: AppColors.leather),
+                  style: AppTheme.stampLabel(color: context.colores.leather),
                 ),
               ),
             ),

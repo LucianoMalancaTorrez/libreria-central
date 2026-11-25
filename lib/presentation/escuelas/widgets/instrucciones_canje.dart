@@ -18,9 +18,9 @@ class InstruccionesCanje extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.storefront_outlined,
-                  color: AppColors.bottleGreen,
+                  color: context.colores.bottleGreen,
                 ),
                 const SizedBox(width: 10),
                 Expanded(

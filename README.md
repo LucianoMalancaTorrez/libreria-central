@@ -88,7 +88,8 @@ Firestore porque Firebase Storage requiere un plan con tarjeta.
 - Falta confirmar: usuario de Instagram, horario de verano de la mañana, fecha
   del cambio de temporada y horario del club de lectura.
 - Faltan las fotos del local.
-- El APK está firmado con la clave de pruebas.
+- El APK se firma con la clave de pruebas hasta crear la propia ([cómo](docs/FIRMA.md)).
+- Prueba de integración: `flutter test integration_test` con un celular conectado.
 - Las versiones de `flutter_local_notifications` y `permission_handler` están
   fijadas porque las más nuevas piden Android SDK 37.
 

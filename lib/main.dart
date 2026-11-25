@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/app.dart';
 import 'package:libreria/app/servicios_firebase.dart';
+import 'package:libreria/core/services/push.dart';
 import 'package:libreria/firebase_options.dart';
 
 Future<void> main() async {
@@ -16,6 +19,9 @@ Future<void> main() async {
     FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true,
     );
+    if (!kIsWeb) {
+      FirebaseMessaging.onBackgroundMessage(alRecibirEnSegundoPlano);
+    }
     runApp(
       LibreriaApp(
         servicios: serviciosFirebase(

@@ -20,10 +20,10 @@ class TarjetaAccion extends StatelessWidget {
     return Card(
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: Icon(icono, color: AppColors.bottleGreen, size: 32),
+        leading: Icon(icono, color: context.colores.bottleGreen, size: 32),
         title: Text(titulo, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Text(subtitulo),
-        trailing: const Icon(Icons.chevron_right, color: AppColors.leather),
+        trailing: Icon(Icons.chevron_right, color: context.colores.leather),
         onTap: onTap,
       ),
     );

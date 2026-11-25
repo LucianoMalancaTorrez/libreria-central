@@ -10,7 +10,7 @@ class BannerConvenio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.parchmentDeep,
+      color: context.colores.parchmentDeep,
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -18,9 +18,9 @@ class BannerConvenio extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.local_offer_outlined,
-                  color: AppColors.bottleGreen,
+                  color: context.colores.bottleGreen,
                   size: 28,
                 ),
                 const SizedBox(width: 12),

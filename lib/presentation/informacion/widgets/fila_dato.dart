@@ -10,7 +10,7 @@ class FilaDato extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icono, size: 20, color: AppColors.leather),
+        Icon(icono, size: 20, color: context.colores.leather),
         const SizedBox(width: 10),
         Expanded(
           child: Text(texto, style: Theme.of(context).textTheme.bodyMedium),

@@ -9,18 +9,18 @@ comprobado o depende de una persona.
 | **B1** Widgets y composición | Pantallas armadas con widgets chicos y reutilizables | `core/widgets`, `presentation/*/widgets` | |
 | **B2** Estado y ciclo de vida | `setState` local, `ChangeNotifier` compartido, `initState`, `didChangeDependencies`, `didUpdateWidget`, `dispose` | `inicio/widgets/indicador_apertura.dart`, `catalogo/widgets/info_externa_libro.dart`, `favoritos/viewmodels` | |
 | **B3** Interacción y navegación | Barra inferior o lateral, `Navigator`, pestañas, toque, doble toque, mantener, deslizar, arrastrar | `principal/principal_screen.dart`, `catalogo/widgets/tarjeta_libro.dart`, `favoritos/` | |
-| **B4** Multiplataforma | Web y Android, ícono y pantalla de inicio, `kIsWeb`, permisos en manifest e Info.plist | `pubspec.yaml`, `android/`, `ios/`, `web/` | Probar en iPhone (como web) |
+| **B4** Multiplataforma y adaptativo | Web y Android, cortes 600/840, teclado, mouse, modo oscuro, capacidades y políticas | `core/plataforma/`, `core/widgets/tamano_ventana.dart` | Probar en iPhone (como web) |
 | **C1** Arquitectura en capas | domain / data / presentation con MVVM y contratos | `domain/repositories`, `data/`, `app/dependencias.dart` | |
 | **C2** Código limpio y herramientas | `flutter analyze` sin avisos, formato con `dart format` | `analysis_options.yaml` | Mostrar Flutter DevTools |
 | **C3** Refactoring | De pantallas de más de 300 líneas a capas | commit "Reorganizar en capas" frente al commit inicial | |
-| **C4** Pruebas | Pruebas de ViewModels, reglas de horario y navegación | `test/` | |
+| **C4** Pruebas | Unitarias, de interfaz y de integración | `test/`, `integration_test/` | Correr la de integración en el celular |
 | **D1** Capacidades y políticas | Permiso de notificaciones al momento de usarlo, acceso a Ajustes, política de privacidad | `core/services/avisos.dart`, `ajustes/privacidad_screen.dart` | Probar en el celular |
 | **D2** Future y async/await | Carga con estados cargando, error y éxito | `core/viewmodels/view_model.dart` | |
 | **D3** Streams e Isolates | Catálogo y horarios en vivo; JSON procesado con `compute` | `data/repositories`, `core/services/conexion.dart` | En la web `compute` no usa otro hilo |
-| **E1** Notificaciones | Aviso del club de lectura | `core/services/avisos.dart` | Probar en el celular |
-| **E2** Segundo plano | Tarea periódica con `workmanager` (solo Android) | `core/services/avisos.dart` | Probar en el celular |
+| **E1** Notificaciones | Local, a hora fija, push y apertura de pantalla al tocarlas | `core/services/avisos.dart`, `core/services/push.dart` | Probar en el celular |
+| **E2** Segundo plano | Tarea única con restricción de red y periódica (solo Android) | `core/services/avisos.dart` | Probar en el celular |
 | **E3** Eventos del sistema | Pérdida de conexión y regreso a la app | `core/widgets/aviso_sin_conexion.dart`, `indicador_apertura.dart` | |
-| **F1** Persistencia, APIs y cámara | Preferencias, Firestore, Open Library, foto de tapa | `data/`, `admin/widgets/selector_foto.dart` | Crear la cuenta y probar la cámara |
+| **F1** Persistencia, APIs y cámara | Preferencias, SQLite, Firestore, Open Library, foto de tapa | `data/`, `admin/viewmodels/foto_view_model.dart` | Crear la cuenta y probar la cámara |
 | **F2** Dispositivo real y publicación | Web en Firebase Hosting y APK de release | `firebase.json` | **Probar en celulares y anotar resultados** |
 | **G1** Demo y defensa | Guion de abajo | | Ensayar |
 
@@ -48,6 +48,10 @@ capturan con `InkWell`, que lo usa por dentro) y BLoC (no está en el material).
 | Activar y probar el aviso del club | | no aplica |
 | Aviso con la app cerrada un jueves | | no aplica |
 | Guardar un libro, cerrar y volver a abrir | | |
+| "Recordármelo" en un encuentro | | no aplica |
+| Push enviado desde la consola | | no aplica |
+| Tocar un aviso abre el club | | no aplica |
+| Modo oscuro del sistema se lee bien | | |
 | Ingresar al panel y sacar una foto | | |
 
 ## Guion para la demo (5 minutos)

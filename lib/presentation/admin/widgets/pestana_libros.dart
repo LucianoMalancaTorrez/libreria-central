@@ -12,8 +12,10 @@ class PestanaLibros extends StatefulWidget {
 }
 
 class _PestanaLibrosState extends State<PestanaLibros> {
-  late final Stream<List<Libro>> _libros = Dependencias.of(context).libros
-      .observarLibros();
+  late final Stream<List<Libro>> _libros = Dependencias.of(context)
+      .administracion!
+      .catalogo
+      .observarPublicados();
   bool _importando = false;
 
   void _editar([Libro? libro]) => Navigator.push(

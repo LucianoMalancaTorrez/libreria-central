@@ -8,6 +8,9 @@ class Capacidades {
       defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS;
 
+  /// Instalada como app, no abierta en un navegador.
+  bool get esAppDeCelular => !kIsWeb && esCelular;
+
   /// Vale también para el navegador de un celular.
   bool get tieneCamara => esCelular;
 

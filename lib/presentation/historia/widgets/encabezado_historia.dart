@@ -10,25 +10,25 @@ class EncabezadoHistoria extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 220,
       pinned: true,
-      backgroundColor: AppColors.leatherDeep,
-      foregroundColor: AppColors.parchment,
+      backgroundColor: context.colores.leatherDeep,
+      foregroundColor: context.colores.parchment,
       flexibleSpace: FlexibleSpaceBar(
         title: Text(
           'Nuestra historia',
           style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: AppColors.parchment),
+              ?.copyWith(color: context.colores.parchment),
         ),
         background: Stack(
           fit: StackFit.expand,
           children: [
-            const ColoredBox(color: AppColors.leatherDeep),
-            const Icon(Icons.storefront, size: 120, color: AppColors.brass),
+            ColoredBox(color: context.colores.leatherDeep),
+            Icon(Icons.storefront, size: 120, color: context.colores.brass),
             Positioned(
               right: 16,
               bottom: 56,
               child: Text(
                 'Desde 1952',
-                style: AppTheme.stampLabel(color: AppColors.parchment),
+                style: AppTheme.stampLabel(color: context.colores.parchment),
               ),
             ),
           ],

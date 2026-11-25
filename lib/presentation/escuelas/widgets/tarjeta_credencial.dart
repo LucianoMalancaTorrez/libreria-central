@@ -15,12 +15,12 @@ class TarjetaCredencial extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.parchmentDeep,
+        color: context.colores.parchmentDeep,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.brass, width: 2),
+        border: Border.all(color: context.colores.brass, width: 2),
         boxShadow: [
           BoxShadow(
-            color: AppColors.leather.withValues(alpha: 0.12),
+            color: context.colores.leather.withValues(alpha: 0.12),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -31,18 +31,18 @@ class TarjetaCredencial extends StatelessWidget {
           // Cabecera estilo sello / membrete de librería
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: const BoxDecoration(
-              color: AppColors.leatherDeep,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: context.colores.leatherDeep,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(18),
                 topRight: Radius.circular(18),
               ),
             ),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.menu_book_rounded,
-                  color: AppColors.brass,
+                  color: context.colores.brass,
                   size: 28,
                 ),
                 const SizedBox(width: 12),
@@ -52,8 +52,10 @@ class TarjetaCredencial extends StatelessWidget {
                     children: [
                       Text(
                         'LIBRERÍA CENTRAL WINTERBACH',
-                        style: AppTheme.stampLabel(color: AppColors.parchment)
-                            .copyWith(
+                        style:
+                            AppTheme.stampLabel(
+                              color: context.colores.parchment,
+                            ).copyWith(
                               letterSpacing: 2,
                               fontWeight: FontWeight.bold,
                             ),
@@ -61,7 +63,9 @@ class TarjetaCredencial extends StatelessWidget {
                       Text(
                         '«lo de Amelia» · Convenio Educativo',
                         style: textTheme.labelSmall?.copyWith(
-                          color: AppColors.parchment.withValues(alpha: 0.9),
+                          color: context.colores.parchment.withValues(
+                            alpha: 0.9,
+                          ),
                         ),
                       ),
                     ],
@@ -81,17 +85,17 @@ class TarjetaCredencial extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.leatherDeep,
+                    color: context.colores.leatherDeep,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.location_on_outlined,
                       size: 18,
-                      color: AppColors.leather,
+                      color: context.colores.leather,
                     ),
                     const SizedBox(width: 4),
                     Flexible(
@@ -109,7 +113,7 @@ class TarjetaCredencial extends StatelessWidget {
                 // Cartel del beneficio / porcentaje en tamaño grande
                 Text(
                   'BENEFICIO EN EL LOCAL',
-                  style: AppTheme.stampLabel(color: AppColors.leather)
+                  style: AppTheme.stampLabel(color: context.colores.leather)
                       .copyWith(letterSpacing: 1.5, fontSize: 13),
                 ),
                 const SizedBox(height: 10),
@@ -120,9 +124,12 @@ class TarjetaCredencial extends StatelessWidget {
                     vertical: 14,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.bottleGreen.withValues(alpha: 0.12),
+                    color: context.colores.bottleGreen.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: AppColors.bottleGreen, width: 2),
+                    border: Border.all(
+                      color: context.colores.bottleGreen,
+                      width: 2,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -130,7 +137,7 @@ class TarjetaCredencial extends StatelessWidget {
                         '${escuela.descuentoPorcentaje}% DE DESCUENTO',
                         textAlign: TextAlign.center,
                         style: textTheme.headlineMedium?.copyWith(
-                          color: AppColors.bottleGreenDark,
+                          color: context.colores.bottleGreenDark,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -139,7 +146,7 @@ class TarjetaCredencial extends StatelessWidget {
                         'En literatura, novelas y cuentos',
                         textAlign: TextAlign.center,
                         style: textTheme.titleSmall?.copyWith(
-                          color: AppColors.leatherDeep,
+                          color: context.colores.leatherDeep,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -148,7 +155,7 @@ class TarjetaCredencial extends StatelessWidget {
                         '(No incluye manuales ni libros de texto escolares)',
                         textAlign: TextAlign.center,
                         style: textTheme.bodySmall?.copyWith(
-                          color: AppColors.leather.withValues(alpha: 0.8),
+                          color: context.colores.leather.withValues(alpha: 0.8),
                         ),
                       ),
                     ],
@@ -159,7 +166,7 @@ class TarjetaCredencial extends StatelessWidget {
                 // Recuadro del código en tipografía muy grande y clara
                 Text(
                   'CÓDIGO PARA MOSTRAR EN CAJA',
-                  style: AppTheme.stampLabel(color: AppColors.leather)
+                  style: AppTheme.stampLabel(color: context.colores.leather)
                       .copyWith(letterSpacing: 1.2, fontSize: 13),
                 ),
                 const SizedBox(height: 8),
@@ -167,19 +174,20 @@ class TarjetaCredencial extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    color: AppColors.parchment,
+                    color: context.colores.parchment,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.brass, width: 2),
+                    border: Border.all(color: context.colores.brass, width: 2),
                   ),
                   child: Text(
                     escuela.codigo,
                     textAlign: TextAlign.center,
-                    style: AppTheme.stampLabel(color: AppColors.leatherDeep)
-                        .copyWith(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 4,
-                        ),
+                    style:
+                        AppTheme.stampLabel(color: context.colores.leatherDeep)
+                            .copyWith(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 4,
+                            ),
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -188,14 +196,14 @@ class TarjetaCredencial extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.brass.withValues(alpha: 0.18),
+                    color: context.colores.brass.withValues(alpha: 0.18),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.badge_outlined,
-                        color: AppColors.leatherDeep,
+                        color: context.colores.leatherDeep,
                       ),
                       const SizedBox(width: 10),
                       Expanded(
@@ -203,7 +211,7 @@ class TarjetaCredencial extends StatelessWidget {
                           'Presentar junto con el carnet de alumno o docente en el mostrador.',
                           style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.leatherDeep,
+                            color: context.colores.leatherDeep,
                           ),
                         ),
                       ),
@@ -215,17 +223,17 @@ class TarjetaCredencial extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.calendar_month_outlined,
                       size: 18,
-                      color: AppColors.leather,
+                      color: context.colores.leather,
                     ),
                     const SizedBox(width: 6),
                     Flexible(
                       child: Text(
                         'Vigente durante el ciclo lectivo: ${LibreriaConfig.vigenciaConvenio}',
                         style: textTheme.bodyMedium?.copyWith(
-                          color: AppColors.leather.withValues(alpha: 0.9),
+                          color: context.colores.leather.withValues(alpha: 0.9),
                         ),
                       ),
                     ),

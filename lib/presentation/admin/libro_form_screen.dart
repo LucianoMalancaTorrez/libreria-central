@@ -1,12 +1,11 @@
 /// Alta y edición de un libro, con foto de la tapa.
 library;
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/domain/models/libro.dart';
+import 'package:libreria/presentation/admin/viewmodels/foto_view_model.dart';
 import 'package:libreria/presentation/admin/widgets/selector_foto.dart';
 
 const generosDisponibles = [
@@ -37,11 +36,24 @@ class _LibroFormScreenState extends State<LibroFormScreen> {
     text: widget.libro?.descripcion,
   );
   late String _genero = widget.libro?.genero ?? generosDisponibles.first;
-  late String _foto = widget.libro?.foto ?? '';
+  late final FotoViewModel _fotos;
   bool _guardando = false;
 
   @override
+  void initState() {
+    super.initState();
+    final servicios = Dependencias.of(context);
+    _fotos = FotoViewModel(
+      servicios.fotos,
+      servicios.borradorFoto,
+      clave: widget.libro?.id ?? 'nuevo',
+      inicial: widget.libro?.foto ?? '',
+    )..recuperar();
+  }
+
+  @override
   void dispose() {
+    _fotos.dispose();
     _titulo.dispose();
     _autor.dispose();
     _descripcion.dispose();
@@ -63,9 +75,10 @@ class _LibroFormScreenState extends State<LibroFormScreen> {
           genero: _genero,
           editorial: widget.libro?.editorial ?? '',
           descripcion: _descripcion.text.trim(),
-          foto: _foto,
+          foto: _fotos.foto,
         ),
       );
+      await _fotos.descartarBorrador();
       if (mounted) navegador.pop();
       mensajero.showSnackBar(const SnackBar(content: Text('Guardado')));
     } catch (e) {
@@ -94,11 +107,7 @@ class _LibroFormScreenState extends State<LibroFormScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SelectorFoto(
-                  foto: _foto,
-                  alCambiar: (bytes) =>
-                      setState(() => _foto = base64Encode(bytes)),
-                ),
+                SelectorFoto(viewModel: _fotos),
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _titulo,

@@ -23,7 +23,7 @@ class SeccionInfo extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icono, color: AppColors.bottleGreen),
+                Icon(icono, color: context.colores.bottleGreen),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(

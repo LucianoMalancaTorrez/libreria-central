@@ -20,20 +20,20 @@ class FotoPlaceholder extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.leather.withValues(alpha: 0.10),
+        color: context.colores.leather.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.brass.withValues(alpha: 0.6)),
+        border: Border.all(color: context.colores.brass.withValues(alpha: 0.6)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icono, size: 36, color: AppColors.leather),
+          Icon(icono, size: 36, color: context.colores.leather),
           const SizedBox(height: 8),
           Text(
             etiqueta,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: AppColors.leatherDeep,
+              color: context.colores.leatherDeep,
               fontWeight: FontWeight.w600,
             ),
           ),

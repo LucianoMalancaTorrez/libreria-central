@@ -35,6 +35,13 @@ class FirestoreLibroRepository
   }
 
   @override
+  Stream<List<Libro>> observarPublicados() => _libros.snapshots().map(
+    (consulta) => [
+      for (final doc in consulta.docs) Libro.fromJson(doc.data(), id: doc.id),
+    ]..sort((a, b) => a.titulo.compareTo(b.titulo)),
+  );
+
+  @override
   Future<void> guardar(Libro libro) => libro.id.isEmpty
       ? _libros.add(libro.toJson())
       : _libros.doc(libro.id).set(libro.toJson());

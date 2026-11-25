@@ -44,10 +44,12 @@ class TarjetaLibro extends StatelessWidget {
                         width: double.infinity,
                         height: double.infinity,
                         decoration: BoxDecoration(
-                          color: AppColors.leather.withValues(alpha: 0.12),
+                          color: context.colores.leather.withValues(
+                            alpha: 0.12,
+                          ),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: AppColors.brass.withValues(alpha: 0.5),
+                            color: context.colores.brass.withValues(alpha: 0.5),
                           ),
                         ),
                         child: TapaLibro(libro: libro, tamanoIcono: 40),

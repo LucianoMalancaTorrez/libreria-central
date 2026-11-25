@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Text(
               '«lo de Amelia»',
-              style: AppTheme.stampLabel(color: AppColors.bottleGreenDark)
+              style: AppTheme.stampLabel(color: context.colores.bottleGreenDark)
                   .copyWith(fontSize: 11, fontStyle: FontStyle.italic),
             ),
           ],

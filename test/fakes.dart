@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/services/avisos.dart';
@@ -6,6 +7,7 @@ import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
 import 'package:libreria/domain/services/auth_service.dart';
+import 'package:libreria/domain/services/fotos.dart';
 import 'package:libreria/domain/services/info_libro_service.dart';
 
 const librosDePrueba = [
@@ -57,6 +59,18 @@ class AvisosFalsos implements ServicioAvisos {
   AvisosFalsos([this.permiso = ResultadoPermiso.concedido]);
   final ResultadoPermiso permiso;
   bool? revision;
+  DateTime? programado;
+  final _toques = StreamController<String>.broadcast();
+
+  void tocar(String destino) => _toques.add(destino);
+
+  @override
+  Stream<String> get toques => _toques.stream;
+  @override
+  Future<String?> tocadoAlAbrir() async => null;
+  @override
+  Future<void> programar(DateTime cuando, String titulo, String cuerpo) async =>
+      programado = cuando;
 
   @override
   bool get soportaSegundoPlano => true;
@@ -102,4 +116,26 @@ class AuthFalso implements AuthService {
   Future<void> salir() async => _cambios.add(null);
   @override
   Future<bool> esAdministrador(String uid) async => admin;
+}
+
+class FuenteFalsa implements FuenteFotos {
+  FuenteFalsa(this.respuestas);
+  final List<Uint8List?> respuestas;
+
+  @override
+  Future<Uint8List?> elegir(OrigenFoto origen) async => respuestas.removeAt(0);
+  @override
+  Future<Uint8List?> recuperarPerdida() async => null;
+}
+
+class BorradorEnMemoria implements BorradorFoto {
+  final datos = <String, Uint8List>{};
+
+  @override
+  Future<void> guardar(String clave, Uint8List foto) async =>
+      datos[clave] = foto;
+  @override
+  Future<Uint8List?> leer(String clave) async => datos[clave];
+  @override
+  Future<void> borrar(String clave) async => datos.remove(clave);
 }

@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
+import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/theme/app_theme.dart';
+import 'package:libreria/presentation/eventos/eventos_screen.dart';
 import 'package:libreria/presentation/principal/principal_screen.dart';
 
 class LibreriaApp extends StatefulWidget {
@@ -16,9 +20,46 @@ class LibreriaApp extends StatefulWidget {
 
 class _LibreriaAppState extends State<LibreriaApp> {
   late final Servicios _servicios = widget.servicios ?? Servicios();
+  final _navegador = GlobalKey<NavigatorState>();
+  final _suscripciones = <StreamSubscription<Object?>>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _suscripciones.addAll([
+      _servicios.avisos.toques.listen(_abrir),
+      _servicios.push.toques.listen(_abrir),
+      // Con la app abierta, Android no muestra el push: lo hacemos nosotros.
+      _servicios.push.recibidos.listen(
+        (aviso) => _servicios.avisos.mostrar(aviso.titulo, aviso.cuerpo),
+      ),
+    ]);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _abrirDesdeAviso());
+  }
+
+  Future<void> _abrirDesdeAviso() async {
+    try {
+      _abrir(
+        await _servicios.avisos.tocadoAlAbrir() ??
+            await _servicios.push.tocadoAlAbrir(),
+      );
+    } catch (e) {
+      debugPrint('Aviso de apertura: $e');
+    }
+  }
+
+  void _abrir(String? destino) {
+    if (destino != destinoClub) return;
+    _navegador.currentState?.push(
+      MaterialPageRoute<void>(builder: (_) => const EventosScreen()),
+    );
+  }
 
   @override
   void dispose() {
+    for (final suscripcion in _suscripciones) {
+      suscripcion.cancel();
+    }
     _servicios.dispose();
     super.dispose();
   }
@@ -30,7 +71,10 @@ class _LibreriaAppState extends State<LibreriaApp> {
       servicios: _servicios,
       child: MaterialApp(
         title: LibreriaConfig.nombre,
+        navigatorKey: _navegador,
+        // El tema claro u oscuro sigue al del sistema.
         theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
         builder: (context, child) => ListenableBuilder(
           listenable: _servicios.ajustes,
           builder: (context, _) {

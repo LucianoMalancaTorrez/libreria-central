@@ -19,7 +19,7 @@ class FilaHorario extends StatelessWidget {
           temporada,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.leatherDeep,
+            color: context.colores.leatherDeep,
           ),
         ),
         const SizedBox(height: 2),

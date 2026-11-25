@@ -28,12 +28,14 @@ class TarjetaEscuela extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.bottleGreen.withValues(alpha: 0.12),
+                      color: context.colores.bottleGreen.withValues(
+                        alpha: 0.12,
+                      ),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.school_outlined,
-                      color: AppColors.bottleGreen,
+                      color: context.colores.bottleGreen,
                       size: 28,
                     ),
                   ),
@@ -51,10 +53,10 @@ class TarjetaEscuela extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.location_on_outlined,
                               size: 16,
-                              color: AppColors.leather,
+                              color: context.colores.leather,
                             ),
                             const SizedBox(width: 4),
                             Expanded(
@@ -79,7 +81,7 @@ class TarjetaEscuela extends StatelessWidget {
                   Text(
                     'Beneficio: ${escuela.descuentoPorcentaje}% de descuento',
                     style: textTheme.labelLarge?.copyWith(
-                      color: AppColors.bottleGreenDark,
+                      color: context.colores.bottleGreenDark,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -87,7 +89,7 @@ class TarjetaEscuela extends StatelessWidget {
                     'En literatura, novelas y cuentos',
                     style: textTheme.labelSmall?.copyWith(
                       fontSize: 11,
-                      color: AppColors.leather.withValues(alpha: 0.8),
+                      color: context.colores.leather.withValues(alpha: 0.8),
                     ),
                   ),
                 ],

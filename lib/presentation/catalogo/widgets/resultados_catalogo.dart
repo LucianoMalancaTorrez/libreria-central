@@ -46,7 +46,7 @@ class ResultadosCatalogo extends StatelessWidget {
           child: Text(
             genero,
             style: Theme.of(context).textTheme.titleLarge
-                ?.copyWith(color: AppColors.bottleGreenDark),
+                ?.copyWith(color: context.colores.bottleGreenDark),
           ),
         ),
         FilaLibro(:final libro) => ListTile(

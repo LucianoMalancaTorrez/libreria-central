@@ -30,59 +30,131 @@ class AppColors {
   static const Color error = Color(0xFF8B2E2E); // rojo óxido, no rojo puro
 }
 
+/// Colores que usan las pantallas. En el tema oscuro "papel" y "tinta" se
+/// invierten, así cada combinación sigue teniendo contraste.
+class Colores extends ThemeExtension<Colores> {
+  const Colores({
+    required this.parchment,
+    required this.parchmentDeep,
+    required this.leather,
+    required this.leatherDeep,
+    required this.bottleGreen,
+    required this.bottleGreenDark,
+    required this.brass,
+    required this.navy,
+    required this.error,
+  });
+
+  static const claro = Colores(
+    parchment: AppColors.parchment,
+    parchmentDeep: AppColors.parchmentDeep,
+    leather: AppColors.leather,
+    leatherDeep: AppColors.leatherDeep,
+    bottleGreen: AppColors.bottleGreen,
+    bottleGreenDark: AppColors.bottleGreenDark,
+    brass: AppColors.brass,
+    navy: AppColors.navy,
+    error: AppColors.error,
+  );
+
+  static const oscuro = Colores(
+    parchment: Color(0xFF1E1712),
+    parchmentDeep: Color(0xFF2E241C),
+    leather: Color(0xFFE6D8C3),
+    leatherDeep: Color(0xFFF5EBDB),
+    bottleGreen: Color(0xFF7FCB8F),
+    bottleGreenDark: Color(0xFFA9E0B5),
+    brass: Color(0xFFC9A56F),
+    navy: Color(0xFFA9BCE8),
+    error: Color(0xFFF2A0A0),
+  );
+
+  final Color parchment;
+  final Color parchmentDeep;
+  final Color leather;
+  final Color leatherDeep;
+  final Color bottleGreen;
+  final Color bottleGreenDark;
+  final Color brass;
+  final Color navy;
+  final Color error;
+
+  @override
+  Colores copyWith() => this;
+
+  @override
+  Colores lerp(covariant Colores? otro, double t) {
+    if (otro == null) return this;
+    return Colores(
+      parchment: Color.lerp(parchment, otro.parchment, t)!,
+      parchmentDeep: Color.lerp(parchmentDeep, otro.parchmentDeep, t)!,
+      leather: Color.lerp(leather, otro.leather, t)!,
+      leatherDeep: Color.lerp(leatherDeep, otro.leatherDeep, t)!,
+      bottleGreen: Color.lerp(bottleGreen, otro.bottleGreen, t)!,
+      bottleGreenDark: Color.lerp(bottleGreenDark, otro.bottleGreenDark, t)!,
+      brass: Color.lerp(brass, otro.brass, t)!,
+      navy: Color.lerp(navy, otro.navy, t)!,
+      error: Color.lerp(error, otro.error, t)!,
+    );
+  }
+}
+
+extension ColoresDelTema on BuildContext {
+  Colores get colores => Theme.of(this).extension<Colores>() ?? Colores.claro;
+}
+
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get light {
-    final base = ThemeData.light();
-    final textTheme = _buildTextTheme(base.textTheme);
+  static ThemeData get light => _construir(Colores.claro, ThemeData.light());
+
+  static ThemeData get dark => _construir(Colores.oscuro, ThemeData.dark());
+
+  static ThemeData _construir(Colores c, ThemeData base) {
+    final textTheme = _buildTextTheme(base.textTheme, c);
 
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.parchment,
-      colorScheme: const ColorScheme.light(
-        primary: AppColors.bottleGreen,
-        onPrimary: AppColors.parchment,
-        secondary: AppColors.brass,
-        onSecondary: AppColors.leatherDeep,
-        surface: AppColors.parchmentDeep,
-        onSurface: AppColors.leather,
-        error: AppColors.error,
-        onError: AppColors.parchment,
-        tertiary: AppColors.navy,
+      extensions: [c],
+      scaffoldBackgroundColor: c.parchment,
+      colorScheme: base.colorScheme.copyWith(
+        primary: c.bottleGreen,
+        onPrimary: c.parchment,
+        secondary: c.brass,
+        onSecondary: c.leatherDeep,
+        surface: c.parchmentDeep,
+        onSurface: c.leather,
+        error: c.error,
+        onError: c.parchment,
+        tertiary: c.navy,
       ),
       textTheme: textTheme,
 
       // --- AppBar: como el header del wireframe, cálido y con el logo centrado ---
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.parchment,
-        foregroundColor: AppColors.leatherDeep,
+        backgroundColor: c.parchment,
+        foregroundColor: c.leatherDeep,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: textTheme.titleLarge?.copyWith(
-          color: AppColors.leatherDeep,
-        ),
-        iconTheme: const IconThemeData(color: AppColors.leather),
+        titleTextStyle: textTheme.titleLarge?.copyWith(color: c.leatherDeep),
+        iconTheme: IconThemeData(color: c.leather),
       ),
 
       // --- Cards: tarjetas de libro con "sello" sutil en el borde ---
       cardTheme: CardThemeData(
-        color: AppColors.parchmentDeep,
+        color: c.parchmentDeep,
         elevation: 0,
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
-          side: BorderSide(
-            color: AppColors.brass.withValues(alpha: 0.55),
-            width: 1.2,
-          ),
+          side: BorderSide(color: c.brass.withValues(alpha: 0.55), width: 1.2),
         ),
       ),
 
       // --- Botones de sección tipo "píldora" ---
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: AppColors.brass.withValues(alpha: 0.35),
-          foregroundColor: AppColors.leatherDeep,
+          backgroundColor: c.brass.withValues(alpha: 0.35),
+          foregroundColor: c.leatherDeep,
           textStyle: textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w700,
           ),
@@ -95,28 +167,23 @@ class AppTheme {
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style:
-            ElevatedButton.styleFrom(
-              backgroundColor: AppColors.bottleGreen,
-              foregroundColor: AppColors.parchment,
-              disabledBackgroundColor: AppColors.bottleGreen.withValues(
-                alpha: 0.4,
-              ),
-              textStyle: textTheme.labelLarge,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              elevation: 0,
-            ).copyWith(
-              overlayColor: WidgetStateProperty.all(AppColors.bottleGreenDark),
-            ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: c.bottleGreen,
+          foregroundColor: c.parchment,
+          disabledBackgroundColor: c.bottleGreen.withValues(alpha: 0.4),
+          textStyle: textTheme.labelLarge,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          elevation: 0,
+        ).copyWith(overlayColor: WidgetStateProperty.all(c.bottleGreenDark)),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.leatherDeep,
-          side: const BorderSide(color: AppColors.leather, width: 1.4),
+          foregroundColor: c.leatherDeep,
+          side: BorderSide(color: c.leather, width: 1.4),
           textStyle: textTheme.labelLarge,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: RoundedRectangleBorder(
@@ -127,7 +194,7 @@ class AppTheme {
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.navy,
+          foregroundColor: c.navy,
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -135,102 +202,99 @@ class AppTheme {
       // --- Buscador de catálogo ---
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.parchmentDeep,
+        fillColor: c.parchmentDeep,
         hintStyle: textTheme.bodyMedium?.copyWith(
-          color: AppColors.leather.withValues(alpha: 0.55),
+          color: c.leather.withValues(alpha: 0.55),
         ),
-        prefixIconColor: AppColors.leather,
+        prefixIconColor: c.leather,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 18,
           vertical: 14,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: AppColors.brass.withValues(alpha: 0.6)),
+          borderSide: BorderSide(color: c.brass.withValues(alpha: 0.6)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: AppColors.brass.withValues(alpha: 0.6)),
+          borderSide: BorderSide(color: c.brass.withValues(alpha: 0.6)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: AppColors.bottleGreen,
-            width: 1.6,
-          ),
+          borderSide: BorderSide(color: c.bottleGreen, width: 1.6),
         ),
       ),
 
       // --- Chips: útiles para género, filtros del catálogo ---
       chipTheme: ChipThemeData(
-        backgroundColor: AppColors.parchment,
-        selectedColor: AppColors.bottleGreen.withValues(alpha: 0.15),
+        backgroundColor: c.parchment,
+        selectedColor: c.bottleGreen.withValues(alpha: 0.15),
         labelStyle: GoogleFonts.specialElite(
           fontSize: 12,
           letterSpacing: 0.5,
-          color: AppColors.leatherDeep,
+          color: c.leatherDeep,
         ),
-        side: BorderSide(color: AppColors.brass.withValues(alpha: 0.5)),
+        side: BorderSide(color: c.brass.withValues(alpha: 0.5)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       ),
 
       dividerTheme: DividerThemeData(
-        color: AppColors.brass.withValues(alpha: 0.4),
+        color: c.brass.withValues(alpha: 0.4),
         thickness: 1,
         space: 32,
       ),
 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: AppColors.parchmentDeep,
-        selectedItemColor: AppColors.bottleGreen,
-        unselectedItemColor: AppColors.leather.withValues(alpha: 0.5),
+        backgroundColor: c.parchmentDeep,
+        selectedItemColor: c.bottleGreen,
+        unselectedItemColor: c.leather.withValues(alpha: 0.5),
         selectedLabelStyle: textTheme.labelSmall,
         unselectedLabelStyle: textTheme.labelSmall,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
       ),
 
-      iconTheme: const IconThemeData(color: AppColors.leather),
+      iconTheme: IconThemeData(color: c.leather),
     );
   }
 
-  static TextTheme _buildTextTheme(TextTheme base) {
+  static TextTheme _buildTextTheme(TextTheme base, Colores c) {
     final display = GoogleFonts.playfairDisplayTextTheme(base);
     final body = GoogleFonts.loraTextTheme(base);
 
     return body.copyWith(
       displayLarge: display.displayLarge?.copyWith(
-        color: AppColors.leatherDeep,
+        color: c.leatherDeep,
         fontWeight: FontWeight.w700,
       ),
       headlineLarge: display.headlineLarge?.copyWith(
-        color: AppColors.leatherDeep,
+        color: c.leatherDeep,
         fontWeight: FontWeight.w700,
       ),
       headlineMedium: display.headlineMedium?.copyWith(
-        color: AppColors.leatherDeep,
+        color: c.leatherDeep,
         fontWeight: FontWeight.w700,
       ),
       titleLarge: display.titleLarge?.copyWith(
-        color: AppColors.leatherDeep,
+        color: c.leatherDeep,
         fontWeight: FontWeight.w600,
       ),
       titleMedium: display.titleMedium?.copyWith(
-        color: AppColors.leather,
+        color: c.leather,
         fontWeight: FontWeight.w600,
       ),
-      bodyLarge: body.bodyLarge?.copyWith(color: AppColors.leather),
-      bodyMedium: body.bodyMedium?.copyWith(color: AppColors.leather),
+      bodyLarge: body.bodyLarge?.copyWith(color: c.leather),
+      bodyMedium: body.bodyMedium?.copyWith(color: c.leather),
       labelLarge: body.labelLarge?.copyWith(
-        color: AppColors.leather,
+        color: c.leather,
         fontWeight: FontWeight.w600,
       ),
       // Rol utilitario "máquina de escribir" para sellos/etiquetas cortas
       labelSmall: GoogleFonts.specialElite(
         fontSize: 11,
         letterSpacing: 0.6,
-        color: AppColors.leather.withValues(alpha: 0.8),
+        color: c.leather.withValues(alpha: 0.8),
       ),
     );
   }

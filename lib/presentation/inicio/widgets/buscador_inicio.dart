@@ -13,19 +13,21 @@ class BuscadorInicio extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         decoration: BoxDecoration(
-          color: AppColors.parchmentDeep,
+          color: context.colores.parchmentDeep,
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: AppColors.brass.withValues(alpha: 0.6)),
+          border: Border.all(
+            color: context.colores.brass.withValues(alpha: 0.6),
+          ),
         ),
         child: Row(
           children: [
-            const Icon(Icons.search, color: AppColors.leather),
+            Icon(Icons.search, color: context.colores.leather),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
                 'Buscar en el catálogo...',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.leather.withValues(alpha: 0.55),
+                  color: context.colores.leather.withValues(alpha: 0.55),
                 ),
               ),
             ),

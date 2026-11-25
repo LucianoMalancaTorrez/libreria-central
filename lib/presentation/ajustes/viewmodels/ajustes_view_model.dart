@@ -1,15 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:libreria/core/services/avisos.dart';
+import 'package:libreria/core/services/push.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
 
 /// Preferencias de la persona: tamaño de letra y avisos del club de lectura.
 class AjustesViewModel extends ChangeNotifier {
-  AjustesViewModel(this._preferencias, this._avisos);
+  AjustesViewModel(
+    this._preferencias,
+    this._avisos, [
+    this._push = const SinPush(),
+  ]);
 
   static const _escalas = [1.0, 1.2, 1.4];
 
   final PreferenciasRepository _preferencias;
   final ServicioAvisos _avisos;
+  final ServicioPush _push;
   int _tamanoLetra = 0;
   bool _avisosClub = false;
 
@@ -49,6 +55,12 @@ class AjustesViewModel extends ChangeNotifier {
     _avisosClub = activar;
     notifyListeners();
     await _preferencias.guardarBool('avisos_club', activar);
+    try {
+      await _push.suscribir(activar);
+    } catch (e) {
+      // Sin red el push falla, pero el aviso local sigue funcionando.
+      debugPrint('Suscripción push: $e');
+    }
     return ResultadoPermiso.concedido;
   }
 }

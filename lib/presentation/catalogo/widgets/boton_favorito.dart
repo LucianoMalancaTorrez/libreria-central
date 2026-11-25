@@ -26,7 +26,7 @@ class BotonFavorito extends StatelessWidget {
             child: Icon(
               marcado ? Icons.favorite : Icons.favorite_border,
               key: ValueKey(marcado),
-              color: marcado ? AppColors.error : AppColors.leather,
+              color: marcado ? context.colores.error : context.colores.leather,
             ),
           ),
         );

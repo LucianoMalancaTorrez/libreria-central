@@ -1,6 +1,6 @@
 # Temas del aula y dónde están en el proyecto
 
-Comparación con el material del aula (programa 2026 y apuntes), al 25/11.
+Comparación con el material del aula (programa 2026 y apuntes), al 25/11 (actualizado).
 
 ## Integrado
 
@@ -16,29 +16,30 @@ Comparación con el material del aula (programa 2026 y apuntes), al 25/11.
 | Future y async/await | Tres estados en los ViewModels, tiempos límite |
 | Streams e Isolates | Catálogo y horarios en vivo, `compute` |
 | Notificaciones locales y permisos | Club de lectura |
-| Segundo plano | Tarea periódica con `workmanager` |
+| Segundo plano | Tareas con `workmanager` |
 | Eventos del sistema | Conexión, ocultar y volver a la app |
 | SharedPreferences | Lista, tamaño de letra, avisos, última búsqueda |
 | API REST, HTTP, JSON y autenticación | Open Library y Firebase Auth |
 | Datos en la nube | Firestore con reglas |
 | Cámara y galería | Foto de la tapa |
-| Pruebas unitarias y de interfaz | `test/` |
+| Pruebas unitarias y de interfaz | `test/` (incluye ciclo de vida, plataformas y SQLite) |
 | Requisitos y presupuesto | `docs/REQUISITOS.md`, `docs/presupuesto/` |
+| Base de datos local (SQLite) | Copia del catálogo en el celular, consultas con parámetros: `data/local/libros_dao.dart` |
+| Cámara en capas | `domain/services/fotos.dart`, borrador en archivo, fotos perdidas: `presentation/admin/viewmodels/foto_view_model.dart` |
+| Avisos a una hora fija | `zonedSchedule` en Club de lectura (Android) |
+| Tocar un aviso | Abre el Club de lectura: `app/app.dart` |
+| Notificaciones push | `core/services/push.dart`, tema `club` (Android) |
+| Tarea única con restricciones | `registerOneOffTask` cuando hay red |
+| Modo oscuro | Sigue al sistema: `core/theme/app_theme.dart` |
+| Pruebas de integración | `integration_test/app_test.dart` (corre en un dispositivo) |
 
-## Falta (se ve en clase y la app no lo usa)
+## Falta o depende del grupo
 
-| Tema | Qué habría que sumar | Requiere |
-|---|---|---|
-| Base de datos local (SQLite) | Guardar el catálogo en el celular con `sqflite` | Paquetes `sqflite`, `path` |
-| Notificaciones push | Recibir avisos enviados desde la consola de Firebase | `firebase_messaging` |
-| Aviso a una hora fija | `zonedSchedule` | `timezone` |
-| Abrir una pantalla al tocar el aviso | Manejar el toque de la notificación | Solo código |
-| Cámara en capas | Guardar el archivo, recuperar fotos perdidas, fuente de fotos reemplazable | `path_provider` |
-| Pruebas de integración | Recorrido completo en un dispositivo | `integration_test` (SDK) |
-| Tarea única con restricciones | `registerOneOffTask` | Solo código |
-| Modo oscuro | Responder al cambio de tema del sistema | Solo código |
-| Firma del APK | Clave propia | La crea el grupo |
-| Publicación en Google Play | Cuenta de desarrollador | **Pago (registro de Google)** |
+| Tema | Situación |
+|---|---|
+| Firma del APK | El proyecto ya la lee de `android/key.properties`; la clave la crea el grupo (`docs/FIRMA.md`) |
+| Publicación en Google Play | **Es paga** (registro de desarrollador); no se hizo |
+| Probar en un dispositivo | Push, avisos programados, cámara y la prueba de integración |
 
 ## No corresponde
 

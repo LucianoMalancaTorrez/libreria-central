@@ -30,6 +30,11 @@ class PrivacidadScreen extends StatelessWidget {
           'cuenta es la de la librería, para actualizarlos.',
     ),
     (
+      'Avisos desde la librería',
+      'En Android, si activás los avisos, Google Firebase guarda un código '
+          'del dispositivo para poder enviarte las novedades del club.',
+    ),
+    (
       'Permisos',
       'Internet: para tapas y tipografías.\n'
           'Cámara y fotos: solo en Administración, cuando se elige la tapa '

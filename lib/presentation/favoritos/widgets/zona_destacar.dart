@@ -18,10 +18,10 @@ class ZonaDestacar extends StatelessWidget {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: candidatos.isEmpty
-              ? AppColors.parchmentDeep
-              : AppColors.brass.withValues(alpha: 0.4),
+              ? context.colores.parchmentDeep
+              : context.colores.brass.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.brass),
+          border: Border.all(color: context.colores.brass),
         ),
         child: const Text(
           'Arrastrá una tapa hasta acá para ponerla primera.',

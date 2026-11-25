@@ -30,6 +30,15 @@ Cualquiera puede leer libros y horarios. Las reglas están en `firestore.rules`.
 - **Borrar un libro:** tocar el tacho y confirmar.
 - **Cambiar un horario:** pestaña Horarios, tocar la hora y Guardar horarios.
 
+## Enviar un aviso push (Android)
+
+1. En el celular, activar **Club de lectura > Avisos**.
+2. En la consola: **Messaging > Nueva campaña > Notificaciones**.
+3. Escribir título y texto; en destino elegir **Tema** y poner `club`.
+4. Enviar. La primera vez el tema puede tardar en aparecer en la consola.
+
+Cloud Messaging es gratuito.
+
 ## Volver a publicar las reglas
 
 ```powershell

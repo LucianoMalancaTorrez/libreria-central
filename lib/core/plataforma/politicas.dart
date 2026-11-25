@@ -10,4 +10,10 @@ class Politicas {
   bool get ofrecerSacarFoto => _capacidades.tieneCamara;
 
   bool get ofrecerAvisoAutomatico => _capacidades.ejecutaTareasEnSegundoPlano;
+
+  /// SQLite solo en la app del celular; la web usa la caché de Firestore.
+  bool get usarBaseLocal => _capacidades.esAppDeCelular;
+
+  /// Falta configurar el push para web y iPhone.
+  bool get recibirPush => _capacidades.ejecutaTareasEnSegundoPlano;
 }

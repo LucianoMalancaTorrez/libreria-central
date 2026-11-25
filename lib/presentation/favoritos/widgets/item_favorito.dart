@@ -23,10 +23,10 @@ class ItemFavorito extends StatelessWidget {
       direction: DismissDirection.endToStart,
       onDismissed: (_) => alQuitar(),
       background: Container(
-        color: AppColors.error,
+        color: context.colores.error,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 24),
-        child: const Icon(Icons.delete, color: AppColors.parchment),
+        child: Icon(Icons.delete, color: context.colores.parchment),
       ),
       child: ListTile(
         leading: Draggable<String>(

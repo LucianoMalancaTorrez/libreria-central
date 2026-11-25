@@ -37,7 +37,9 @@ class EtapaHistoria extends StatelessWidget {
             children: [
               Text(
                 anio,
-                style: AppTheme.stampLabel(color: AppColors.bottleGreenDark),
+                style: AppTheme.stampLabel(
+                  color: context.colores.bottleGreenDark,
+                ),
               ),
               Text(nombre, style: textTheme.headlineSmall),
               const SizedBox(height: 8),

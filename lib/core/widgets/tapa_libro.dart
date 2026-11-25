@@ -16,7 +16,7 @@ class TapaLibro extends StatelessWidget {
     final icono = Icon(
       Icons.menu_book_rounded,
       size: tamanoIcono,
-      color: AppColors.leather,
+      color: context.colores.leather,
     );
     if (libro.foto.isEmpty) return icono;
     return Image.memory(

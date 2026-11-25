@@ -1,16 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/services/conexion.dart';
+import 'package:libreria/core/services/push.dart';
 import 'package:libreria/data/repositories/asset_libro_repository.dart';
 import 'package:libreria/data/repositories/in_memory_escuela_repository.dart';
 import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
 import 'package:libreria/data/repositories/shared_preferencias_repository.dart';
+import 'package:libreria/data/services/archivo_borrador_foto.dart';
+import 'package:libreria/data/services/image_picker_fuente.dart';
 import 'package:libreria/data/services/open_library_service.dart';
 import 'package:libreria/domain/repositories/escuela_repository.dart';
 import 'package:libreria/domain/repositories/horarios_repository.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
 import 'package:libreria/domain/services/auth_service.dart';
+import 'package:libreria/domain/services/fotos.dart';
 import 'package:libreria/domain/services/info_libro_service.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/favoritos/viewmodels/favoritos_view_model.dart';
@@ -41,6 +45,9 @@ class Servicios {
     InfoLibroService? infoLibros,
     ServicioAvisos? avisos,
     Stream<bool> Function()? conexion,
+    ServicioPush? push,
+    FuenteFotos? fotos,
+    BorradorFoto? borradorFoto,
     this.administracion,
   }) : libros = libros ?? AssetLibroRepository(),
        escuelas = escuelas ?? InMemoryEscuelaRepository(),
@@ -48,7 +55,10 @@ class Servicios {
        preferencias = preferencias ?? SharedPreferenciasRepository(),
        infoLibros = infoLibros ?? OpenLibraryService(),
        avisos = avisos ?? ServicioAvisosDispositivo(),
-       conexion = conexion ?? estadoConexion;
+       conexion = conexion ?? estadoConexion,
+       push = push ?? const SinPush(),
+       fotos = fotos ?? ImagePickerFuente(),
+       borradorFoto = borradorFoto ?? ArchivoBorradorFoto();
 
   final LibroRepository libros;
   final EscuelaRepository escuelas;
@@ -57,11 +67,14 @@ class Servicios {
   final InfoLibroService infoLibros;
   final ServicioAvisos avisos;
   final Stream<bool> Function() conexion;
+  final ServicioPush push;
+  final FuenteFotos fotos;
+  final BorradorFoto borradorFoto;
   final Administracion? administracion;
 
   /// Estado compartido por varias pantallas.
   late final favoritos = FavoritosViewModel(preferencias)..cargar();
-  late final ajustes = AjustesViewModel(preferencias, avisos)..cargar();
+  late final ajustes = AjustesViewModel(preferencias, avisos, push)..cargar();
 
   void dispose() {
     favoritos.dispose();

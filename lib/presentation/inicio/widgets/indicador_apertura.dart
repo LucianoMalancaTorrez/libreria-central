@@ -52,8 +52,8 @@ class _IndicadorAperturaState extends State<IndicadorApertura> {
   Widget build(BuildContext context) {
     final estado = estadoDelLocal(widget.reloj(), _horarios);
     final color = estado.abierto
-        ? AppColors.bottleGreen
-        : AppColors.leatherDeep;
+        ? context.colores.bottleGreen
+        : context.colores.leatherDeep;
     final texto =
         '${estado.abierto ? 'Abierto ahora' : 'Cerrado'} · ${estado.detalle}';
     return AnimatedContainer(

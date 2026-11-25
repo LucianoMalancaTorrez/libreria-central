@@ -22,15 +22,18 @@ class _AvisoSinConexionState extends State<AvisoSinConexion> {
       builder: (context, snapshot) => AnimatedSize(
         duration: const Duration(milliseconds: 300),
         child: snapshot.data == false
-            ? const ColoredBox(
-                color: AppColors.leatherDeep,
+            ? ColoredBox(
+                color: context.colores.leatherDeep,
                 child: SafeArea(
                   bottom: false,
                   child: ListTile(
-                    leading: Icon(Icons.wifi_off, color: AppColors.parchment),
+                    leading: Icon(
+                      Icons.wifi_off,
+                      color: context.colores.parchment,
+                    ),
                     title: Text(
                       'Sin conexión. Podés seguir mirando el catálogo.',
-                      style: TextStyle(color: AppColors.parchment),
+                      style: TextStyle(color: context.colores.parchment),
                     ),
                   ),
                 ),
