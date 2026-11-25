@@ -1,23 +1,24 @@
 /// Pantalla principal de "Librería Central Winterbach" («lo de Amelia»).
 /// Presenta las secciones clave del negocio acordadas con Amelia:
 /// Catálogo de consulta, Convenios con escuelas, Información y Nuestra historia.
-/// Las actividades académicas de clase se conservan en un menú lateral discreto.
 library;
 
 import 'package:libreria/core/config/libreria_config.dart';
 import 'package:flutter/material.dart';
+import 'package:libreria/presentation/inicio/widgets/indicador_apertura.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
-import 'package:libreria/presentation/catalogo/catalogo_screen.dart';
 import 'package:libreria/presentation/escuelas/escuelas_screen.dart';
 import 'package:libreria/presentation/historia/historia_screen.dart';
 import 'package:libreria/presentation/informacion/informacion_screen.dart';
 import 'package:libreria/presentation/inicio/widgets/buscador_inicio.dart';
-import 'package:libreria/presentation/inicio/widgets/menu_ejercicios_drawer.dart';
 import 'package:libreria/presentation/inicio/widgets/tarjeta_accion.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.alAbrirCatalogo});
+
+  /// Cambia a la pestaña del catálogo.
+  final VoidCallback alAbrirCatalogo;
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +40,14 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      endDrawer: MenuEjerciciosDrawer(),
       body: ResponsiveCenter(
         child: SafeArea(
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              BuscadorInicio(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const CatalogoScreen()),
-                ),
-              ),
+              const IndicadorApertura(),
+              const SizedBox(height: 16),
+              BuscadorInicio(onTap: alAbrirCatalogo),
               const SizedBox(height: 20),
 
               // Catálogo: libros disponibles para consulta presencial (sin precios)
@@ -58,10 +55,7 @@ class HomeScreen extends StatelessWidget {
                 icono: Icons.menu_book_rounded,
                 titulo: 'Catálogo',
                 subtitulo: 'Consultar libros disponibles en el local',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const CatalogoScreen()),
-                ),
+                onTap: alAbrirCatalogo,
               ),
               const SizedBox(height: 16),
 

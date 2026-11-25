@@ -21,10 +21,13 @@ class BuscadorInicio extends StatelessWidget {
           children: [
             const Icon(Icons.search, color: AppColors.leather),
             const SizedBox(width: 10),
-            Text(
-              'Buscar en el catálogo...',
-              style: Theme.of(context).textTheme.bodyMedium
-                  ?.copyWith(color: AppColors.leather.withValues(alpha: 0.55)),
+            Expanded(
+              child: Text(
+                'Buscar en el catálogo...',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.leather.withValues(alpha: 0.55),
+                ),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Necesario en la versión release para descargar tipografías y datos. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Avisos del club de lectura (Android 13 o superior pide confirmación). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="Librería Central"
         android:name="${applicationName}"
@@ -39,6 +41,11 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Permite abrir enlaces web (WhatsApp, mapa, Instagram). -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

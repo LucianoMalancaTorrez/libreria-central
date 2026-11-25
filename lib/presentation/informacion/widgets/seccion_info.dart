@@ -25,7 +25,12 @@ class SeccionInfo extends StatelessWidget {
               children: [
                 Icon(icono, color: AppColors.bottleGreen),
                 const SizedBox(width: 10),
-                Text(titulo, style: Theme.of(context).textTheme.titleMedium),
+                Expanded(
+                  child: Text(
+                    titulo,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 12),

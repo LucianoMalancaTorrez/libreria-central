@@ -73,42 +73,36 @@ class TarjetaEscuela extends StatelessWidget {
               const SizedBox(height: 12),
               const Divider(height: 1),
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Beneficio: ${escuela.descuentoPorcentaje}% de descuento',
-                          style: textTheme.labelLarge?.copyWith(
-                            color: AppColors.bottleGreenDark,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'En literatura, novelas y cuentos',
-                          style: textTheme.labelSmall?.copyWith(
-                            fontSize: 11,
-                            color: AppColors.leather.withValues(alpha: 0.8),
-                          ),
-                        ),
-                      ],
+                  Text(
+                    'Beneficio: ${escuela.descuentoPorcentaje}% de descuento',
+                    style: textTheme.labelLarge?.copyWith(
+                      color: AppColors.bottleGreenDark,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  OutlinedButton.icon(
-                    onPressed: onTap,
-                    icon: const Icon(Icons.badge_outlined, size: 16),
-                    label: const Text('Mostrá esto en caja'),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+                  Text(
+                    'En literatura, novelas y cuentos',
+                    style: textTheme.labelSmall?.copyWith(
+                      fontSize: 11,
+                      color: AppColors.leather.withValues(alpha: 0.8),
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 10),
+              OutlinedButton.icon(
+                onPressed: onTap,
+                icon: const Icon(Icons.badge_outlined, size: 16),
+                label: const Text('Mostrá esto en caja'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                ),
               ),
             ],
           ),

@@ -1,77 +1,58 @@
-/// Cumple el requisito: "consultar información del libro".
-///
-/// NOTA (pedido de la clienta): sin precio ni estado de stock — la app
-/// es de consulta, no de venta online.
+/// Detalle de un libro, sin precio ni stock: la app es de consulta.
 library;
 
 import 'package:flutter/material.dart';
-import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/domain/models/libro.dart';
+import 'package:libreria/presentation/catalogo/widgets/boton_favorito.dart';
 import 'package:libreria/presentation/catalogo/widgets/dato_libro.dart';
+import 'package:libreria/presentation/catalogo/widgets/hoja_consulta.dart';
+import 'package:libreria/presentation/catalogo/widgets/info_externa_libro.dart';
 
 class LibroDetalleScreen extends StatelessWidget {
-  final Libro libro;
   const LibroDetalleScreen({super.key, required this.libro});
+
+  final Libro libro;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: Text(libro.titulo)),
+      appBar: AppBar(
+        title: Text(libro.titulo),
+        actions: [BotonFavorito(libro: libro)],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => mostrarHojaConsulta(context, libro),
+        icon: const Icon(Icons.chat_bubble_outline),
+        label: const Text('Consultar'),
+      ),
       body: ResponsiveCenter(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 160,
-                  height: 220,
-                  decoration: BoxDecoration(
-                    color: AppColors.leather.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: AppColors.brass.withValues(alpha: 0.6),
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.menu_book_rounded,
-                    size: 64,
-                    color: AppColors.leather,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                libro.titulo,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 4),
-              Text(libro.autor, style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 96),
+          children: [
+            InfoExternaLibro(libro: libro),
+            const SizedBox(height: 20),
+            Text(libro.titulo, style: textTheme.headlineMedium),
+            const SizedBox(height: 4),
+            Text(libro.autor, style: textTheme.titleMedium),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                DatoLibro(label: 'Género', valor: libro.genero),
+                if (libro.editorial.isNotEmpty)
                   DatoLibro(label: 'Editorial', valor: libro.editorial),
-                  DatoLibro(label: 'Género', valor: libro.genero),
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Divider(),
+              ],
+            ),
+            if (libro.descripcion.isNotEmpty) ...[
+              const Divider(height: 40),
+              Text('Descripción', style: textTheme.titleMedium),
               const SizedBox(height: 8),
-              Text(
-                'Descripción',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                libro.descripcion,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              Text(libro.descripcion, style: textTheme.bodyLarge),
             ],
-          ),
+          ],
         ),
       ),
     );

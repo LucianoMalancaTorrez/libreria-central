@@ -94,7 +94,12 @@ class TarjetaCredencial extends StatelessWidget {
                       color: AppColors.leather,
                     ),
                     const SizedBox(width: 4),
-                    Text(escuela.localidad, style: textTheme.bodyLarge),
+                    Flexible(
+                      child: Text(
+                        escuela.localidad,
+                        style: textTheme.bodyLarge,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -216,10 +221,12 @@ class TarjetaCredencial extends StatelessWidget {
                       color: AppColors.leather,
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      'Vigente durante el ciclo lectivo: ${LibreriaConfig.vigenciaConvenio}',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: AppColors.leather.withValues(alpha: 0.9),
+                    Flexible(
+                      child: Text(
+                        'Vigente durante el ciclo lectivo: ${LibreriaConfig.vigenciaConvenio}',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: AppColors.leather.withValues(alpha: 0.9),
+                        ),
                       ),
                     ),
                   ],

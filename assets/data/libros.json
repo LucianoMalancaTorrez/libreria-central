@@ -1,0 +1,578 @@
+[
+ {
+  "titulo": "Cien Años de Soledad",
+  "autor": "Gabriel García Márquez",
+  "genero": "Novela",
+  "editorial": "Sudamericana",
+  "descripcion": "La saga de la familia Buendía a lo largo de generaciones en el pueblo imaginario de Macondo.",
+  "id": "1"
+ },
+ {
+  "titulo": "Rayuela",
+  "autor": "Julio Cortázar",
+  "genero": "Novela",
+  "editorial": "Sudamericana",
+  "descripcion": "Novela experimental que puede leerse en distintos órdenes, siguiendo la historia de Horacio Oliveira.",
+  "id": "2"
+ },
+ {
+  "titulo": "Ficciones",
+  "autor": "Jorge Luis Borges",
+  "genero": "Cuento",
+  "editorial": "Emecé",
+  "descripcion": "Colección de relatos breves que exploran laberintos, espejos e infinitos.",
+  "id": "3"
+ },
+ {
+  "titulo": "La Casa de los Espíritus",
+  "autor": "Isabel Allende",
+  "genero": "Novela",
+  "editorial": "Plaza & Janés",
+  "descripcion": "La historia de la familia Trueba, narrada a través de varias generaciones de mujeres.",
+  "id": "4"
+ },
+ {
+  "titulo": "El Aleph",
+  "autor": "Jorge Luis Borges",
+  "genero": "Cuento",
+  "editorial": "Emecé",
+  "descripcion": "Otro de los grandes libros de cuentos de Borges, con el relato que le da título al volumen.",
+  "id": "5"
+ },
+ {
+  "titulo": "Pedro Páramo",
+  "autor": "Juan Rulfo",
+  "genero": "Novela",
+  "editorial": "Fondo de Cultura Económica",
+  "descripcion": "Juan Preciado viaja a Comala en busca de su padre y encuentra un pueblo habitado por fantasmas.",
+  "id": "6"
+ },
+ {
+  "titulo": "El túnel",
+  "autor": "Ernesto Sabato",
+  "genero": "Novela",
+  "id": "7"
+ },
+ {
+  "titulo": "Sobre héroes y tumbas",
+  "autor": "Ernesto Sabato",
+  "genero": "Novela",
+  "id": "8"
+ },
+ {
+  "titulo": "El amor en los tiempos del cólera",
+  "autor": "Gabriel García Márquez",
+  "genero": "Novela",
+  "id": "9"
+ },
+ {
+  "titulo": "Crónica de una muerte anunciada",
+  "autor": "Gabriel García Márquez",
+  "genero": "Novela",
+  "id": "10"
+ },
+ {
+  "titulo": "La ciudad y los perros",
+  "autor": "Mario Vargas Llosa",
+  "genero": "Novela",
+  "id": "11"
+ },
+ {
+  "titulo": "Conversación en La Catedral",
+  "autor": "Mario Vargas Llosa",
+  "genero": "Novela",
+  "id": "12"
+ },
+ {
+  "titulo": "La invención de Morel",
+  "autor": "Adolfo Bioy Casares",
+  "genero": "Novela",
+  "id": "13"
+ },
+ {
+  "titulo": "Don Segundo Sombra",
+  "autor": "Ricardo Güiraldes",
+  "genero": "Novela",
+  "id": "14"
+ },
+ {
+  "titulo": "El juguete rabioso",
+  "autor": "Roberto Arlt",
+  "genero": "Novela",
+  "id": "15"
+ },
+ {
+  "titulo": "Los siete locos",
+  "autor": "Roberto Arlt",
+  "genero": "Novela",
+  "id": "16"
+ },
+ {
+  "titulo": "Boquitas pintadas",
+  "autor": "Manuel Puig",
+  "genero": "Novela",
+  "id": "17"
+ },
+ {
+  "titulo": "El beso de la mujer araña",
+  "autor": "Manuel Puig",
+  "genero": "Novela",
+  "id": "18"
+ },
+ {
+  "titulo": "Zama",
+  "autor": "Antonio Di Benedetto",
+  "genero": "Novela",
+  "id": "19"
+ },
+ {
+  "titulo": "La tregua",
+  "autor": "Mario Benedetti",
+  "genero": "Novela",
+  "id": "20"
+ },
+ {
+  "titulo": "Como agua para chocolate",
+  "autor": "Laura Esquivel",
+  "genero": "Novela",
+  "id": "21"
+ },
+ {
+  "titulo": "Don Quijote de la Mancha",
+  "autor": "Miguel de Cervantes",
+  "genero": "Novela",
+  "id": "22"
+ },
+ {
+  "titulo": "Orgullo y prejuicio",
+  "autor": "Jane Austen",
+  "genero": "Novela",
+  "id": "23"
+ },
+ {
+  "titulo": "Jane Eyre",
+  "autor": "Charlotte Brontë",
+  "genero": "Novela",
+  "id": "24"
+ },
+ {
+  "titulo": "Cumbres borrascosas",
+  "autor": "Emily Brontë",
+  "genero": "Novela",
+  "id": "25"
+ },
+ {
+  "titulo": "Crimen y castigo",
+  "autor": "Fiódor Dostoyevski",
+  "genero": "Novela",
+  "id": "26"
+ },
+ {
+  "titulo": "Anna Karénina",
+  "autor": "León Tolstói",
+  "genero": "Novela",
+  "id": "27"
+ },
+ {
+  "titulo": "Madame Bovary",
+  "autor": "Gustave Flaubert",
+  "genero": "Novela",
+  "id": "28"
+ },
+ {
+  "titulo": "Los miserables",
+  "autor": "Victor Hugo",
+  "genero": "Novela",
+  "id": "29"
+ },
+ {
+  "titulo": "El gran Gatsby",
+  "autor": "F. Scott Fitzgerald",
+  "genero": "Novela",
+  "id": "30"
+ },
+ {
+  "titulo": "1984",
+  "autor": "George Orwell",
+  "genero": "Novela",
+  "id": "31"
+ },
+ {
+  "titulo": "Rebelión en la granja",
+  "autor": "George Orwell",
+  "genero": "Novela",
+  "id": "32"
+ },
+ {
+  "titulo": "Fahrenheit 451",
+  "autor": "Ray Bradbury",
+  "genero": "Novela",
+  "id": "33"
+ },
+ {
+  "titulo": "La peste",
+  "autor": "Albert Camus",
+  "genero": "Novela",
+  "id": "34"
+ },
+ {
+  "titulo": "El extranjero",
+  "autor": "Albert Camus",
+  "genero": "Novela",
+  "id": "35"
+ },
+ {
+  "titulo": "El nombre de la rosa",
+  "autor": "Umberto Eco",
+  "genero": "Novela",
+  "id": "36"
+ },
+ {
+  "titulo": "Bestiario",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento",
+  "id": "37"
+ },
+ {
+  "titulo": "Final del juego",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento",
+  "id": "38"
+ },
+ {
+  "titulo": "Las armas secretas",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento",
+  "id": "39"
+ },
+ {
+  "titulo": "Historias de cronopios y de famas",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento",
+  "id": "40"
+ },
+ {
+  "titulo": "Cuentos de la selva",
+  "autor": "Horacio Quiroga",
+  "genero": "Cuento",
+  "id": "41"
+ },
+ {
+  "titulo": "Cuentos de amor de locura y de muerte",
+  "autor": "Horacio Quiroga",
+  "genero": "Cuento",
+  "id": "42"
+ },
+ {
+  "titulo": "El llano en llamas",
+  "autor": "Juan Rulfo",
+  "genero": "Cuento",
+  "id": "43"
+ },
+ {
+  "titulo": "Doce cuentos peregrinos",
+  "autor": "Gabriel García Márquez",
+  "genero": "Cuento",
+  "id": "44"
+ },
+ {
+  "titulo": "Misteriosa Buenos Aires",
+  "autor": "Manuel Mujica Lainez",
+  "genero": "Cuento",
+  "id": "45"
+ },
+ {
+  "titulo": "Narraciones extraordinarias",
+  "autor": "Edgar Allan Poe",
+  "genero": "Cuento",
+  "id": "46"
+ },
+ {
+  "titulo": "La metamorfosis",
+  "autor": "Franz Kafka",
+  "genero": "Cuento",
+  "id": "47"
+ },
+ {
+  "titulo": "Dublineses",
+  "autor": "James Joyce",
+  "genero": "Cuento",
+  "id": "48"
+ },
+ {
+  "titulo": "Los que aman, odian",
+  "autor": "Silvina Ocampo y Adolfo Bioy Casares",
+  "genero": "Cuento",
+  "id": "49"
+ },
+ {
+  "titulo": "La furia",
+  "autor": "Silvina Ocampo",
+  "genero": "Cuento",
+  "id": "50"
+ },
+ {
+  "titulo": "El principito",
+  "autor": "Antoine de Saint-Exupéry",
+  "genero": "Infantil",
+  "id": "51"
+ },
+ {
+  "titulo": "Dailan Kifki",
+  "autor": "María Elena Walsh",
+  "genero": "Infantil",
+  "id": "52"
+ },
+ {
+  "titulo": "Tutú Marambá",
+  "autor": "María Elena Walsh",
+  "genero": "Infantil",
+  "id": "53"
+ },
+ {
+  "titulo": "El reino del revés",
+  "autor": "María Elena Walsh",
+  "genero": "Infantil",
+  "id": "54"
+ },
+ {
+  "titulo": "Zoo loco",
+  "autor": "María Elena Walsh",
+  "genero": "Infantil",
+  "id": "55"
+ },
+ {
+  "titulo": "Un elefante ocupa mucho espacio",
+  "autor": "Elsa Bornemann",
+  "genero": "Infantil",
+  "id": "56"
+ },
+ {
+  "titulo": "¡Socorro!",
+  "autor": "Elsa Bornemann",
+  "genero": "Infantil",
+  "id": "57"
+ },
+ {
+  "titulo": "Natacha",
+  "autor": "Luis María Pescetti",
+  "genero": "Infantil",
+  "id": "58"
+ },
+ {
+  "titulo": "Matilda",
+  "autor": "Roald Dahl",
+  "genero": "Infantil",
+  "id": "59"
+ },
+ {
+  "titulo": "Charlie y la fábrica de chocolate",
+  "autor": "Roald Dahl",
+  "genero": "Infantil",
+  "id": "60"
+ },
+ {
+  "titulo": "Las brujas",
+  "autor": "Roald Dahl",
+  "genero": "Infantil",
+  "id": "61"
+ },
+ {
+  "titulo": "Alicia en el país de las maravillas",
+  "autor": "Lewis Carroll",
+  "genero": "Infantil",
+  "id": "62"
+ },
+ {
+  "titulo": "Peter Pan",
+  "autor": "J. M. Barrie",
+  "genero": "Infantil",
+  "id": "63"
+ },
+ {
+  "titulo": "Pinocho",
+  "autor": "Carlo Collodi",
+  "genero": "Infantil",
+  "id": "64"
+ },
+ {
+  "titulo": "Corazón",
+  "autor": "Edmondo De Amicis",
+  "genero": "Infantil",
+  "id": "65"
+ },
+ {
+  "titulo": "Mi planta de naranja lima",
+  "autor": "José Mauro de Vasconcelos",
+  "genero": "Infantil",
+  "id": "66"
+ },
+ {
+  "titulo": "La isla del tesoro",
+  "autor": "Robert Louis Stevenson",
+  "genero": "Aventura",
+  "id": "67"
+ },
+ {
+  "titulo": "Veinte mil leguas de viaje submarino",
+  "autor": "Julio Verne",
+  "genero": "Aventura",
+  "id": "68"
+ },
+ {
+  "titulo": "La vuelta al mundo en ochenta días",
+  "autor": "Julio Verne",
+  "genero": "Aventura",
+  "id": "69"
+ },
+ {
+  "titulo": "Viaje al centro de la Tierra",
+  "autor": "Julio Verne",
+  "genero": "Aventura",
+  "id": "70"
+ },
+ {
+  "titulo": "Las aventuras de Tom Sawyer",
+  "autor": "Mark Twain",
+  "genero": "Aventura",
+  "id": "71"
+ },
+ {
+  "titulo": "Robinson Crusoe",
+  "autor": "Daniel Defoe",
+  "genero": "Aventura",
+  "id": "72"
+ },
+ {
+  "titulo": "Sandokán",
+  "autor": "Emilio Salgari",
+  "genero": "Aventura",
+  "id": "73"
+ },
+ {
+  "titulo": "Los tres mosqueteros",
+  "autor": "Alexandre Dumas",
+  "genero": "Aventura",
+  "id": "74"
+ },
+ {
+  "titulo": "El conde de Montecristo",
+  "autor": "Alexandre Dumas",
+  "genero": "Aventura",
+  "id": "75"
+ },
+ {
+  "titulo": "Colmillo Blanco",
+  "autor": "Jack London",
+  "genero": "Aventura",
+  "id": "76"
+ },
+ {
+  "titulo": "El Hobbit",
+  "autor": "J. R. R. Tolkien",
+  "genero": "Aventura",
+  "id": "77"
+ },
+ {
+  "titulo": "Moby Dick",
+  "autor": "Herman Melville",
+  "genero": "Aventura",
+  "id": "78"
+ },
+ {
+  "titulo": "Martín Fierro",
+  "autor": "José Hernández",
+  "genero": "Poesía",
+  "id": "79"
+ },
+ {
+  "titulo": "Veinte poemas de amor y una canción desesperada",
+  "autor": "Pablo Neruda",
+  "genero": "Poesía",
+  "id": "80"
+ },
+ {
+  "titulo": "Árbol de Diana",
+  "autor": "Alejandra Pizarnik",
+  "genero": "Poesía",
+  "id": "81"
+ },
+ {
+  "titulo": "Inventario",
+  "autor": "Mario Benedetti",
+  "genero": "Poesía",
+  "id": "82"
+ },
+ {
+  "titulo": "Rimas y leyendas",
+  "autor": "Gustavo Adolfo Bécquer",
+  "genero": "Poesía",
+  "id": "83"
+ },
+ {
+  "titulo": "Romancero gitano",
+  "autor": "Federico García Lorca",
+  "genero": "Poesía",
+  "id": "84"
+ },
+ {
+  "titulo": "Desolación",
+  "autor": "Gabriela Mistral",
+  "genero": "Poesía",
+  "id": "85"
+ },
+ {
+  "titulo": "Veinte poemas para ser leídos en el tranvía",
+  "autor": "Oliverio Girondo",
+  "genero": "Poesía",
+  "id": "86"
+ },
+ {
+  "titulo": "Operación masacre",
+  "autor": "Rodolfo Walsh",
+  "genero": "Policial",
+  "id": "87"
+ },
+ {
+  "titulo": "Estudio en escarlata",
+  "autor": "Arthur Conan Doyle",
+  "genero": "Policial",
+  "id": "88"
+ },
+ {
+  "titulo": "El sabueso de los Baskerville",
+  "autor": "Arthur Conan Doyle",
+  "genero": "Policial",
+  "id": "89"
+ },
+ {
+  "titulo": "Asesinato en el Orient Express",
+  "autor": "Agatha Christie",
+  "genero": "Policial",
+  "id": "90"
+ },
+ {
+  "titulo": "Diez negritos",
+  "autor": "Agatha Christie",
+  "genero": "Policial",
+  "id": "91"
+ },
+ {
+  "titulo": "Crímenes imperceptibles",
+  "autor": "Guillermo Martínez",
+  "genero": "Policial",
+  "id": "92"
+ },
+ {
+  "titulo": "Plata quemada",
+  "autor": "Ricardo Piglia",
+  "genero": "Policial",
+  "id": "93"
+ },
+ {
+  "titulo": "Las viudas de los jueves",
+  "autor": "Claudia Piñeiro",
+  "genero": "Policial",
+  "id": "94"
+ }
+]

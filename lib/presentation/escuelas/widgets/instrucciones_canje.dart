@@ -23,10 +23,12 @@ class InstruccionesCanje extends StatelessWidget {
                   color: AppColors.bottleGreen,
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  '¿Cómo usar este descuento con Amelia?',
-                  style: Theme.of(context).textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    '¿Cómo usar este descuento con Amelia?',
+                    style: Theme.of(context).textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),

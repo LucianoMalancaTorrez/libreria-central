@@ -1,44 +1,58 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:libreria/core/services/avisos.dart';
+import 'package:libreria/data/repositories/asset_libro_repository.dart';
 import 'package:libreria/data/repositories/in_memory_escuela_repository.dart';
 import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
-import 'package:libreria/data/repositories/in_memory_libro_repository.dart';
-import 'package:libreria/domain/models/libro.dart';
-import 'package:libreria/domain/repositories/libro_repository.dart';
+import 'package:libreria/domain/logic/club_lectura.dart';
+import 'package:libreria/domain/logic/horario_comercial.dart';
+import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/catalogo/viewmodels/catalogo_view_model.dart';
 import 'package:libreria/presentation/escuelas/viewmodels/escuelas_view_model.dart';
+import 'package:libreria/presentation/favoritos/viewmodels/favoritos_view_model.dart';
 import 'package:libreria/presentation/informacion/viewmodels/informacion_view_model.dart';
 
-/// Repositorio falso que simula un corte de conexión.
-class _RepositorioSinConexion implements LibroRepository {
-  @override
-  Future<List<Libro>> getLibros() async => throw Exception('Sin conexión');
-}
+import 'fakes.dart';
 
 void main() {
   group('CatalogoViewModel', () {
     test('pasa por cargando y termina con los libros', () async {
-      final viewModel = CatalogoViewModel(InMemoryLibroRepository());
+      final viewModel = CatalogoViewModel(LibrosFalsos());
       final estados = <bool>[];
       viewModel.addListener(() => estados.add(viewModel.cargando));
 
       await viewModel.cargar();
 
       expect(estados, [true, false]);
-      expect(viewModel.libros, isNotEmpty);
+      expect(viewModel.libros, hasLength(3));
       expect(viewModel.error, isNull);
     });
 
-    test('busca sin distinguir mayúsculas ni tildes', () async {
-      final viewModel = CatalogoViewModel(InMemoryLibroRepository());
+    test('busca sin tildes y filtra por género', () async {
+      final viewModel = CatalogoViewModel(LibrosFalsos());
       await viewModel.cargar();
 
       viewModel.buscar('garcia marquez');
-
       expect(viewModel.libros.single.titulo, 'Cien Años de Soledad');
+
+      viewModel.buscar('');
+      viewModel.filtrarGenero('Cuento');
+      expect(viewModel.libros.single.titulo, 'Ficciones');
+    });
+
+    test('arma la lista con un encabezado por género', () async {
+      final viewModel = CatalogoViewModel(LibrosFalsos());
+      await viewModel.cargar();
+
+      expect(viewModel.filas.whereType<FilaEncabezado>().map((f) => f.genero), [
+        'Cuento',
+        'Novela',
+      ]);
     });
 
     test('si falla, guarda el error y deja de cargar', () async {
-      final viewModel = CatalogoViewModel(_RepositorioSinConexion());
+      final viewModel = CatalogoViewModel(LibrosFalsos(falla: true));
 
       await viewModel.cargar();
 
@@ -47,13 +61,101 @@ void main() {
     });
 
     test('no notifica si la pantalla ya se cerró', () async {
-      final viewModel = CatalogoViewModel(InMemoryLibroRepository());
+      final viewModel = CatalogoViewModel(LibrosFalsos());
       final carga = viewModel.cargar();
 
       viewModel.dispose();
 
       await expectLater(carga, completes);
     });
+  });
+
+  group('FavoritosViewModel', () {
+    test('guarda, ordena y se recupera al volver a abrir', () async {
+      final preferencias = PreferenciasEnMemoria();
+      final favoritos = FavoritosViewModel(preferencias)
+        ..alternar('1')
+        ..alternar('2')
+        ..mover(1, 0);
+
+      final otraSesion = FavoritosViewModel(preferencias);
+      await otraSesion.cargar();
+
+      expect(favoritos.ids, ['2', '1']);
+      expect(otraSesion.ids, ['2', '1']);
+    });
+
+    test('quitar permite deshacer en la misma posición', () {
+      final favoritos = FavoritosViewModel(PreferenciasEnMemoria())
+        ..alternar('1')
+        ..alternar('2')
+        ..alternar('3');
+
+      final posicion = favoritos.quitar('2');
+      favoritos.insertar(posicion, '2');
+
+      expect(favoritos.ids, ['1', '2', '3']);
+    });
+  });
+
+  group('Avisos del club', () {
+    test('sin permiso no se activan', () async {
+      final avisos = AvisosFalsos(ResultadoPermiso.denegado);
+      final ajustes = AjustesViewModel(PreferenciasEnMemoria(), avisos);
+
+      await ajustes.cambiarAvisosClub(true);
+
+      expect(ajustes.avisosClub, isFalse);
+      expect(avisos.revision, isNull);
+    });
+
+    test('con permiso programa la revisión', () async {
+      final avisos = AvisosFalsos();
+      final ajustes = AjustesViewModel(PreferenciasEnMemoria(), avisos);
+
+      await ajustes.cambiarAvisosClub(true);
+
+      expect(ajustes.avisosClub, isTrue);
+      expect(avisos.revision, isTrue);
+    });
+  });
+
+  group('Horario del local', () {
+    // 24/11/2026 es martes (temporada de verano).
+    test('abierto a la mañana', () {
+      final estado = estadoDelLocal(DateTime(2026, 11, 24, 10));
+      expect(estado.abierto, isTrue);
+      expect(estado.detalle, 'Cierra a las 13:00');
+    });
+
+    test('la tarde de verano abre 17:30 y la de invierno 16:30', () {
+      expect(
+        estadoDelLocal(DateTime(2026, 11, 24, 17)).detalle,
+        'Abre hoy a las 17:30',
+      );
+      expect(estadoDelLocal(DateTime(2026, 6, 23, 17)).abierto, isTrue);
+    });
+
+    test('el sábado a la noche avisa que abre el lunes', () {
+      expect(
+        estadoDelLocal(DateTime(2026, 11, 28, 22)).detalle,
+        'Abre el lunes a las 9:00',
+      );
+    });
+  });
+
+  test('El club de lectura cae siempre en jueves', () {
+    final fechas = proximosEncuentros(DateTime(2026, 11, 24));
+    expect(fechas.first, DateTime(2026, 11, 26));
+    expect(fechas.every(esDiaDeClub), isTrue);
+  });
+
+  test('El catálogo de ejemplo tiene unos 100 libros con id único', () {
+    final libros = parsearLibros(
+      File('assets/data/libros.json').readAsStringSync(),
+    );
+    expect(libros.length, greaterThanOrEqualTo(90));
+    expect({for (final l in libros) l.id}.length, libros.length);
   });
 
   test('EscuelasViewModel muestra solo las dos escuelas confirmadas', () async {
