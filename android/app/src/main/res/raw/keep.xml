@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- El ícono de las notificaciones se pide por nombre: sin esta regla, la
+     compilación release puede descartarlo y el aviso falla sin mostrar error. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@mipmap/ic_launcher,@drawable/*" />

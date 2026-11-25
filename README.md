@@ -95,4 +95,5 @@ Firestore porque Firebase Storage requiere un plan con tarjeta.
 ## Más documentación
 
 - [Rúbrica: dónde está cada tema](docs/RUBRICA.md)
+- [Presupuesto para Amelia (borrador)](docs/presupuesto/Presupuesto-Libreria-Central.pdf)
 - [Firebase y guía para Amelia](docs/FIREBASE.md)
