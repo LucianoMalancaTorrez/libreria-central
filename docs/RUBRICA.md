@@ -44,6 +44,7 @@ capturan con `InkWell`, que lo usa por dentro) y BLoC (no está en el material).
 | Prueba | Android | iPhone |
 |---|---|---|
 | Instalar la app (25/11) | Anda bien | Anda bien |
+| APK de la versión final (25/11) | Funciona bien | no aplica |
 | Abrir sin conexión (después de abrirla una vez) | | |
 | Activar y probar el aviso del club | | no aplica |
 | Aviso con la app cerrada un jueves | | no aplica |
