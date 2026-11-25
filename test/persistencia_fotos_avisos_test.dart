@@ -8,6 +8,7 @@ import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/data/local/libros_dao.dart';
 import 'package:libreria/data/repositories/libro_repository_con_copia_local.dart';
+import 'package:libreria/data/repositories/libro_repository_con_respaldo.dart';
 import 'package:libreria/domain/logic/recordatorio.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/domain/services/fotos.dart';
@@ -62,6 +63,40 @@ void main() {
       final List<Libro> primero = await repositorio.observarLibros().first;
 
       expect(primero, hasLength(3));
+    });
+  });
+
+  group('El catálogo de ejemplo no pisa la copia', () {
+    const real = Libro(id: 'r', titulo: 'Real', autor: 'A', genero: 'Novela');
+
+    for (final (caso, nube) in [
+      ('la nube falla', LibrosFalsos(falla: true)),
+      ('la nube responde vacío', LibrosFijos(const [])),
+    ]) {
+      test('cuando $caso', () async {
+        final dao = await daoEnMemoria();
+        await dao.reemplazarTodos([real]);
+        final repositorio = LibroRepositoryConRespaldo(
+          LibroRepositoryConCopiaLocal(nube, dao),
+          LibrosFalsos(),
+        );
+
+        final vistas = await repositorio.observarLibros().toList();
+
+        expect(vistas.single.single.titulo, 'Real');
+        expect((await dao.todos()).single.titulo, 'Real');
+      });
+    }
+
+    test('sin copia se muestra el ejemplo y no se guarda', () async {
+      final dao = await daoEnMemoria();
+      final repositorio = LibroRepositoryConRespaldo(
+        LibroRepositoryConCopiaLocal(LibrosFalsos(falla: true), dao),
+        LibrosFalsos(),
+      );
+
+      expect(await repositorio.observarLibros().first, hasLength(3));
+      expect(await dao.todos(), isEmpty);
     });
   });
 

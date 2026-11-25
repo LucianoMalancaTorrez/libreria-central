@@ -90,13 +90,25 @@ void main() {
       final favoritos = FavoritosViewModel(preferencias)
         ..alternar('1')
         ..alternar('2')
-        ..mover(1, 0);
+        ..reordenar(['1', '2'], 1, 0);
 
       final otraSesion = FavoritosViewModel(preferencias);
       await otraSesion.cargar();
 
       expect(favoritos.ids, ['2', '1']);
       expect(otraSesion.ids, ['2', '1']);
+    });
+
+    test('reordenar ignora los favoritos que ya no existen', () {
+      final favoritos = FavoritosViewModel(PreferenciasEnMemoria())
+        ..alternar('borrado')
+        ..alternar('a')
+        ..alternar('b');
+
+      // En pantalla solo se ven "a" y "b"; se sube "b".
+      favoritos.reordenar(['a', 'b'], 1, 0);
+
+      expect(favoritos.ids, ['borrado', 'b', 'a']);
     });
 
     test('quitar permite deshacer en la misma posición', () {

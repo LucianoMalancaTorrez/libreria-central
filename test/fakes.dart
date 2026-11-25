@@ -139,3 +139,11 @@ class BorradorEnMemoria implements BorradorFoto {
   @override
   Future<void> borrar(String clave) async => datos.remove(clave);
 }
+
+class LibrosFijos implements LibroRepository {
+  LibrosFijos(this.libros);
+  final List<Libro> libros;
+
+  @override
+  Stream<List<Libro>> observarLibros() => Stream.value(libros);
+}

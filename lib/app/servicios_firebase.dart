@@ -8,23 +8,27 @@ import 'package:libreria/data/repositories/asset_libro_repository.dart';
 import 'package:libreria/data/repositories/firestore_horarios_repository.dart';
 import 'package:libreria/data/repositories/firestore_libro_repository.dart';
 import 'package:libreria/data/repositories/libro_repository_con_copia_local.dart';
+import 'package:libreria/data/repositories/libro_repository_con_respaldo.dart';
 import 'package:libreria/data/services/firebase_auth_service.dart';
 
 /// Arma los servicios conectados a la nube.
 Servicios serviciosFirebase(FirebaseFirestore base, FirebaseAuth auth) {
   const politicas = Politicas();
   final respaldo = AssetLibroRepository();
-  final libros = FirestoreLibroRepository(base, respaldo: respaldo);
+  final nube = FirestoreLibroRepository(base);
   final horarios = FirestoreHorariosRepository(base);
   return Servicios(
-    libros: politicas.usarBaseLocal
-        ? LibroRepositoryConCopiaLocal(libros, LibrosDao.enDispositivo())
-        : libros,
+    libros: LibroRepositoryConRespaldo(
+      politicas.usarBaseLocal
+          ? LibroRepositoryConCopiaLocal(nube, LibrosDao.enDispositivo())
+          : nube,
+      respaldo,
+    ),
     horarios: horarios,
     push: politicas.recibirPush ? PushFirebase() : const SinPush(),
     administracion: Administracion(
       auth: FirebaseAuthService(auth, base),
-      catalogo: libros,
+      catalogo: nube,
       horarios: horarios,
       catalogoDeEjemplo: respaldo,
     ),

@@ -44,9 +44,17 @@ class FavoritosViewModel extends ChangeNotifier {
     _guardar();
   }
 
-  /// [hasta] es la posición final, ya descontado el elemento movido.
-  void mover(int desde, int hasta) {
-    _ids.insert(hasta, _ids.removeAt(desde));
+  /// [visibles] son los ids que se ven en pantalla y [hasta] la posición
+  /// final entre ellos. Los que ya no están en el catálogo no se mueven.
+  void reordenar(List<String> visibles, int desde, int hasta) {
+    if (desde < 0 || desde >= visibles.length) return;
+    final orden = List.of(visibles);
+    orden.insert(hasta, orden.removeAt(desde));
+    final enPantalla = visibles.toSet();
+    var siguiente = 0;
+    for (var i = 0; i < _ids.length; i++) {
+      if (enPantalla.contains(_ids[i])) _ids[i] = orden[siguiente++];
+    }
     _guardar();
   }
 

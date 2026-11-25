@@ -1,38 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
 
-/// Catálogo en Firestore. Mientras la nube esté vacía o no responda, muestra
-/// el catálogo de ejemplo incluido en la app.
+/// Catálogo en Firestore. Solo entrega lo que viene de la nube: si falla,
+/// avisa con el error para que otra capa decida qué mostrar.
 class FirestoreLibroRepository
     implements LibroRepository, CatalogoAdminRepository {
-  FirestoreLibroRepository(this._base, {required this.respaldo});
+  FirestoreLibroRepository(this._base);
 
   final FirebaseFirestore _base;
-  final LibroRepository respaldo;
 
   CollectionReference<Map<String, dynamic>> get _libros =>
       _base.collection('libros');
 
   @override
-  Stream<List<Libro>> observarLibros() async* {
-    try {
-      await for (final consulta in _libros.snapshots()) {
-        if (consulta.docs.isEmpty) {
-          yield await respaldo.observarLibros().first;
-        } else {
-          yield [
-            for (final doc in consulta.docs)
-              Libro.fromJson(doc.data(), id: doc.id),
-          ]..sort((a, b) => a.titulo.compareTo(b.titulo));
-        }
-      }
-    } catch (e) {
-      debugPrint('Catálogo en la nube no disponible: $e');
-      yield await respaldo.observarLibros().first;
-    }
-  }
+  Stream<List<Libro>> observarLibros() => observarPublicados();
 
   @override
   Stream<List<Libro>> observarPublicados() => _libros.snapshots().map(

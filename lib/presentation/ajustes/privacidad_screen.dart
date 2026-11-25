@@ -39,7 +39,7 @@ class PrivacidadScreen extends StatelessWidget {
       'Internet: para tapas y tipografías.\n'
           'Cámara y fotos: solo en Administración, cuando se elige la tapa '
           'de un libro.\n'
-          'Notificaciones: solo siactivás los avisos del club de lectura. '
+          'Notificaciones: solo si activás los avisos del club de lectura. '
           'Podés desactivarlos en Club de lectura > Avisos.',
     ),
   ];

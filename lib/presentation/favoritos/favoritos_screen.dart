@@ -124,16 +124,19 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
       );
     }
     final favoritos = Dependencias.of(context).favoritos;
+    final visibles = [for (final libro in libros) libro.id];
     return Column(
       children: [
         ZonaDestacar(
-          alSoltar: (id) => favoritos.mover(favoritos.ids.indexOf(id), 0),
+          alSoltar: (id) =>
+              favoritos.reordenar(visibles, visibles.indexOf(id), 0),
         ),
         Expanded(
           child: ReorderableListView.builder(
             padding: const EdgeInsets.only(bottom: 96),
             itemCount: libros.length,
-            onReorderItem: favoritos.mover,
+            onReorderItem: (desde, hasta) =>
+                favoritos.reordenar(visibles, desde, hasta),
             itemBuilder: (context, i) => ItemFavorito(
               key: ValueKey(libros[i].id),
               libro: libros[i],

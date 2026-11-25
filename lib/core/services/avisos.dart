@@ -132,6 +132,9 @@ class ServicioAvisosDispositivo implements ServicioAvisos {
     await gestor.initialize(tareasEnSegundoPlano);
     if (!activa) {
       await gestor.cancelByUniqueName(_tareaClub);
+      await gestor.cancelByUniqueName('$_tareaClub-inicial');
+      await _iniciar();
+      await _plugin.cancel(id: _idRecordatorio);
       return;
     }
     // Una revisión ahora, cuando haya red, y otras periódicas.
