@@ -30,9 +30,9 @@ def buscar_libros(texto: str, limite: int = 10) -> list[dict]:
     """Busca por título, autor o género, sin distinguir tildes ni mayúsculas."""
     buscado = _normalizar(texto)
     hallados = [
-        {k: libro[k] for k in OBLIGATORIOS}
+        {k: libro.get(k, "") for k in OBLIGATORIOS}
         for libro in _libros()
-        if any(buscado in _normalizar(libro[k]) for k in ("titulo", "autor", "genero"))
+        if any(buscado in _normalizar(str(libro.get(k, ""))) for k in ("titulo", "autor", "genero"))
     ]
     return hallados[: max(0, limite)]
 
@@ -49,17 +49,20 @@ async def validar_catalogo(ctx: Context) -> dict:
         if faltan:
             problemas.append(f"{libro.get('id', '?')}: falta {', '.join(faltan)}")
         if "precio" in libro:
-            problemas.append(f"{libro['id']}: tiene precio y la clienta no quiere precios")
+            problemas.append(f"{libro.get('id', '?')}: tiene precio y la clienta no quiere precios")
     for campo, valores in (
         ("id", [x.get("id") for x in libros]),
-        ("título y autor", [(_normalizar(x["titulo"]), _normalizar(x["autor"])) for x in libros]),
+        ("título y autor", [
+            (_normalizar(str(x.get("titulo", ""))), _normalizar(str(x.get("autor", ""))))
+            for x in libros
+        ]),
     ):
         for valor, veces in Counter(valores).items():
             if veces > 1:
                 problemas.append(f"{campo} repetido: {valor}")
     return {
         "total": len(libros),
-        "por_genero": dict(Counter(x["genero"] for x in libros)),
+        "por_genero": dict(Counter(x.get("genero", "?") for x in libros)),
         "problemas": problemas,
     }
 
