@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Uso de Claude Code - Librería Central</title>
+<style>
+@page { size: A4; margin: 16mm; }
+body { font-family: Calibri, Arial, sans-serif; color: #222; font-size: 11pt; line-height: 1.4; }
+h1 { font-size: 18pt; margin: 0; color: #3B2A20; }
+h2 { font-size: 13pt; color: #0B6623; margin: 5mm 0 2mm; break-after: avoid; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 2mm; }
+th, td { border: 1px solid #B08D57; padding: 1.4mm 2mm; text-align: left; vertical-align: top; }
+th { background: #EDE3CE; }
+tr { break-inside: avoid; }
+code { font-size: 10pt; }
+</style></head><body>
+<h1>Uso de Claude Code en el proyecto Librería Central</h1>
+<p>Programación de Aplicaciones para Celulares · 25 de noviembre de 2026<br>
+Repositorio: LucianoMalancaTorrez/libreria-central</p>
+<p><strong>Aclaración:</strong> la app se desarrolló conversando con Claude Code. Las skills,
+subagentes, hook, MCP y <code>CLAUDE.md</code> se incorporaron <strong>en la revisión final</strong>.</p>
+
+<h2>1. Durante el desarrollo</h2>
+<table><tr><th>Recurso</th><th>Para qué</th></tr>
+<tr><td>Claude Code en la app de escritorio</td><td>Escribir, probar y compilar</td></tr>
+<tr><td>Planes con aprobación y lista de tareas</td><td>Acordar cada etapa antes de cambiar el código</td></tr>
+<tr><td>Navegador integrado (herramientas MCP de la app)</td><td>Probar la web publicada y leer el material del aula</td></tr>
+<tr><td>Terminal y procesos en segundo plano</td><td>Pruebas, compilaciones, Firebase, git y GitHub</td></tr>
+</table>
+
+<h2>2. Skills</h2>
+<table><tr><th>Skill</th><th>Origen</th><th>Cómo se usó y resultado</th></tr>
+<tr><td><code>update-config</code></td><td>Incluida</td><td>Invocada para configurar el hook</td></tr>
+<tr><td><code>code-review</code></td><td>Incluida</td><td>Invocada: 1 error en el servidor MCP, corregido</td></tr>
+<tr><td><code>security-review</code></td><td>Incluida</td><td>Invocada: sin vulnerabilidades en los archivos nuevos (sin sus sub-agentes)</td></tr>
+<tr><td><code>verificar-entrega</code></td><td>Propia</td><td>Creada. La sesión no la cargó: se ejecutaron sus 7 pasos a mano, todos correctos</td></tr>
+</table>
+
+<h2>3. Subagentes</h2>
+<p>Definidos en <code>.claude/agents/</code>. Como la sesión no cargó los tipos nuevos, se lanzaron
+<strong>tres subagentes genéricos</strong> en paralelo, cada uno con las instrucciones de su archivo.
+Los tres fueron de solo lectura.</p>
+<table><tr><th>Definición</th><th>Resultado</th></tr>
+<tr><td><code>revisor-arquitectura</code></td><td>8 hallazgos; el más grave, la copia local puede perderse</td></tr>
+<tr><td><code>revisor-seguridad</code></td><td>Nada crítico; 4 de gravedad media y 4 baja</td></tr>
+<tr><td><code>profesor-examen</code></td><td>15 preguntas de oral con respuesta y archivo</td></tr>
+</table>
+
+<h2>4. Configuración y automatización</h2>
+<table><tr><th>Elemento</th><th>Archivo</th><th>Comprobación</th></tr>
+<tr><td>Memoria del proyecto</td><td><code>CLAUDE.md</code></td><td>Creada; se lee al abrir el proyecto en una sesión nueva</td></tr>
+<tr><td>Hook PostToolUse (formatea y analiza)</td><td><code>.claude/settings.json</code>, <code>.claude/hooks/</code></td><td>Probado enviándole la entrada a mano: aprueba un archivo correcto y frena uno con error. No se observó dispararse solo</td></tr>
+<tr><td>Servidor MCP propio (Python)</td><td><code>tools/mcp/</code>, <code>.mcp.json</code></td><td>Probado con un cliente propio: 2 herramientas, 1 recurso, 1 prompt y una notificación. No se conectó a esta sesión</td></tr>
+</table>
+
+<h2>5. Relación con los cursos de Claude Academy</h2>
+<table><tr><th>Curso</th><th>Aplicación en el proyecto</th></tr>
+<tr><td>Claude Code 101</td><td>Planificar, hacer y verificar; <code>CLAUDE.md</code>; commits</td></tr>
+<tr><td>Claude Code en acción</td><td>Hook, revisiones y verificación</td></tr>
+<tr><td>Introducción a las Agent Skills</td><td>Skill propia y tres incluidas</td></tr>
+<tr><td>Introducción a los subagentes</td><td>Tres revisiones delegadas en paralelo</td></tr>
+<tr><td>Introducción a MCP y temas avanzados</td><td>Servidor con herramientas, recurso, prompt y notificación. No se usaron <em>sampling</em> ni <em>roots</em></td></tr>
+<tr><td>Manual del SDLC nativo de IA</td><td>Está dirigido a líderes; aquí Claude intervino en requisitos, diseño, código, pruebas, revisión y publicación</td></tr>
+</table>
+
+<h2>6. Qué quedó pendiente</h2>
+<p>Las revisiones encontraron problemas en la app que todavía no se corrigieron (ver
+<code>docs/claude-code/revisiones.md</code>). Los dos principales: la copia local del catálogo
+puede ser reemplazada por la de ejemplo, y "Mi lista" puede reordenar el libro equivocado.</p>
+</body></html>
