@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:libreria/core/plataforma/politicas.dart';
 
 /// Saca o elige la foto de la tapa. Se achica antes de guardarla.
 class SelectorFoto extends StatelessWidget {
@@ -52,11 +53,12 @@ class SelectorFoto extends StatelessWidget {
           alignment: WrapAlignment.center,
           spacing: 10,
           children: [
-            OutlinedButton.icon(
-              onPressed: () => _elegir(context, ImageSource.camera),
-              icon: const Icon(Icons.photo_camera_outlined),
-              label: const Text('Sacar foto'),
-            ),
+            if (const Politicas().ofrecerSacarFoto)
+              OutlinedButton.icon(
+                onPressed: () => _elegir(context, ImageSource.camera),
+                icon: const Icon(Icons.photo_camera_outlined),
+                label: const Text('Sacar foto'),
+              ),
             OutlinedButton.icon(
               onPressed: () => _elegir(context, ImageSource.gallery),
               icon: const Icon(Icons.photo_library_outlined),

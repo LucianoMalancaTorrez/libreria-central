@@ -3,15 +3,15 @@
 /// Catálogo de consulta, Convenios con escuelas, Información y Nuestra historia.
 library;
 
-import 'package:libreria/core/config/libreria_config.dart';
 import 'package:flutter/material.dart';
-import 'package:libreria/presentation/inicio/widgets/indicador_apertura.dart';
+import 'package:libreria/core/config/libreria_config.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/presentation/escuelas/escuelas_screen.dart';
 import 'package:libreria/presentation/historia/historia_screen.dart';
 import 'package:libreria/presentation/informacion/informacion_screen.dart';
 import 'package:libreria/presentation/inicio/widgets/buscador_inicio.dart';
+import 'package:libreria/presentation/inicio/widgets/indicador_apertura.dart';
 import 'package:libreria/presentation/inicio/widgets/tarjeta_accion.dart';
 
 class HomeScreen extends StatelessWidget {

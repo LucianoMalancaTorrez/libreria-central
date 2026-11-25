@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:libreria/core/plataforma/politicas.dart';
 import 'package:libreria/domain/logic/club_lectura.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,10 +23,8 @@ class ServicioAvisosDispositivo implements ServicioAvisos {
   final _plugin = FlutterLocalNotificationsPlugin();
   Future<void>? _inicio;
 
-  /// En iPhone haría falta configuración extra en Xcode (requiere una Mac).
   @override
-  bool get soportaSegundoPlano =>
-      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+  bool get soportaSegundoPlano => const Politicas().ofrecerAvisoAutomatico;
 
   Future<void> _iniciar() => _inicio ??= _plugin.initialize(
     settings: const InitializationSettings(

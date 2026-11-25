@@ -1,14 +1,14 @@
 /// Escuelas adheridas, con acceso a la credencial para mostrar en caja.
 library;
 
+import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
 import 'package:libreria/core/utils/abrir_enlace.dart';
-import 'package:libreria/core/widgets/vista_estado.dart';
-import 'package:libreria/presentation/escuelas/viewmodels/escuelas_view_model.dart';
-import 'package:flutter/material.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
+import 'package:libreria/core/widgets/vista_estado.dart';
 import 'package:libreria/presentation/escuelas/credencial_escuela_screen.dart';
+import 'package:libreria/presentation/escuelas/viewmodels/escuelas_view_model.dart';
 import 'package:libreria/presentation/escuelas/widgets/banner_convenio.dart';
 import 'package:libreria/presentation/escuelas/widgets/boton_solicitud_convenio.dart';
 import 'package:libreria/presentation/escuelas/widgets/tarjeta_escuela.dart';

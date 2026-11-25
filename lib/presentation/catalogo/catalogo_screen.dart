@@ -23,9 +23,34 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
   late final CatalogoViewModel _viewModel = CatalogoViewModel(
     Dependencias.of(context).libros,
   )..cargar();
+  final _busqueda = TextEditingController();
+  late final AppLifecycleListener _cicloDeVida;
+  static const _clave = 'ultima_busqueda';
+
+  @override
+  void initState() {
+    super.initState();
+    // Si el sistema cierra la app mientras está oculta, no se pierde nada.
+    _cicloDeVida = AppLifecycleListener(onHide: _guardarBusqueda);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _recuperarBusqueda());
+  }
+
+  Future<void> _guardarBusqueda() =>
+      Dependencias.of(context).preferencias
+          .guardarLista(_clave, [_busqueda.text]);
+
+  Future<void> _recuperarBusqueda() async {
+    final guardada = await Dependencias.of(context).preferencias
+        .leerLista(_clave);
+    if (!mounted || guardada.isEmpty || _busqueda.text.isNotEmpty) return;
+    _busqueda.text = guardada.first;
+    _viewModel.buscar(guardada.first);
+  }
 
   @override
   void dispose() {
+    _cicloDeVida.dispose();
+    _busqueda.dispose();
     _viewModel.dispose();
     super.dispose();
   }
@@ -44,6 +69,7 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: TextField(
+                controller: _busqueda,
                 onChanged: _viewModel.buscar,
                 decoration: const InputDecoration(
                   hintText: 'Buscar por título o autor...',
@@ -57,6 +83,7 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
                 alReintentar: _viewModel.cargar,
                 // Slivers: todo se desplaza junto y solo se construye lo visible.
                 builder: (context) => CustomScrollView(
+                  key: const PageStorageKey('catalogo'),
                   slivers: [
                     SliverToBoxAdapter(
                       child: FiltrosCatalogo(viewModel: _viewModel),

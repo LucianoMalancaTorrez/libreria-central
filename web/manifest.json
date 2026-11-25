@@ -6,9 +6,12 @@
     "display": "standalone",
     "background_color": "#F5F2EB",
     "theme_color": "#3B2A20",
-    "orientation": "portrait-primary",
     "prefer_related_applications": false,
-    "categories": ["books", "shopping", "lifestyle"],
+    "categories": [
+        "books",
+        "shopping",
+        "lifestyle"
+    ],
     "lang": "es",
     "icons": [
         {

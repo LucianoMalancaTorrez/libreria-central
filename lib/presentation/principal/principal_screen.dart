@@ -3,8 +3,10 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/widgets/aviso_sin_conexion.dart';
+import 'package:libreria/core/widgets/tamano_ventana.dart';
 import 'package:libreria/presentation/ajustes/mas_screen.dart';
 import 'package:libreria/presentation/catalogo/catalogo_screen.dart';
 import 'package:libreria/presentation/favoritos/favoritos_screen.dart';
@@ -25,7 +27,9 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
   @override
   Widget build(BuildContext context) {
     final favoritos = Dependencias.of(context).favoritos;
-    final ancho = MediaQuery.sizeOf(context).width >= 700;
+    final tamano = tamanoDeVentana(MediaQuery.sizeOf(context).width);
+    final ancho = tamano != TamanoVentana.compacta;
+    final extendida = tamano == TamanoVentana.expandida;
 
     Widget iconoLista(IconData icono) => ListenableBuilder(
       listenable: favoritos,
@@ -69,14 +73,17 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
       ],
     );
 
-    return Scaffold(
+    final pantalla = Scaffold(
       body: ancho
           ? Row(
               children: [
                 NavigationRail(
                   selectedIndex: _indice,
                   onDestinationSelected: _irA,
-                  labelType: NavigationRailLabelType.all,
+                  extended: extendida,
+                  labelType: extendida
+                      ? NavigationRailLabelType.none
+                      : NavigationRailLabelType.all,
                   destinations: [
                     for (final (icono, activo, texto) in destinos)
                       NavigationRailDestination(
@@ -105,6 +112,21 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                   ),
               ],
             ),
+    );
+
+    // Atajos Ctrl+1 a Ctrl+4 para usar la app con teclado.
+    const teclas = [
+      LogicalKeyboardKey.digit1,
+      LogicalKeyboardKey.digit2,
+      LogicalKeyboardKey.digit3,
+      LogicalKeyboardKey.digit4,
+    ];
+    return CallbackShortcuts(
+      bindings: {
+        for (var i = 0; i < teclas.length; i++)
+          SingleActivator(teclas[i], control: true): () => _irA(i),
+      },
+      child: Focus(autofocus: true, child: pantalla),
     );
   }
 }

@@ -1,13 +1,13 @@
 /// Horarios, dirección, WhatsApp, mapa e Instagram.
 library;
 
+import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
 import 'package:libreria/core/utils/abrir_enlace.dart';
+import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/core/widgets/vista_estado.dart';
 import 'package:libreria/presentation/informacion/viewmodels/informacion_view_model.dart';
-import 'package:flutter/material.dart';
-import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/presentation/informacion/widgets/boton_contacto.dart';
 import 'package:libreria/presentation/informacion/widgets/fila_dato.dart';
 import 'package:libreria/presentation/informacion/widgets/fila_horario.dart';

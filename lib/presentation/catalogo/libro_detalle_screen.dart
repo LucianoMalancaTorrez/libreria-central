@@ -1,9 +1,9 @@
 /// Detalle de un libro, sin precio ni stock: la app es de consulta.
 library;
 
-import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
+import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/presentation/catalogo/widgets/boton_favorito.dart';
 import 'package:libreria/presentation/catalogo/widgets/dato_libro.dart';

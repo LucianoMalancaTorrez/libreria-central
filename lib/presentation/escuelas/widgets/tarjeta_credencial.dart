@@ -1,5 +1,5 @@
-import 'package:libreria/core/config/libreria_config.dart';
 import 'package:flutter/material.dart';
+import 'package:libreria/core/config/libreria_config.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/domain/models/escuela.dart';
 

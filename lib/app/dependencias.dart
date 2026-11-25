@@ -1,4 +1,3 @@
-import 'package:libreria/domain/services/auth_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/services/conexion.dart';
@@ -11,6 +10,7 @@ import 'package:libreria/domain/repositories/escuela_repository.dart';
 import 'package:libreria/domain/repositories/horarios_repository.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
+import 'package:libreria/domain/services/auth_service.dart';
 import 'package:libreria/domain/services/info_libro_service.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/favoritos/viewmodels/favoritos_view_model.dart';

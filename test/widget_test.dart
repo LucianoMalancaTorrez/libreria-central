@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:libreria/app/app.dart';
 
@@ -129,5 +130,38 @@ void main() {
     await tocar(tester, find.text('Por autor'));
 
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Ctrl+2 abre el catálogo desde el teclado', (tester) async {
+    await abrirApp(tester, tamano: const Size(1200, 900));
+
+    await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
+    await tester.sendKeyEvent(LogicalKeyboardKey.digit2);
+    await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Destacados'), findsOneWidget);
+  });
+
+  testWidgets('Al ocultarse la app se guarda la búsqueda', (tester) async {
+    tester.view.physicalSize = const Size(420, 1800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final servicios = serviciosDePrueba();
+    await tester.pumpWidget(LibreriaApp(servicios: servicios));
+    await tester.pumpAndSettle();
+    await tocar(tester, pestana('Catálogo'));
+    await tester.enterText(find.byType(TextField), 'borges');
+
+    // En el orden real en que Android avisa.
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+    await tester.pumpAndSettle();
+
+    expect(await servicios.preferencias.leerLista('ultima_busqueda'), [
+      'borges',
+    ]);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
   });
 }
