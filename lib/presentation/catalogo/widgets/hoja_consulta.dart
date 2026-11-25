@@ -23,6 +23,7 @@ class _HojaConsulta extends StatefulWidget {
 
 class _HojaConsultaState extends State<_HojaConsulta> {
   final _nombre = TextEditingController();
+  bool _pedirAviso = false;
 
   @override
   void dispose() {
@@ -39,7 +40,8 @@ class _HojaConsultaState extends State<_HojaConsulta> {
       context,
       LibreriaConfig.enlaceWhatsApp(
         '$saludo Quería consultar por "${widget.libro.titulo}" '
-        'de ${widget.libro.autor}.',
+        'de ${widget.libro.autor}.'
+        '${_pedirAviso ? ' Si no está, ¿me avisás cuando llegue?' : ''}',
       ),
     );
   }
@@ -69,6 +71,12 @@ class _HojaConsultaState extends State<_HojaConsulta> {
             decoration: const InputDecoration(
               labelText: 'Tu nombre (opcional)',
             ),
+          ),
+          CheckboxListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Avisarme cuando llegue si no está'),
+            value: _pedirAviso,
+            onChanged: (v) => setState(() => _pedirAviso = v ?? false),
           ),
           const SizedBox(height: 12),
           ElevatedButton.icon(

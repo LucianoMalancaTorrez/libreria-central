@@ -27,6 +27,12 @@ Future<void> tocar(WidgetTester tester, Finder finder) async {
 Finder pestana(String texto) =>
     find.descendant(of: find.byType(NavigationBar), matching: find.text(texto));
 
+Future<void> letraMuyGrande(WidgetTester tester) async {
+  await tester.drag(find.byType(Slider), const Offset(600, 0));
+  await tester.pumpAndSettle();
+  expect(find.text('Tamaño de letra: Muy grande'), findsOneWidget);
+}
+
 void main() {
   testWidgets('El celular usa barra inferior', (tester) async {
     await abrirApp(tester);
@@ -84,7 +90,7 @@ void main() {
   testWidgets('Con letra grande no se desborda nada', (tester) async {
     await abrirApp(tester, tamano: const Size(360, 740));
     await tocar(tester, pestana('Más'));
-    await tocar(tester, find.text('Letra grande'));
+    await letraMuyGrande(tester);
 
     for (final nombre in ['Inicio', 'Catálogo', 'Mi lista', 'Más']) {
       await tocar(tester, pestana(nombre));
@@ -97,7 +103,7 @@ void main() {
   ) async {
     await abrirApp(tester, tamano: const Size(360, 2400));
     await tocar(tester, pestana('Más'));
-    await tocar(tester, find.text('Letra grande'));
+    await letraMuyGrande(tester);
     await tocar(tester, find.text('Convenios con escuelas'));
     await tocar(tester, find.text('Mostrá esto en caja').first);
 
@@ -114,5 +120,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Primera edición: 1963'), findsOneWidget);
+  });
+
+  testWidgets('El menú ordena el catálogo por autor', (tester) async {
+    await abrirApp(tester);
+    await tocar(tester, pestana('Catálogo'));
+    await tocar(tester, find.byTooltip('Ordenar'));
+    await tocar(tester, find.text('Por autor'));
+
+    expect(tester.takeException(), isNull);
   });
 }

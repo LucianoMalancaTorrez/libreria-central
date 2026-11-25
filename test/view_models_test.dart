@@ -54,6 +54,17 @@ void main() {
       ]);
     });
 
+    test('ordena por título y por autor', () async {
+      final viewModel = CatalogoViewModel(LibrosFalsos());
+      await viewModel.cargar();
+
+      viewModel.ordenar(OrdenCatalogo.titulo);
+      expect(viewModel.libros.first.titulo, 'Cien Años de Soledad');
+
+      viewModel.ordenar(OrdenCatalogo.autor);
+      expect(viewModel.libros.first.autor, 'Gabriel García Márquez');
+    });
+
     test('si falla, guarda el error y deja de cargar', () async {
       final viewModel = CatalogoViewModel(LibrosFalsos(falla: true));
 

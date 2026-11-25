@@ -1,11 +1,12 @@
 /// Resto de las secciones y las preferencias de accesibilidad.
 library;
 
-import 'package:libreria/presentation/admin/admin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
+import 'package:libreria/presentation/admin/admin_screen.dart';
 import 'package:libreria/presentation/ajustes/privacidad_screen.dart';
+import 'package:libreria/presentation/ajustes/widgets/control_letra.dart';
 import 'package:libreria/presentation/escuelas/escuelas_screen.dart';
 import 'package:libreria/presentation/eventos/eventos_screen.dart';
 import 'package:libreria/presentation/historia/historia_screen.dart';
@@ -17,7 +18,6 @@ class MasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final servicios = Dependencias.of(context);
-    final ajustes = servicios.ajustes;
     final secciones = <(IconData, String, Widget)>[
       (Icons.event, 'Club de lectura', const EventosScreen()),
       (Icons.school_outlined, 'Convenios con escuelas', const EscuelasScreen()),
@@ -36,15 +36,7 @@ class MasScreen extends StatelessWidget {
       body: ResponsiveCenter(
         child: ListView(
           children: [
-            ListenableBuilder(
-              listenable: ajustes,
-              builder: (context, _) => SwitchListTile(
-                secondary: const Icon(Icons.format_size),
-                title: const Text('Letra grande'),
-                value: ajustes.letraGrande,
-                onChanged: ajustes.cambiarLetraGrande,
-              ),
-            ),
+            ControlLetra(ajustes: servicios.ajustes),
             const Divider(),
             for (final (icono, titulo, pantalla) in secciones)
               ListTile(

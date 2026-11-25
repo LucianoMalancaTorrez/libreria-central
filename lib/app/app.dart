@@ -35,10 +35,9 @@ class _LibreriaAppState extends State<LibreriaApp> {
           listenable: _servicios.ajustes,
           builder: (context, _) {
             final media = MediaQuery.of(context);
-            // "Letra grande" agranda el texto sobre lo que ya pida el sistema.
+            // La letra elegida se suma a la que ya pida el sistema.
             final escala =
-                media.textScaler.scale(1) *
-                (_servicios.ajustes.letraGrande ? 1.25 : 1);
+                media.textScaler.scale(1) * _servicios.ajustes.escalaLetra;
             return MediaQuery(
               data: media.copyWith(textScaler: TextScaler.linear(escala)),
               child: child!,

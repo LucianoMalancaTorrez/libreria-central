@@ -9,6 +9,7 @@ import 'package:libreria/core/widgets/vista_estado.dart';
 import 'package:libreria/presentation/catalogo/viewmodels/catalogo_view_model.dart';
 import 'package:libreria/presentation/catalogo/widgets/carrusel_destacados.dart';
 import 'package:libreria/presentation/catalogo/widgets/filtros_catalogo.dart';
+import 'package:libreria/presentation/catalogo/widgets/menu_orden.dart';
 import 'package:libreria/presentation/catalogo/widgets/resultados_catalogo.dart';
 
 class CatalogoScreen extends StatefulWidget {
@@ -32,7 +33,10 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Catálogo')),
+      appBar: AppBar(
+        title: const Text('Catálogo'),
+        actions: [MenuOrden(viewModel: _viewModel)],
+      ),
       body: ResponsiveCenter(
         maxWidth: 900,
         child: Column(

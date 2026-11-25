@@ -1,49 +1,98 @@
-# Librería Central — Sitio Web PWA
+# Librería Central Winterbach
 
-Sitio web informativo de **Librería Central**, construido con Flutter Web y configurado como PWA (Progressive Web App) instalable en Android e iOS.
+App informativa de la librería de Amelia (Belgrano 742, Mendoza), hecha en
+Flutter. Proyecto Integrador de Programación de Aplicaciones para Celulares.
+No vende ni cobra: muestra el catálogo y ayuda a que la gente vaya al local.
 
-## Contenido
+**Web publicada:** https://libreria-central-53b7c.web.app
 
-- Catálogo de libros (título, autor, tapa)
-- Historia del local
-- Información de contacto (WhatsApp, Instagram, mapa, horarios)
+## Qué hace
 
-## Requisitos previos
+- Catálogo con búsqueda, filtros por género, orden y detalle de cada libro.
+- "Mi lista" para guardar libros y consultarlos por WhatsApp.
+- Indicador de abierto o cerrado, horarios, dirección y contacto.
+- Convenios con escuelas e historia de la familia.
+- Club de lectura con avisos.
+- Panel de administración para libros (con foto de la tapa) y horarios.
+- Funciona como app instalable (PWA) y como APK de Android.
 
-- [Flutter SDK](https://flutter.dev/install/windows) — descomprimido en `C:\flutter`
-- `C:\flutter\bin` agregado al PATH del sistema
-- Google Chrome instalado
+## Cómo está organizado
 
-## Levantar en modo desarrollo (con hot-reload)
+```
+lib/
+  app/           arranque e inyección de dependencias
+  core/          configuración, tema, widgets y servicios comunes
+  domain/        modelos, reglas de negocio y contratos (Dart puro)
+  data/          implementaciones: assets, Firestore, preferencias, API
+  presentation/  una carpeta por sección: pantallas, widgets y ViewModels
+```
 
-```bat
-cd C:\Users\USUARIO\Desktop\Libreria\Libreria
+Las pantallas usan ViewModels (`ChangeNotifier`) y solo conocen los contratos de
+`domain/`. Dónde vienen los datos se decide en `app/`, y los tests pasan
+versiones falsas.
+
+## Cómo correrlo
+
+En Android Studio, abrir esta carpeta y tocar Run. Desde la terminal:
+
+```powershell
 flutter pub get
+```
+
+```powershell
 flutter run -d chrome
 ```
 
-## Generar build de producción (para deploy)
+Para un celular Android: activar la depuración por USB, conectarlo y ejecutar
+`flutter run`.
 
-```bat
-flutter build web --web-renderer canvaskit --release
+## Pruebas y análisis
+
+```powershell
+flutter analyze
 ```
 
-El output queda en `build\web\`. Esa carpeta se sube completa al hosting (Netlify, Firebase, GitHub Pages).
+```powershell
+flutter test
+```
 
-## Deploy rápido sin dominio — Netlify
+## Compilar y publicar
 
-1. Ejecutar `flutter build web --release`
-2. Ir a [netlify.com](https://netlify.com) → iniciar sesión
-3. Arrastrar la carpeta `build\web\` al panel de Netlify
-4. ¡Listo! Queda online con HTTPS en minutos
+APK (queda en `build\app\outputs\flutter-apk\app-release.apk`):
 
-## Paleta de colores (identidad visual)
+```powershell
+flutter build apk --release
+```
 
-| Token | Hex | Uso |
-|---|---|---|
-| `parchment` | `#F5F2EB` | Fondo principal |
-| `parchmentDeep` | `#EDE3CE` | Cards / fondo secundario |
-| `leather` | `#5C4033` | Texto principal |
-| `leatherDeep` | `#3B2A20` | Headers / énfasis |
-| `bottleGreen` | `#0B6623` | Acento primario |
-| `brass` | `#B08D57` | Bordes / acento secundario |
+Web. La opción `--no-web-resources-cdn` es necesaria para que abra sin conexión:
+
+```powershell
+flutter build web --release --no-web-resources-cdn
+```
+
+```powershell
+firebase deploy --only hosting
+```
+
+## Costos
+
+Todo usa planes gratuitos: Firebase Spark (Hosting, Firestore y Authentication,
+sin tarjeta), Open Library y los paquetes de pub.dev. No se publica en Google
+Play ni en App Store porque cobran. Las fotos de tapa se guardan comprimidas en
+Firestore porque Firebase Storage requiere un plan con tarjeta.
+
+## Pendientes y datos de ejemplo
+
+- El catálogo es de ejemplo; no es el inventario real de Amelia.
+- El número de WhatsApp es de relleno (`lib/core/config/libreria_config.dart`).
+- Falta confirmar: usuario de Instagram, horario de verano de la mañana, fecha
+  del cambio de temporada y horario del club de lectura.
+- Faltan las fotos del local.
+- El APK está firmado con la clave de pruebas.
+- Las versiones de `flutter_local_notifications` y `permission_handler` están
+  fijadas porque las más nuevas piden Android SDK 37.
+
+## Más documentación
+
+- [Rúbrica: dónde está cada tema](docs/RUBRICA.md)
+- [Firebase y guía para Amelia](docs/FIREBASE.md)

@@ -2,28 +2,41 @@ import 'package:flutter/foundation.dart';
 import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
 
-/// Preferencias de la persona: letra grande y avisos del club de lectura.
+/// Preferencias de la persona: tamaño de letra y avisos del club de lectura.
 class AjustesViewModel extends ChangeNotifier {
   AjustesViewModel(this._preferencias, this._avisos);
 
+  static const _escalas = [1.0, 1.2, 1.4];
+
   final PreferenciasRepository _preferencias;
   final ServicioAvisos _avisos;
-  bool _letraGrande = false;
+  int _tamanoLetra = 0;
   bool _avisosClub = false;
 
-  bool get letraGrande => _letraGrande;
+  /// 0 normal, 1 grande, 2 muy grande.
+  int get tamanoLetra => _tamanoLetra;
+  double get escalaLetra => _escalas[_tamanoLetra];
   bool get avisosClub => _avisosClub;
 
   Future<void> cargar() async {
-    _letraGrande = await _preferencias.leerBool('letra_grande');
+    // Se guarda como dos marcas para reutilizar el repositorio de booleanos.
+    final grande = await _preferencias.leerBool('letra_grande');
+    final muyGrande = await _preferencias.leerBool('letra_muy_grande');
+    _tamanoLetra = muyGrande
+        ? 2
+        : grande
+        ? 1
+        : 0;
     _avisosClub = await _preferencias.leerBool('avisos_club');
     notifyListeners();
   }
 
-  Future<void> cambiarLetraGrande(bool valor) async {
-    _letraGrande = valor;
+  Future<void> cambiarTamanoLetra(int tamano) async {
+    if (tamano == _tamanoLetra) return;
+    _tamanoLetra = tamano;
     notifyListeners();
-    await _preferencias.guardarBool('letra_grande', valor);
+    await _preferencias.guardarBool('letra_grande', tamano == 1);
+    await _preferencias.guardarBool('letra_muy_grande', tamano == 2);
   }
 
   /// Pide el permiso solo cuando la persona activa los avisos.

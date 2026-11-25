@@ -50,3 +50,6 @@ app.*.map.json
 # Logs locales de herramientas
 firebase-debug.log
 *-debug.log
+
+# Caché de publicación de Firebase
+.firebase/

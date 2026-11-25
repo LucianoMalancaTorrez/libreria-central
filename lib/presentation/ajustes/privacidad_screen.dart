@@ -15,7 +15,7 @@ class PrivacidadScreen extends StatelessWidget {
     ),
     (
       'Qué se guarda en tu dispositivo',
-      'Tu lista de libros, la opción de letra grande y si querés avisos. '
+      'Tu lista de libros, el tamaño de letra y si querés avisos. '
           'Podés borrar la lista cuando quieras.',
     ),
     (
