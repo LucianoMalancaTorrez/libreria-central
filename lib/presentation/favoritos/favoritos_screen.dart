@@ -19,9 +19,8 @@ class FavoritosScreen extends StatefulWidget {
 }
 
 class _FavoritosScreenState extends State<FavoritosScreen> {
-  late final Future<List<Libro>> _catalogo = Dependencias.of(context).libros
-      .getLibros();
-
+  late final Stream<List<Libro>> _catalogo = Dependencias.of(context).libros
+      .observarLibros();
   Future<void> _confirmarVaciado() async {
     final favoritos = Dependencias.of(context).favoritos;
     final si = await showDialog<bool>(
@@ -74,8 +73,8 @@ class _FavoritosScreenState extends State<FavoritosScreen> {
   @override
   Widget build(BuildContext context) {
     final favoritos = Dependencias.of(context).favoritos;
-    return FutureBuilder<List<Libro>>(
-      future: _catalogo,
+    return StreamBuilder<List<Libro>>(
+      stream: _catalogo,
       builder: (context, snapshot) => ListenableBuilder(
         listenable: favoritos,
         builder: (context, _) {

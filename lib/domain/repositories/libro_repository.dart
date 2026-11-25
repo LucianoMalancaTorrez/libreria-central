@@ -2,5 +2,14 @@ import 'package:libreria/domain/models/libro.dart';
 
 /// Contrato del catálogo, independiente de dónde estén guardados los datos.
 abstract class LibroRepository {
-  Future<List<Libro>> getLibros();
+  /// Emite la lista completa cada vez que cambia.
+  Stream<List<Libro>> observarLibros();
+}
+
+/// Escritura del catálogo: solo la usa el panel de administración.
+abstract class CatalogoAdminRepository {
+  /// Si [libro] no tiene id, se crea uno nuevo.
+  Future<void> guardar(Libro libro);
+  Future<void> eliminar(String id);
+  Future<void> importar(List<Libro> libros);
 }

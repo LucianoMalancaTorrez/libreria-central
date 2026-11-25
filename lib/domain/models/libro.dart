@@ -6,6 +6,9 @@ class Libro {
   final String editorial;
   final String descripcion;
 
+  /// Foto de la tapa comprimida, en base64. Vacío si no tiene.
+  final String foto;
+
   const Libro({
     required this.id,
     required this.titulo,
@@ -13,16 +16,28 @@ class Libro {
     required this.genero,
     this.editorial = '',
     this.descripcion = '',
+    this.foto = '',
   });
 
-  factory Libro.fromJson(Map<String, dynamic> json) => Libro(
-    id: json['id'] as String,
-    titulo: json['titulo'] as String,
-    autor: json['autor'] as String,
-    genero: json['genero'] as String,
+  factory Libro.fromJson(Map<String, dynamic> json, {String? id}) => Libro(
+    id: id ?? json['id'] as String,
+    titulo: json['titulo'] as String? ?? '',
+    autor: json['autor'] as String? ?? '',
+    genero: json['genero'] as String? ?? '',
     editorial: json['editorial'] as String? ?? '',
     descripcion: json['descripcion'] as String? ?? '',
+    foto: json['foto'] as String? ?? '',
   );
+
+  /// El id no se incluye: es el nombre del documento.
+  Map<String, dynamic> toJson() => {
+    'titulo': titulo,
+    'autor': autor,
+    'genero': genero,
+    'editorial': editorial,
+    'descripcion': descripcion,
+    'foto': foto,
+  };
 
   /// Indica si el libro coincide con una búsqueda por título, autor o género.
   bool coincide(String busqueda) {

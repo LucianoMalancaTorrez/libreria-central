@@ -11,7 +11,9 @@ class AssetLibroRepository implements LibroRepository {
   List<Libro>? _cache;
 
   @override
-  Future<List<Libro>> getLibros() async {
+  Stream<List<Libro>> observarLibros() => Stream.fromFuture(_leer());
+
+  Future<List<Libro>> _leer() async {
     final cache = _cache;
     if (cache != null) return cache;
     final texto = await rootBundle.loadString('assets/data/libros.json');

@@ -57,14 +57,15 @@ class _InformacionScreenState extends State<InformacionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (_viewModel.horarios.isEmpty)
-                const Text('Consultar horarios en el local.'),
-              for (final h in _viewModel.horarios)
+              for (final (temporada, horario) in [
+                ('Invierno (abril a octubre)', _viewModel.horarios.invierno),
+                ('Verano (octubre a abril)', _viewModel.horarios.verano),
+              ])
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: FilaHorario(
-                    temporada: h.temporada,
-                    horario: h.horario,
+                    temporada: temporada,
+                    horario: horario.texto,
                   ),
                 ),
             ],

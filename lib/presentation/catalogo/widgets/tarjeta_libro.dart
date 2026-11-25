@@ -1,3 +1,4 @@
+import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/theme/app_theme.dart';
@@ -47,11 +48,7 @@ class TarjetaLibro extends StatelessWidget {
                           color: AppColors.brass.withValues(alpha: 0.5),
                         ),
                       ),
-                      child: const Icon(
-                        Icons.menu_book_rounded,
-                        size: 40,
-                        color: AppColors.leather,
-                      ),
+                      child: TapaLibro(libro: libro, tamanoIcono: 40),
                     ),
                     Positioned(
                       top: 0,

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:libreria/app/dependencias.dart';
+import 'package:libreria/domain/services/auth_service.dart';
 import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
@@ -26,8 +29,9 @@ class LibrosFalsos implements LibroRepository {
   final bool falla;
 
   @override
-  Future<List<Libro>> getLibros() async =>
-      falla ? throw Exception('Sin conexión') : librosDePrueba;
+  Stream<List<Libro>> observarLibros() => falla
+      ? Stream.error(Exception('Sin conexión'))
+      : Stream.value(librosDePrueba);
 }
 
 class PreferenciasEnMemoria implements PreferenciasRepository {
@@ -79,3 +83,23 @@ Servicios serviciosDePrueba({bool conexion = true}) => Servicios(
   avisos: AvisosFalsos(),
   conexion: () => Stream.value(conexion),
 );
+
+class AuthFalso implements AuthService {
+  AuthFalso({this.admin = true, this.falla = false});
+  final bool admin;
+  final bool falla;
+  final _cambios = StreamController<Usuario?>.broadcast();
+
+  @override
+  Stream<Usuario?> observarUsuario() => _cambios.stream;
+  @override
+  Future<void> ingresar(String email, String clave) async {
+    if (falla) throw Exception('clave incorrecta');
+    _cambios.add(Usuario(uid: 'uid-1', email: email));
+  }
+
+  @override
+  Future<void> salir() async => _cambios.add(null);
+  @override
+  Future<bool> esAdministrador(String uid) async => admin;
+}

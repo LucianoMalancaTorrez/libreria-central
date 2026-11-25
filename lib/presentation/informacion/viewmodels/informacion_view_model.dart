@@ -6,19 +6,22 @@ class InformacionViewModel extends ViewModel {
   InformacionViewModel(this._repositorio);
 
   final HorariosRepository _repositorio;
-  List<HorarioAtencion> _horarios = const [];
+  Horarios _horarios = Horarios.habituales;
   InfoLibreria? _info;
 
-  List<HorarioAtencion> get horarios => _horarios;
+  Horarios get horarios => _horarios;
   InfoLibreria? get info => _info;
 
-  Future<void> cargar() => ejecutar(() async {
-    // Los dos pedidos corren en paralelo.
-    final (horarios, info) = await (
-      _repositorio.getHorarios(),
-      _repositorio.getInfoLibreria(),
-    ).wait;
-    _horarios = horarios;
-    _info = info;
-  }, mensajeError: 'No se pudo cargar la información.');
+  Future<void> cargar() async {
+    await ejecutar(
+      () async => _info = await _repositorio.getInfoLibreria(),
+      mensajeError: 'No se pudo cargar la información.',
+    );
+    if (error != null) return;
+    await escuchar<Horarios>(
+      _repositorio.observarHorarios(),
+      (nuevos) => _horarios = nuevos,
+      mensajeError: 'No se pudieron cargar los horarios.',
+    );
+  }
 }

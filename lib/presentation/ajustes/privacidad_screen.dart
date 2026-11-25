@@ -10,7 +10,7 @@ class PrivacidadScreen extends StatelessWidget {
 
   static const _apartados = <(String, String)>[
     (
-      'Sin cuentas ni compras',
+      'Sin cuentas de clientes ni compras',
       'No pedimos registro, no vendemos por la app y no cobramos nada.',
     ),
     (
@@ -25,9 +25,16 @@ class PrivacidadScreen extends StatelessWidget {
           'WhatsApp, el mapa e Instagram se abren solo si vos los tocás.',
     ),
     (
+      'Datos en la nube',
+      'El catálogo y los horarios se guardan en Google Firebase. La única '
+          'cuenta es la de la librería, para actualizarlos.',
+    ),
+    (
       'Permisos',
       'Internet: para tapas y tipografías.\n'
-          'Notificaciones: solo si activás los avisos del club de lectura. '
+          'Cámara y fotos: solo en Administración, cuando se elige la tapa '
+          'de un libro.\n'
+          'Notificaciones: solo siactivás los avisos del club de lectura. '
           'Podés desactivarlos en Club de lectura > Avisos.',
     ),
   ];

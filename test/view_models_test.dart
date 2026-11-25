@@ -7,6 +7,9 @@ import 'package:libreria/data/repositories/in_memory_escuela_repository.dart';
 import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
 import 'package:libreria/domain/logic/club_lectura.dart';
 import 'package:libreria/domain/logic/horario_comercial.dart';
+import 'package:libreria/domain/models/horario_atencion.dart';
+import 'package:libreria/domain/models/libro.dart';
+import 'package:libreria/presentation/admin/viewmodels/acceso_view_model.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/catalogo/viewmodels/catalogo_view_model.dart';
 import 'package:libreria/presentation/escuelas/viewmodels/escuelas_view_model.dart';
@@ -121,25 +124,31 @@ void main() {
   });
 
   group('Horario del local', () {
+    const h = Horarios.habituales;
+
     // 24/11/2026 es martes (temporada de verano).
     test('abierto a la mañana', () {
-      final estado = estadoDelLocal(DateTime(2026, 11, 24, 10));
+      final estado = estadoDelLocal(DateTime(2026, 11, 24, 10), h);
       expect(estado.abierto, isTrue);
       expect(estado.detalle, 'Cierra a las 13:00');
     });
 
     test('la tarde de verano abre 17:30 y la de invierno 16:30', () {
       expect(
-        estadoDelLocal(DateTime(2026, 11, 24, 17)).detalle,
+        estadoDelLocal(DateTime(2026, 11, 24, 17), h).detalle,
         'Abre hoy a las 17:30',
       );
-      expect(estadoDelLocal(DateTime(2026, 6, 23, 17)).abierto, isTrue);
+      expect(estadoDelLocal(DateTime(2026, 6, 23, 17), h).abierto, isTrue);
     });
 
-    test('el sábado a la noche avisa que abre el lunes', () {
+    test('el sábado a la noche y el domingo avisan que abre el lunes', () {
       expect(
-        estadoDelLocal(DateTime(2026, 11, 28, 22)).detalle,
+        estadoDelLocal(DateTime(2026, 11, 28, 22), h).detalle,
         'Abre el lunes a las 9:00',
+      );
+      expect(
+        estadoDelLocal(DateTime(2026, 11, 29, 10), h).detalle,
+        'Abre mañana a las 9:00',
       );
     });
   });
@@ -174,7 +183,37 @@ void main() {
 
     await viewModel.cargar();
 
-    expect(viewModel.horarios, hasLength(2));
+    expect(viewModel.horarios.verano.texto, contains('17:30'));
     expect(viewModel.info, isNotNull);
+  });
+
+  test('Un libro se guarda y se vuelve a leer igual', () {
+    const libro = Libro(id: '7', titulo: 'T', autor: 'A', genero: 'Novela');
+
+    final copia = Libro.fromJson(libro.toJson(), id: libro.id);
+
+    expect(copia.toJson(), libro.toJson());
+    expect(copia.id, '7');
+  });
+
+  group('Acceso al panel', () {
+    test('una cuenta sin habilitar no entra', () async {
+      final acceso = AccesoViewModel(AuthFalso(admin: false));
+
+      await acceso.ingresar('a@b.com', 'x');
+      await pumpEventQueue();
+
+      expect(acceso.usuario, isNotNull);
+      expect(acceso.habilitado, isFalse);
+    });
+
+    test('una clave mala deja un mensaje de error', () async {
+      final acceso = AccesoViewModel(AuthFalso(falla: true));
+
+      await acceso.ingresar('a@b.com', 'x');
+
+      expect(acceso.usuario, isNull);
+      expect(acceso.error, contains('No se pudo ingresar'));
+    });
   });
 }

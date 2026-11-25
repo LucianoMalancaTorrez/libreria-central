@@ -52,11 +52,12 @@ class CatalogoViewModel extends ViewModel {
     ];
   }
 
-  Future<void> cargar() => ejecutar(
-    () async => _todos = await _repositorio.getLibros(),
-    mensajeError: 'No se pudo cargar el catálogo.',
-  );
-
+  Future<void> cargar() =>
+      escuchar<List<Libro>>(_repositorio.observarLibros(), (libros) {
+        _todos = libros;
+        // El género elegido pudo desaparecer al editar el catálogo.
+        if (!libros.any((l) => l.genero == _genero)) _genero = null;
+      }, mensajeError: 'No se pudo cargar el catálogo.');
   void buscar(String texto) {
     _busqueda = texto;
     notifyListeners();

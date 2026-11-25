@@ -1,6 +1,7 @@
 /// Resto de las secciones y las preferencias de accesibilidad.
 library;
 
+import 'package:libreria/presentation/admin/admin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
@@ -15,13 +16,20 @@ class MasScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ajustes = Dependencias.of(context).ajustes;
-    const secciones = <(IconData, String, Widget)>[
-      (Icons.event, 'Club de lectura', EventosScreen()),
-      (Icons.school_outlined, 'Convenios con escuelas', EscuelasScreen()),
-      (Icons.info_outline, 'Horarios y contacto', InformacionScreen()),
-      (Icons.auto_stories_outlined, 'Nuestra historia', HistoriaScreen()),
-      (Icons.privacy_tip_outlined, 'Privacidad y permisos', PrivacidadScreen()),
+    final servicios = Dependencias.of(context);
+    final ajustes = servicios.ajustes;
+    final secciones = <(IconData, String, Widget)>[
+      (Icons.event, 'Club de lectura', const EventosScreen()),
+      (Icons.school_outlined, 'Convenios con escuelas', const EscuelasScreen()),
+      (Icons.info_outline, 'Horarios y contacto', const InformacionScreen()),
+      (Icons.auto_stories_outlined, 'Nuestra historia', const HistoriaScreen()),
+      (
+        Icons.privacy_tip_outlined,
+        'Privacidad y permisos',
+        const PrivacidadScreen(),
+      ),
+      if (servicios.administracion != null)
+        (Icons.lock_outline, 'Administración', const AdminScreen()),
     ];
     return Scaffold(
       appBar: AppBar(title: const Text('Más')),

@@ -1,3 +1,4 @@
+import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/domain/models/libro.dart';
@@ -12,7 +13,11 @@ class ItemFavorito extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tapa = Icon(Icons.menu_book_rounded, size: 32);
+    final tapa = SizedBox(
+      width: 36,
+      height: 48,
+      child: TapaLibro(libro: libro),
+    );
     return Dismissible(
       key: ValueKey('quitar-${libro.id}'),
       direction: DismissDirection.endToStart,
@@ -26,8 +31,8 @@ class ItemFavorito extends StatelessWidget {
       child: ListTile(
         leading: Draggable<String>(
           data: libro.id,
-          feedback: const Material(color: Colors.transparent, child: tapa),
-          childWhenDragging: const Opacity(opacity: 0.3, child: tapa),
+          feedback: Material(color: Colors.transparent, child: tapa),
+          childWhenDragging: Opacity(opacity: 0.3, child: tapa),
           child: tapa,
         ),
         title: Text(libro.titulo),

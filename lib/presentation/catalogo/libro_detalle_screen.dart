@@ -1,6 +1,7 @@
 /// Detalle de un libro, sin precio ni stock: la app es de consulta.
 library;
 
+import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/domain/models/libro.dart';
@@ -31,7 +32,11 @@ class LibroDetalleScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 96),
           children: [
-            InfoExternaLibro(libro: libro),
+            // Si hay foto propia no hace falta consultar afuera.
+            if (libro.foto.isEmpty)
+              InfoExternaLibro(libro: libro)
+            else
+              SizedBox(height: 220, child: TapaLibro(libro: libro)),
             const SizedBox(height: 20),
             Text(libro.titulo, style: textTheme.headlineMedium),
             const SizedBox(height: 4),

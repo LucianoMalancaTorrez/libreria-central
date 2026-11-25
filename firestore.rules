@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solo quien figure en la colección "admins" puede escribir. Esa colección
+    // se carga a mano desde la consola: registrarse no alcanza.
+    function esAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function textoValido(valor, maximo) {
+      return valor is string && valor.size() <= maximo;
+    }
+
+    match /libros/{id} {
+      allow read: if true;
+      allow delete: if esAdmin();
+      allow create, update: if esAdmin()
+        && request.resource.data.keys().hasOnly(
+             ['titulo', 'autor', 'genero', 'editorial', 'descripcion', 'foto'])
+        && textoValido(request.resource.data.titulo, 200)
+        && request.resource.data.titulo.size() > 0
+        && textoValido(request.resource.data.autor, 200)
+        && textoValido(request.resource.data.genero, 60)
+        && textoValido(request.resource.data.get('editorial', ''), 200)
+        && textoValido(request.resource.data.get('descripcion', ''), 2000)
+        // La foto de tapa va comprimida dentro del documento (máx. 1 MB).
+        && textoValido(request.resource.data.get('foto', ''), 700000);
+    }
+
+    match /config/horarios {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+
+    // Cada persona solo puede consultar si ella misma es administradora.
+    match /admins/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+  }
+}
