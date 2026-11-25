@@ -53,3 +53,8 @@ firebase-debug.log
 
 # Caché de publicación de Firebase
 .firebase/
+
+# Entorno del servidor MCP y ajustes personales de Claude Code
+tools/mcp/.venv/
+.claude/settings.local.json
+__pycache__/

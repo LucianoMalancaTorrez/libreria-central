@@ -1,0 +1,36 @@
+Processing request of type ListToolsRequest
+Processing request of type ListResourcesRequest
+Processing request of type ListPromptsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+herramientas: ['buscar_libros', 'validar_catalogo']
+recursos: ['catalogo://libros']
+prompts: ['revisar_catalogo']
+buscar_libros: {
+  "id": "2",
+  "titulo": "Rayuela",
+  "autor": "Julio Cortázar",
+  "genero": "Novela"
+} {
+  "id": "37",
+  "titulo": "Bestiario",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento"
+} {
+  "id": "38",
+  "titulo": "Final del juego",
+  "autor": "Julio Cortázar",
+  "genero": "Cuento"
+}
+validar_catalogo: {
+  "total": 94,
+  "por_genero": {
+    "Novela": 34,
+    "Cuento": 16,
+    "Infantil": 16,
+    "Aventura": 12,
+    "Poesía": 8,
+    "Policial": 8
+  },
+  "problemas": []
+}

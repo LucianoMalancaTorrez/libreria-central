@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "catalogo-libreria": {
+      "command": "tools/mcp/.venv/Scripts/python.exe",
+      "args": ["tools/mcp/servidor_catalogo.py"]
+    }
+  }
+}
