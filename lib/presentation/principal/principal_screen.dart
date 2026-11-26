@@ -57,7 +57,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
 
     final contenido = Column(
       children: [
-        const AvisoSinConexion(),
+        AvisoSinConexion(conexion: Dependencias.of(context).conexion),
         Expanded(
           // IndexedStack conserva la búsqueda y el scroll de cada pestaña.
           child: IndexedStack(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 
 /// Franja que aparece sola cuando el sistema avisa que no hay conexión.
 class AvisoSinConexion extends StatefulWidget {
-  const AvisoSinConexion({super.key});
+  const AvisoSinConexion({super.key, required this.conexion});
+
+  /// Quien lo usa decide de dónde sale el estado de la conexión.
+  final Stream<bool> Function() conexion;
 
   @override
   State<AvisoSinConexion> createState() => _AvisoSinConexionState();
@@ -12,7 +14,7 @@ class AvisoSinConexion extends StatefulWidget {
 
 class _AvisoSinConexionState extends State<AvisoSinConexion> {
   // El Stream se crea una sola vez, no en cada build.
-  late final Stream<bool> _conexion = Dependencias.of(context).conexion();
+  late final Stream<bool> _conexion = widget.conexion();
 
   @override
   Widget build(BuildContext context) {

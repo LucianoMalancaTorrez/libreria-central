@@ -17,7 +17,7 @@ El resto queda pendiente. Nada de esto se reprodujo en un dispositivo.
 | 8 ✔ | Baja | Error de texto en Privacidad: "siactivás" (comprobado) | revisor-seguridad |
 | 9 | Baja | Las reglas no validan el formato de `config/horarios` | revisor-seguridad |
 | 10 | Baja | Falta `allowBackup="false"`, cabeceras en el hosting y completar la política | revisor-seguridad |
-| 11 | Baja | Las pantallas de administración no tienen ViewModel; hay dirección y escuelas escritas a mano; `core` importa `app` | revisor-arquitectura |
+| 11 (parcial ✔) | Baja | Corregido el 26/11: panel con ViewModels y `core` ya no importa `app`. Queda: dirección y escuelas escritas a mano en algunas pantallas | revisor-arquitectura |
 
 ## `/code-review` (nivel bajo, cambios de la rama)
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/widgets/tapa_libro.dart';
+import 'package:libreria/core/widgets/vista_estado.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/presentation/admin/libro_form_screen.dart';
+import 'package:libreria/presentation/admin/viewmodels/libros_admin_view_model.dart';
 
+/// Solo dibuja y pregunta; las decisiones están en el ViewModel.
 class PestanaLibros extends StatefulWidget {
   const PestanaLibros({super.key});
 
@@ -12,11 +15,21 @@ class PestanaLibros extends StatefulWidget {
 }
 
 class _PestanaLibrosState extends State<PestanaLibros> {
-  late final Stream<List<Libro>> _libros = Dependencias.of(context)
-      .administracion!
-      .catalogo
-      .observarPublicados();
-  bool _importando = false;
+  late final LibrosAdminViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    final admin = Dependencias.of(context).administracion!;
+    _viewModel = LibrosAdminViewModel(admin.catalogo, admin.catalogoDeEjemplo)
+      ..cargar();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
 
   void _editar([Libro? libro]) => Navigator.push(
     context,
@@ -24,7 +37,6 @@ class _PestanaLibrosState extends State<PestanaLibros> {
   );
 
   Future<void> _eliminar(Libro libro) async {
-    final administracion = Dependencias.of(context).administracion!;
     final mensajero = ScaffoldMessenger.of(context);
     final si = await showDialog<bool>(
       context: context,
@@ -44,31 +56,15 @@ class _PestanaLibrosState extends State<PestanaLibros> {
       ),
     );
     if (si != true) return;
-    try {
-      await administracion.catalogo.eliminar(libro.id);
-    } catch (e) {
-      debugPrint('Borrar: $e');
-      mensajero.showSnackBar(
-        const SnackBar(content: Text('No se pudo borrar.')),
-      );
+    final error = await _viewModel.eliminar(libro);
+    if (error != null) {
+      mensajero.showSnackBar(SnackBar(content: Text(error)));
     }
   }
 
   Future<void> _importar() async {
-    final administracion = Dependencias.of(context).administracion!;
     final mensajero = ScaffoldMessenger.of(context);
-    setState(() => _importando = true);
-    var mensaje = 'Catálogo de ejemplo cargado en la nube.';
-    try {
-      final ejemplo = await administracion.catalogoDeEjemplo
-          .observarLibros()
-          .first;
-      await administracion.catalogo.importar(ejemplo);
-    } catch (e) {
-      debugPrint('Importar: $e');
-      mensaje = 'No se pudo cargar el catálogo.';
-    }
-    if (mounted) setState(() => _importando = false);
+    final mensaje = await _viewModel.importar();
     mensajero.showSnackBar(SnackBar(content: Text(mensaje)));
   }
 
@@ -81,33 +77,28 @@ class _PestanaLibrosState extends State<PestanaLibros> {
         icon: const Icon(Icons.add),
         label: const Text('Nuevo libro'),
       ),
-      body: StreamBuilder<List<Libro>>(
-        stream: _libros,
-        builder: (context, snapshot) {
-          final libros = snapshot.data;
-          if (libros == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView.builder(
-            padding: const EdgeInsets.only(bottom: 96),
-            itemCount: libros.length + 1,
-            itemBuilder: (context, i) {
-              if (i == 0) return _cabecera();
-              final libro = libros[i - 1];
-              return ListTile(
-                leading: SizedBox(width: 40, child: TapaLibro(libro: libro)),
-                title: Text(libro.titulo),
-                subtitle: Text(libro.autor),
-                onTap: () => _editar(libro),
-                trailing: IconButton(
-                  tooltip: 'Borrar ${libro.titulo}',
-                  icon: const Icon(Icons.delete_outline),
-                  onPressed: () => _eliminar(libro),
-                ),
-              );
-            },
-          );
-        },
+      body: VistaEstado(
+        viewModel: _viewModel,
+        alReintentar: _viewModel.cargar,
+        builder: (context) => ListView.builder(
+          padding: const EdgeInsets.only(bottom: 96),
+          itemCount: _viewModel.libros.length + 1,
+          itemBuilder: (context, i) {
+            if (i == 0) return _cabecera();
+            final libro = _viewModel.libros[i - 1];
+            return ListTile(
+              leading: SizedBox(width: 40, child: TapaLibro(libro: libro)),
+              title: Text(libro.titulo),
+              subtitle: Text(libro.autor),
+              onTap: () => _editar(libro),
+              trailing: IconButton(
+                tooltip: 'Borrar ${libro.titulo}',
+                icon: const Icon(Icons.delete_outline),
+                onPressed: () => _eliminar(libro),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -122,7 +113,7 @@ class _PestanaLibrosState extends State<PestanaLibros> {
           'editarlo. Pisa los libros de ejemplo que hayas cambiado.',
         ),
         const SizedBox(height: 8),
-        if (_importando)
+        if (_viewModel.importando)
           const LinearProgressIndicator()
         else
           OutlinedButton.icon(

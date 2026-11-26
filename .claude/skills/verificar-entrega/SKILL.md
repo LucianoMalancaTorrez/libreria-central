@@ -14,7 +14,8 @@ error tal como salió.
 4. `flutter build web --release --no-web-resources-cdn`
 5. Archivos delicados: `git ls-files` no debe incluir `key.properties`, `*.jks`,
    `*.keystore`, `local.properties` ni `build/`.
-6. Capas: ningún archivo de `lib/presentation` importa `package:libreria/data/`.
+6. Capas: `lib/presentation` no importa `package:libreria/data/`; `lib/domain`
+   solo importa `domain`; `lib/core` no importa `app`, `data` ni `presentation`.
 7. Colores: fuera de `lib/core/theme` no aparece `AppColors.`.
 
 Terminar con una tabla: paso, resultado y, si falló, el motivo. No publicar ni
