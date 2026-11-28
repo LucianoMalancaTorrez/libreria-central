@@ -18,10 +18,17 @@ class InformacionViewModel extends ViewModel {
       mensajeError: 'No se pudo cargar la información.',
     );
     if (error != null) return;
-    await escuchar<Horarios>(
-      _repositorio.observarHorarios(),
-      (nuevos) => _horarios = nuevos,
-      mensajeError: 'No se pudieron cargar los horarios.',
-    );
+    await _escucharHorarios();
   }
+
+  /// Al volver a la app, sin mostrar "cargando".
+  Future<void> refrescar() => _escucharHorarios(silencioso: true);
+
+  Future<void> _escucharHorarios({bool silencioso = false}) =>
+      escuchar<Horarios>(
+        _repositorio.observarHorarios(),
+        (nuevos) => _horarios = nuevos,
+        mensajeError: 'No se pudieron cargar los horarios.',
+        silencioso: silencioso,
+      );
 }

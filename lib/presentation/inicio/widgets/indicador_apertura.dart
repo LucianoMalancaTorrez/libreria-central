@@ -26,14 +26,25 @@ class _IndicadorAperturaState extends State<IndicadorApertura> {
   void initState() {
     super.initState();
     _reloj = Timer.periodic(const Duration(seconds: 30), (_) => _refrescar());
-    // Al volver a la app puede haber pasado mucho tiempo: se recalcula.
-    _cicloDeVida = AppLifecycleListener(onResume: _refrescar);
+    // Al volver a la app puede haber pasado mucho tiempo: se piden los
+    // horarios otra vez y se recalcula.
+    _cicloDeVida = AppLifecycleListener(
+      onResume: () {
+        _escucharHorarios();
+        _refrescar();
+      },
+    );
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _suscripcion ??= Dependencias.of(context).horarios
+    if (_suscripcion == null) _escucharHorarios();
+  }
+
+  void _escucharHorarios() {
+    _suscripcion?.cancel();
+    _suscripcion = Dependencias.of(context).horarios
         .observarHorarios()
         .listen((nuevos) => setState(() => _horarios = nuevos));
   }

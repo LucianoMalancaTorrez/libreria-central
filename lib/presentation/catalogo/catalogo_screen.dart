@@ -31,7 +31,10 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
   void initState() {
     super.initState();
     // Si el sistema cierra la app mientras está oculta, no se pierde nada.
-    _cicloDeVida = AppLifecycleListener(onHide: _guardarBusqueda);
+    _cicloDeVida = AppLifecycleListener(
+      onHide: _guardarBusqueda,
+      onResume: _viewModel.refrescar,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) => _recuperarBusqueda());
   }
 

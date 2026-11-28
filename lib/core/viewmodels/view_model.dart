@@ -35,11 +35,15 @@ abstract class ViewModel extends ChangeNotifier {
 
   /// Se suscribe a un Stream: queda "cargando" hasta el primer dato y después
   /// avisa en cada cambio. La suscripción se cancela en [dispose].
+  ///
+  /// Con [silencioso] vuelve a pedir los datos sin mostrar "cargando" y, si
+  /// falla, deja en pantalla lo que ya había.
   @protected
   Future<void> escuchar<T>(
     Stream<T> datos,
     void Function(T) alRecibir, {
     required String mensajeError,
+    bool silencioso = false,
   }) {
     final primero = _primerDato = Completer<void>();
     void terminar() {
@@ -49,9 +53,11 @@ abstract class ViewModel extends ChangeNotifier {
     }
 
     _suscripcion?.cancel();
-    _cargando = true;
-    _error = null;
-    notifyListeners();
+    if (!silencioso) {
+      _cargando = true;
+      _error = null;
+      notifyListeners();
+    }
     _suscripcion = datos.listen(
       (dato) {
         alRecibir(dato);
@@ -60,7 +66,7 @@ abstract class ViewModel extends ChangeNotifier {
       },
       onError: (Object e) {
         debugPrint('$mensajeError $e');
-        _error = mensajeError;
+        if (!silencioso) _error = mensajeError;
         terminar();
       },
     );

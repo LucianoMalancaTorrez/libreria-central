@@ -73,12 +73,19 @@ class CatalogoViewModel extends ViewModel {
     ];
   }
 
-  Future<void> cargar() =>
-      escuchar<List<Libro>>(_repositorio.observarLibros(), (libros) {
-        _todos = libros;
-        // El género elegido pudo desaparecer al editar el catálogo.
-        if (!libros.any((l) => l.genero == _genero)) _genero = null;
-      }, mensajeError: 'No se pudo cargar el catálogo.');
+  /// Al volver a la app: pide el catálogo otra vez sin tapar la pantalla.
+  Future<void> refrescar() => cargar(silencioso: true);
+
+  Future<void> cargar({bool silencioso = false}) => escuchar<List<Libro>>(
+    _repositorio.observarLibros(),
+    (libros) {
+      _todos = libros;
+      // El género elegido pudo desaparecer al editar el catálogo.
+      if (!libros.any((l) => l.genero == _genero)) _genero = null;
+    },
+    silencioso: silencioso,
+    mensajeError: 'No se pudo cargar el catálogo.',
+  );
   void buscar(String texto) {
     _busqueda = texto;
     notifyListeners();

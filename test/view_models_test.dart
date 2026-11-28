@@ -157,6 +157,21 @@ void main() {
     });
   });
 
+  test(
+    'refrescar el catálogo no muestra "cargando" ni borra lo que hay',
+    () async {
+      final catalogo = CatalogoViewModel(LibrosFalsos());
+      await catalogo.cargar();
+      final estados = <bool>[];
+      catalogo.addListener(() => estados.add(catalogo.cargando));
+
+      await catalogo.refrescar();
+
+      expect(estados, isNot(contains(true)));
+      expect(catalogo.libros, isNotEmpty);
+    },
+  );
+
   group('Aviso semanal', () {
     test('cae el próximo jueves a las 10', () {
       expect(

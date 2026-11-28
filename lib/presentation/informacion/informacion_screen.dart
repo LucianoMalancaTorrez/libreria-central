@@ -25,8 +25,17 @@ class _InformacionScreenState extends State<InformacionScreen> {
     Dependencias.of(context).horarios,
   )..cargar();
 
+  late final AppLifecycleListener _cicloDeVida;
+
+  @override
+  void initState() {
+    super.initState();
+    _cicloDeVida = AppLifecycleListener(onResume: () => _viewModel.refrescar());
+  }
+
   @override
   void dispose() {
+    _cicloDeVida.dispose();
     _viewModel.dispose();
     super.dispose();
   }
