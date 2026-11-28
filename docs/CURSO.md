@@ -16,7 +16,7 @@ Comparación con el material del aula (programa 2026 y apuntes), al 25/11 (actua
 | Future y async/await | Tres estados en los ViewModels, tiempos límite |
 | Streams e Isolates | Catálogo y horarios en vivo, `compute` |
 | Notificaciones locales y permisos | Club de lectura |
-| Segundo plano | Tareas con `workmanager` |
+| Segundo plano | `workmanager` sincroniza el catálogo |
 | Eventos del sistema | Conexión, ocultar y volver a la app |
 | SharedPreferences | Lista, tamaño de letra, avisos, última búsqueda |
 | API REST, HTTP, JSON y autenticación | Open Library y Firebase Auth |
@@ -26,10 +26,10 @@ Comparación con el material del aula (programa 2026 y apuntes), al 25/11 (actua
 | Requisitos y presupuesto | `docs/REQUISITOS.md`, `docs/presupuesto/` |
 | Base de datos local (SQLite) | Copia del catálogo en el celular, consultas con parámetros: `data/local/libros_dao.dart` |
 | Cámara en capas | `domain/services/fotos.dart`, borrador en archivo, fotos perdidas: `presentation/admin/viewmodels/foto_view_model.dart` |
-| Avisos a una hora fija | `zonedSchedule` en Club de lectura (Android) |
-| Tocar un aviso | Abre el Club de lectura: `app/app.dart` |
-| Notificaciones push | `core/services/push.dart`, tema `club` (Android) |
-| Tarea única con restricciones | `registerOneOffTask` cuando hay red |
+| Avisos a una hora fija | `zonedSchedule` semanal en Club de lectura (Android) |
+| Tocar un aviso | Abre la pantalla del destino: `app/coordinador_avisos.dart` |
+| Notificaciones push | `data/services/push_firebase.dart`, tema `club` (Android) |
+| Tarea periódica con restricciones | `registerPeriodicTask` solo con red |
 | Modo oscuro | Sigue al sistema: `core/theme/app_theme.dart` |
 | Pruebas de integración | `integration_test/app_test.dart` (corre en un dispositivo) |
 

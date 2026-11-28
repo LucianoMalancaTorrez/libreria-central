@@ -14,11 +14,11 @@ comprobado o depende de una persona.
 | **C2** Código limpio y herramientas | `flutter analyze` sin avisos, formato con `dart format` | `analysis_options.yaml` | Mostrar Flutter DevTools |
 | **C3** Refactoring | De pantallas de más de 300 líneas a capas | commit "Reorganizar en capas" frente al commit inicial | |
 | **C4** Pruebas | Unitarias, de interfaz y de integración | `test/`, `integration_test/` | Correr la de integración en el celular |
-| **D1** Capacidades y políticas | Permiso de notificaciones al momento de usarlo, acceso a Ajustes, política de privacidad | `core/services/avisos.dart`, `ajustes/privacidad_screen.dart` | Probar en el celular |
+| **D1** Capacidades y políticas | Permiso de notificaciones al momento de usarlo, acceso a Ajustes, política de privacidad | `data/services/avisos_dispositivo.dart`, `ajustes/privacidad_screen.dart` | Probar en el celular |
 | **D2** Future y async/await | Carga con estados cargando, error y éxito | `core/viewmodels/view_model.dart` | |
-| **D3** Streams e Isolates | Catálogo y horarios en vivo; JSON procesado con `compute` | `data/repositories`, `core/services/conexion.dart` | En la web `compute` no usa otro hilo |
-| **E1** Notificaciones | Local, a hora fija, push y apertura de pantalla al tocarlas | `core/services/avisos.dart`, `core/services/push.dart` | Probar en el celular |
-| **E2** Segundo plano | Tarea única con restricción de red y periódica (solo Android) | `core/services/avisos.dart` | Probar en el celular |
+| **D3** Streams e Isolates | Catálogo y horarios en vivo; JSON procesado con `compute` | `data/repositories`, `data/services/conexion_dispositivo.dart` | En la web `compute` no usa otro hilo |
+| **E1** Notificaciones | Local, semanal, push con destino y apertura de pantalla al tocarlas | `data/services/avisos_dispositivo.dart`, `data/services/push_firebase.dart`, `app/coordinador_avisos.dart` | Probar en el celular |
+| **E2** Segundo plano | Sincronización periódica del catálogo con restricción de red (solo Android) | `data/services/sincronizacion_catalogo.dart` | Probar en el celular |
 | **E3** Eventos del sistema | Pérdida de conexión y regreso a la app | `core/widgets/aviso_sin_conexion.dart`, `indicador_apertura.dart` | |
 | **F1** Persistencia, APIs y cámara | Preferencias, SQLite, Firestore, Open Library, foto de tapa | `data/`, `admin/viewmodels/foto_view_model.dart` | Crear la cuenta y probar la cámara |
 | **F2** Dispositivo real y publicación | Web en Firebase Hosting y APK de release | `firebase.json` | **Probar en celulares y anotar resultados** |

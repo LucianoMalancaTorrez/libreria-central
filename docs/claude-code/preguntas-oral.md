@@ -12,7 +12,7 @@ Preparado por un subagente con las instrucciones de `profesor-examen`; resumido.
 8. **¿Quién puede modificar datos?** Solo quien está en `admins`. El panel y la cámara no constan como probados. `firestore.rules`
 9. **¿Aviso a hora fija?** `zonedSchedule`, jueves 10 h, modo inexacto. No consta probado en un celular. `avisos.dart`
 10. **¿Push?** Android, tema `club`, enviado desde la consola. No consta probado. `push.dart`
-11. **¿Segundo plano?** `workmanager`: tarea única con red y periódica cada 6 h, otro Isolate. No consta probado con la app cerrada. `avisos.dart`
+11. **¿Segundo plano?** `workmanager` sincroniza la copia del catálogo cada 12 h, con red y en otro Isolate. El aviso de los jueves es una notificación programada semanal. `sincronizacion_catalogo.dart`
 12. **¿Qué pruebas hay?** 45, con falsos inyectados. `test/`
 13. **¿Prueba de integración?** Una, escrita; no consta ejecutada en un dispositivo. `integration_test/app_test.dart`
 14. **¿Firma y Google Play?** Clave de pruebas; no publicado (la cuenta es paga). `docs/FIRMA.md`

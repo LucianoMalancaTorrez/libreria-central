@@ -8,7 +8,7 @@ Sos revisor de seguridad de un proyecto universitario propio. No modifiques
 archivos ni hagas pedidos a servicios en la nube.
 
 Revisá `firestore.rules`, `firebase.json`, `android/app/src/main/AndroidManifest.xml`,
-`web/sw.js`, `lib/data`, `lib/core/services`, el panel de `lib/presentation/admin`
+`web/sw.js`, `lib/data`, `lib/data/services`, el panel de `lib/presentation/admin`
 y la pantalla de privacidad.
 
 Buscá: escritura sin autorización, datos de más expuestos a lectura pública,
