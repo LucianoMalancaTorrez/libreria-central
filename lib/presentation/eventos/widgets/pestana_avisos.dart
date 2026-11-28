@@ -43,6 +43,7 @@ class PestanaAvisos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final servicios = Dependencias.of(context);
+    if (!servicios.club.puedeAvisar) return const _SinAvisos();
     return ListenableBuilder(
       listenable: servicios.ajustes,
       builder: (context, _) => ListView(
@@ -50,11 +51,7 @@ class PestanaAvisos extends StatelessWidget {
         children: [
           SwitchListTile(
             title: const Text('Avisarme los jueves'),
-            subtitle: Text(
-              servicios.club.puedeAvisar
-                  ? 'Te llega aunque la app esté cerrada.'
-                  : 'El aviso automático funciona en la app para Android.',
-            ),
+            subtitle: const Text('Te llega aunque la app esté cerrada.'),
             value: servicios.ajustes.avisosClub,
             onChanged: (valor) => _cambiar(context, valor),
           ),
@@ -66,6 +63,41 @@ class PestanaAvisos extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// Web y iPhone: se cuenta qué falta y por qué, en vez de un botón que no anda.
+class _SinAvisos extends StatelessWidget {
+  const _SinAvisos();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.notifications_off_outlined),
+            title: Text('Acá no hay avisos'),
+            subtitle: Text(
+              'Los avisos funcionan en la aplicación para Android.',
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Text(
+          'Aviso de los jueves: una página web no puede dejar un aviso '
+          'programado para cuando está cerrada.',
+        ),
+        SizedBox(height: 8),
+        Text(
+          'Avisos de libros nuevos: todavía no están preparados para la web '
+          'ni para iPhone.',
+        ),
+        SizedBox(height: 8),
+        Text('Todo lo demás se puede usar igual.'),
+      ],
     );
   }
 }

@@ -18,6 +18,9 @@ class Politicas {
   bool get sincronizarEnSegundoPlano =>
       _capacidades.ejecutaTareasEnSegundoPlano;
 
+  /// Quien ya tiene la app instalada como APK no necesita instrucciones.
+  bool get explicarComoInstalar => !_capacidades.esAppDeCelular;
+
   /// Falta configurar el push para web y iPhone.
   bool get recibirPush => _capacidades.ejecutaTareasEnSegundoPlano;
 }

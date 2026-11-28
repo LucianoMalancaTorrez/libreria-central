@@ -3,8 +3,10 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
+import 'package:libreria/core/plataforma/politicas.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
 import 'package:libreria/presentation/admin/admin_screen.dart';
+import 'package:libreria/presentation/ajustes/instalar_screen.dart';
 import 'package:libreria/presentation/ajustes/privacidad_screen.dart';
 import 'package:libreria/presentation/ajustes/widgets/control_letra.dart';
 import 'package:libreria/presentation/escuelas/escuelas_screen.dart';
@@ -23,6 +25,12 @@ class MasScreen extends StatelessWidget {
       (Icons.school_outlined, 'Convenios con escuelas', const EscuelasScreen()),
       (Icons.info_outline, 'Horarios y contacto', const InformacionScreen()),
       (Icons.auto_stories_outlined, 'Nuestra historia', const HistoriaScreen()),
+      if (const Politicas().explicarComoInstalar)
+        (
+          Icons.install_mobile,
+          'Instalar en el celular',
+          const InstalarScreen(),
+        ),
       (
         Icons.privacy_tip_outlined,
         'Privacidad y permisos',
