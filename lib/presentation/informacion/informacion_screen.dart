@@ -74,7 +74,10 @@ class _InformacionScreenState extends State<InformacionScreen> {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: FilaHorario(
                     temporada: temporada,
-                    horario: horario.texto,
+                    horario: horario == _viewModel.horarios.verano
+                        ? '${horario.texto('Lunes a viernes')}. '
+                              'Sábados: consultanos.'
+                        : horario.texto(),
                   ),
                 ),
             ],

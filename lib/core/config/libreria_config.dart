@@ -6,11 +6,12 @@ class LibreriaConfig {
   static const apodo = '«lo de Amelia»';
   static const direccion = 'Belgrano 742 (al lado de la farmacia), Mendoza';
 
-  // PENDIENTE: número de ejemplo; Amelia entrega el real en persona.
+  // PENDIENTE: número de ejemplo. Amelia ya envió el suyo; falta confirmar
+  // que se pueda publicar, porque el repositorio y la web son públicos.
   static const telefonoWhatsApp = '5492610000000';
 
-  // PENDIENTE: confirmar el usuario exacto con Valentina.
-  static const usuarioInstagram = 'libreriacentral_';
+  // PENDIENTE: así lo escribió Amelia; confirmar si es "amalia" o "amelia".
+  static const usuarioInstagram = 'lalibreriadeamalia';
 
   static const descuentoEscolar = 10;
   static const vigenciaConvenio = 'marzo a diciembre';

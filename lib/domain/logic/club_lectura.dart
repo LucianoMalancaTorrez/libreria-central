@@ -1,5 +1,6 @@
 /// El club de lectura se reúne los jueves.
-/// PENDIENTE: Amelia todavía no indicó el horario.
+/// Horario confirmado por Amelia.
+const horaClubLectura = '18:00';
 const diaClubLectura = DateTime.thursday;
 
 bool esDiaDeClub(DateTime fecha) => fecha.weekday == diaClubLectura;

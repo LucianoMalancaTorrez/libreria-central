@@ -24,8 +24,8 @@ class HorarioTemporada {
 
   List<int> toList() => [manana.desde, manana.hasta, tarde.desde, tarde.hasta];
 
-  String get texto =>
-      'Lunes a sábado de ${Turno.hora(manana.desde)} a '
+  String texto([String dias = 'Lunes a sábado']) =>
+      '$dias de ${Turno.hora(manana.desde)} a '
       '${Turno.hora(manana.hasta)} y de ${Turno.hora(tarde.desde)} a '
       '${Turno.hora(tarde.hasta)}';
 }
@@ -34,15 +34,16 @@ class Horarios {
   const Horarios({required this.invierno, required this.verano});
 
   /// Horarios confirmados por Amelia.
-  /// PENDIENTE: la mañana de verano se supuso igual a la de invierno.
+  /// PENDIENTE: para el verano Amelia dijo "lunes a viernes"; falta saber
+  /// qué pasa los sábados. Mientras, se calculan igual que los otros días.
   static const habituales = Horarios(
     invierno: HorarioTemporada(
       manana: Turno(9 * 60, 13 * 60),
       tarde: Turno(16 * 60 + 30, 20 * 60),
     ),
     verano: HorarioTemporada(
-      manana: Turno(9 * 60, 13 * 60),
-      tarde: Turno(17 * 60 + 30, 21 * 60),
+      manana: Turno(9 * 60, 12 * 60 + 30),
+      tarde: Turno(17 * 60, 20 * 60 + 30),
     ),
   );
 

@@ -205,15 +205,15 @@ void main() {
     test('abierto a la mañana', () {
       final estado = estadoDelLocal(DateTime(2026, 11, 24, 10), h);
       expect(estado.abierto, isTrue);
-      expect(estado.detalle, 'Cierra a las 13:00');
+      expect(estado.detalle, 'Cierra a las 12:30');
     });
 
-    test('la tarde de verano abre 17:30 y la de invierno 16:30', () {
+    test('la tarde de verano abre 17:00 y la de invierno 16:30', () {
       expect(
-        estadoDelLocal(DateTime(2026, 11, 24, 17), h).detalle,
-        'Abre hoy a las 17:30',
+        estadoDelLocal(DateTime(2026, 11, 24, 16, 45), h).detalle,
+        'Abre hoy a las 17:00',
       );
-      expect(estadoDelLocal(DateTime(2026, 6, 23, 17), h).abierto, isTrue);
+      expect(estadoDelLocal(DateTime(2026, 6, 23, 16, 45), h).abierto, isTrue);
     });
 
     test('el sábado a la noche y el domingo avisan que abre el lunes', () {
@@ -258,7 +258,7 @@ void main() {
 
     await viewModel.cargar();
 
-    expect(viewModel.horarios.verano.texto, contains('17:30'));
+    expect(viewModel.horarios.verano.texto(), contains('17:00'));
     expect(viewModel.info, isNotNull);
   });
 

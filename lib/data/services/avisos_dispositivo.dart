@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:libreria/core/plataforma/politicas.dart';
+import 'package:libreria/domain/logic/club_lectura.dart';
 import 'package:libreria/domain/logic/recordatorio.dart';
 import 'package:libreria/domain/services/avisos.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -137,7 +138,7 @@ class ServicioAvisosDispositivo implements ServicioAvisos {
     await _plugin.zonedSchedule(
       id: _idSemanal,
       title: 'Hoy hay club de lectura',
-      body: 'Te esperamos en Librería Central, Belgrano 742.',
+      body: 'Te esperamos a las $horaClubLectura en Belgrano 742.',
       scheduledDate: _enZona(zona, proximo),
       notificationDetails: _detalles,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

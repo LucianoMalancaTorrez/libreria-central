@@ -52,8 +52,7 @@ class PestanaEncuentros extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       children: [
         const Text(
-          'Nos juntamos los jueves en el local. Consultá el horario por '
-          'WhatsApp.',
+          'Nos juntamos los jueves a las $horaClubLectura en el local.',
         ),
         const SizedBox(height: 12),
         for (final fecha in proximosEncuentros(DateTime.now()))
