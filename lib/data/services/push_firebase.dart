@@ -20,16 +20,19 @@ class PushFirebase implements ServicioPush {
         (m) => (
           titulo: m.notification!.title ?? 'Librería Central',
           cuerpo: m.notification!.body ?? '',
+          destino: destinoValido(m.data['destino']),
         ),
       );
 
   @override
-  Stream<String> get toques =>
-      FirebaseMessaging.onMessageOpenedApp.map((_) => destinoClub);
+  Stream<String> get toques => FirebaseMessaging.onMessageOpenedApp
+      .map((m) => destinoValido(m.data['destino']))
+      .where((destino) => destino != null)
+      .cast<String>();
 
   @override
   Future<String?> tocadoAlAbrir() async =>
-      await _mensajes.getInitialMessage() == null ? null : destinoClub;
+      destinoValido((await _mensajes.getInitialMessage())?.data['destino']);
 }
 
 /// Con la app cerrada, Android muestra la notificación solo; esta función

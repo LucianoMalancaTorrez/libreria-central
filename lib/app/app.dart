@@ -1,11 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:libreria/app/coordinador_avisos.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/domain/services/avisos.dart';
+import 'package:libreria/presentation/catalogo/catalogo_screen.dart';
 import 'package:libreria/presentation/eventos/eventos_screen.dart';
+import 'package:libreria/presentation/informacion/informacion_screen.dart';
 import 'package:libreria/presentation/principal/principal_screen.dart';
 
 class LibreriaApp extends StatefulWidget {
@@ -21,45 +22,37 @@ class LibreriaApp extends StatefulWidget {
 class _LibreriaAppState extends State<LibreriaApp> {
   late final Servicios _servicios = widget.servicios ?? Servicios();
   final _navegador = GlobalKey<NavigatorState>();
-  final _suscripciones = <StreamSubscription<Object?>>[];
+  late final CoordinadorAvisos _coordinador = CoordinadorAvisos(
+    _servicios.avisos,
+    _servicios.push,
+    abrir: _abrir,
+  );
 
   @override
   void initState() {
     super.initState();
-    _suscripciones.addAll([
-      _servicios.avisos.toques.listen(_abrir),
-      _servicios.push.toques.listen(_abrir),
-      // Con la app abierta, Android no muestra el push: lo hacemos nosotros.
-      _servicios.push.recibidos.listen(
-        (aviso) => _servicios.avisos.mostrar(aviso.titulo, aviso.cuerpo),
-      ),
-    ]);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _abrirDesdeAviso());
+    _coordinador.iniciar();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _coordinador.abrirDesdeAviso(),
+    );
   }
 
-  Future<void> _abrirDesdeAviso() async {
-    try {
-      _abrir(
-        await _servicios.avisos.tocadoAlAbrir() ??
-            await _servicios.push.tocadoAlAbrir(),
-      );
-    } catch (e) {
-      debugPrint('Aviso de apertura: $e');
-    }
-  }
-
-  void _abrir(String? destino) {
-    if (destino != destinoClub) return;
+  void _abrir(String destino) {
+    final Widget? pantalla = switch (destino) {
+      destinoClub => const EventosScreen(),
+      destinoCatalogo => const CatalogoScreen(),
+      destinoHorarios => const InformacionScreen(),
+      _ => null,
+    };
+    if (pantalla == null) return;
     _navegador.currentState?.push(
-      MaterialPageRoute<void>(builder: (_) => const EventosScreen()),
+      MaterialPageRoute<void>(builder: (_) => pantalla),
     );
   }
 
   @override
   void dispose() {
-    for (final suscripcion in _suscripciones) {
-      suscripcion.cancel();
-    }
+    _coordinador.dispose();
     _servicios.dispose();
     super.dispose();
   }

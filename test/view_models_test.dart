@@ -7,6 +7,7 @@ import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
 import 'package:libreria/data/services/sin_push.dart';
 import 'package:libreria/domain/logic/club_lectura.dart';
 import 'package:libreria/domain/logic/horario_comercial.dart';
+import 'package:libreria/domain/logic/recordatorio.dart';
 import 'package:libreria/domain/models/horario_atencion.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/domain/services/avisos.dart';
@@ -14,6 +15,7 @@ import 'package:libreria/presentation/admin/viewmodels/acceso_view_model.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/catalogo/viewmodels/catalogo_view_model.dart';
 import 'package:libreria/presentation/escuelas/viewmodels/escuelas_view_model.dart';
+import 'package:libreria/presentation/eventos/viewmodels/club_view_model.dart';
 import 'package:libreria/presentation/favoritos/viewmodels/favoritos_view_model.dart';
 import 'package:libreria/presentation/informacion/viewmodels/informacion_view_model.dart';
 
@@ -137,10 +139,10 @@ void main() {
       await ajustes.cambiarAvisosClub(true);
 
       expect(ajustes.avisosClub, isFalse);
-      expect(avisos.revision, isNull);
+      expect(avisos.semanal, isNull);
     });
 
-    test('con permiso programa la revisión', () async {
+    test('con permiso programa el aviso semanal', () async {
       final avisos = AvisosFalsos();
       final ajustes = AjustesViewModel(
         PreferenciasEnMemoria(),
@@ -151,7 +153,33 @@ void main() {
       await ajustes.cambiarAvisosClub(true);
 
       expect(ajustes.avisosClub, isTrue);
-      expect(avisos.revision, isTrue);
+      expect(avisos.semanal, isTrue);
+    });
+  });
+
+  group('Aviso semanal', () {
+    test('cae el próximo jueves a las 10', () {
+      expect(
+        proximoAvisoSemanal(DateTime(2026, 11, 28, 12)),
+        DateTime(2026, 12, 3, 10),
+      );
+    });
+
+    test('un jueves después de las 10 pasa a la semana siguiente', () {
+      expect(
+        proximoAvisoSemanal(DateTime(2026, 12, 3, 10)),
+        DateTime(2026, 12, 10, 10),
+      );
+    });
+
+    test('no duplica el recordatorio puntual si ya es semanal', () async {
+      final avisos = AvisosFalsos();
+
+      final resultado = await ClubViewModel(avisos)
+          .recordar(DateTime(2026, 12, 3), yaSemanal: true);
+
+      expect(resultado, ResultadoRecordatorio.yaSemanal);
+      expect(avisos.programado, isNull);
     });
   });
 

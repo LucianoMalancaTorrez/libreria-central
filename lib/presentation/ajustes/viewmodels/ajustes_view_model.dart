@@ -31,6 +31,14 @@ class AjustesViewModel extends ChangeNotifier {
         : 0;
     _avisosClub = await _preferencias.leerBool('avisos_club');
     notifyListeners();
+    // Quien ya tenía el interruptor activado recibe el aviso semanal nuevo.
+    if (_avisosClub) {
+      try {
+        await _avisos.programarSemanal(true);
+      } catch (e) {
+        debugPrint('Aviso semanal: $e');
+      }
+    }
   }
 
   Future<void> cambiarTamanoLetra(int tamano) async {
@@ -47,7 +55,7 @@ class AjustesViewModel extends ChangeNotifier {
       final permiso = await _avisos.pedirPermiso();
       if (permiso != ResultadoPermiso.concedido) return permiso;
     }
-    await _avisos.programarRevision(activar);
+    await _avisos.programarSemanal(activar);
     _avisosClub = activar;
     notifyListeners();
     await _preferencias.guardarBool('avisos_club', activar);

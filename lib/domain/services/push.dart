@@ -1,5 +1,5 @@
 /// Un mensaje que llegó con la app abierta.
-typedef AvisoPush = ({String titulo, String cuerpo});
+typedef AvisoPush = ({String titulo, String cuerpo, String? destino});
 
 /// Notificaciones enviadas desde la consola de Firebase.
 abstract class ServicioPush {

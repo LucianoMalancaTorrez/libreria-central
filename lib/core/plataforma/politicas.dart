@@ -14,6 +14,10 @@ class Politicas {
   /// SQLite solo en la app del celular; la web usa la caché de Firestore.
   bool get usarBaseLocal => _capacidades.esAppDeCelular;
 
+  /// Mantener al día la copia local con la app cerrada.
+  bool get sincronizarEnSegundoPlano =>
+      _capacidades.ejecutaTareasEnSegundoPlano;
+
   /// Falta configurar el push para web y iPhone.
   bool get recibirPush => _capacidades.ejecutaTareasEnSegundoPlano;
 }

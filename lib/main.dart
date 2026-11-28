@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,7 +8,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/app.dart';
 import 'package:libreria/app/servicios_firebase.dart';
+import 'package:libreria/core/plataforma/politicas.dart';
 import 'package:libreria/data/services/push_firebase.dart';
+import 'package:libreria/data/services/sincronizacion_catalogo.dart';
 import 'package:libreria/firebase_options.dart';
 
 Future<void> main() async {
@@ -21,6 +25,10 @@ Future<void> main() async {
     );
     if (!kIsWeb) {
       FirebaseMessaging.onBackgroundMessage(alRecibirEnSegundoPlano);
+    }
+    if (const Politicas().sincronizarEnSegundoPlano) {
+      // Sin await: no tiene que demorar el arranque.
+      unawaited(programarSincronizacion());
     }
     runApp(
       LibreriaApp(

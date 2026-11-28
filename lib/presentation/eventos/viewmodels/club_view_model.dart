@@ -2,7 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:libreria/domain/logic/recordatorio.dart';
 import 'package:libreria/domain/services/avisos.dart';
 
-enum ResultadoRecordatorio { programado, muyPronto, sinPermiso, fallo }
+enum ResultadoRecordatorio {
+  programado,
+  yaSemanal,
+  muyPronto,
+  sinPermiso,
+  fallo,
+}
 
 /// Lo que hacen las dos pestañas del club con los avisos. Las vistas solo
 /// muestran el resultado. No guarda estado: el interruptor vive en los ajustes.
@@ -30,8 +36,13 @@ class ClubViewModel {
     }
   }
 
-  /// Programa el aviso de un encuentro puntual.
-  Future<ResultadoRecordatorio> recordar(DateTime encuentro) async {
+  /// Programa el aviso de un encuentro puntual. Con el aviso semanal activado
+  /// no hace falta: saldría dos veces.
+  Future<ResultadoRecordatorio> recordar(
+    DateTime encuentro, {
+    bool yaSemanal = false,
+  }) async {
+    if (yaSemanal) return ResultadoRecordatorio.yaSemanal;
     final hora = horaDelRecordatorio(encuentro, reloj());
     if (hora == null) return ResultadoRecordatorio.muyPronto;
     try {

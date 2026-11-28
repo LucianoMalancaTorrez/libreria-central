@@ -9,6 +9,7 @@ import 'package:libreria/domain/services/auth_service.dart';
 import 'package:libreria/domain/services/avisos.dart';
 import 'package:libreria/domain/services/fotos.dart';
 import 'package:libreria/domain/services/info_libro_service.dart';
+import 'package:libreria/domain/services/push.dart';
 
 const librosDePrueba = [
   Libro(id: '1', titulo: 'Rayuela', autor: 'Julio Cortázar', genero: 'Novela'),
@@ -58,7 +59,8 @@ class PreferenciasEnMemoria implements PreferenciasRepository {
 class AvisosFalsos implements ServicioAvisos {
   AvisosFalsos([this.permiso = ResultadoPermiso.concedido]);
   final ResultadoPermiso permiso;
-  bool? revision;
+  bool? semanal;
+  final mostrados = <({String? destino, bool novedad})>[];
   DateTime? programado;
   final _toques = StreamController<String>.broadcast();
 
@@ -77,9 +79,14 @@ class AvisosFalsos implements ServicioAvisos {
   @override
   Future<ResultadoPermiso> pedirPermiso() async => permiso;
   @override
-  Future<void> mostrar(String titulo, String cuerpo) async {}
+  Future<void> mostrar(
+    String titulo,
+    String cuerpo, {
+    String? destino = destinoClub,
+    bool novedad = false,
+  }) async => mostrados.add((destino: destino, novedad: novedad));
   @override
-  Future<void> programarRevision(bool activa) async => revision = activa;
+  Future<void> programarSemanal(bool activa) async => semanal = activa;
   @override
   Future<void> abrirAjustes() async {}
 }
@@ -146,4 +153,23 @@ class LibrosFijos implements LibroRepository {
 
   @override
   Stream<List<Libro>> observarLibros() => Stream.value(libros);
+}
+
+class PushFalso implements ServicioPush {
+  final _recibidos = StreamController<AvisoPush>.broadcast();
+
+  void llega(String? destino) => _recibidos.add((
+    titulo: 'Novedad',
+    cuerpo: 'Llegó un libro',
+    destino: destino,
+  ));
+
+  @override
+  Future<void> suscribir(bool activo) async {}
+  @override
+  Stream<AvisoPush> get recibidos => _recibidos.stream;
+  @override
+  Stream<String> get toques => const Stream.empty();
+  @override
+  Future<String?> tocadoAlAbrir() async => null;
 }

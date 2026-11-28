@@ -29,11 +29,16 @@ class PestanaEncuentros extends StatelessWidget {
   }
 
   Future<void> _recordar(BuildContext context, DateTime fecha) async {
-    final club = Dependencias.of(context).club;
+    final servicios = Dependencias.of(context);
     final mensajero = ScaffoldMessenger.of(context);
-    final texto = switch (await club.recordar(fecha)) {
+    final texto = switch (await servicios.club.recordar(
+      fecha,
+      yaSemanal: servicios.ajustes.avisosClub,
+    )) {
       ResultadoRecordatorio.programado =>
         'Te avisamos el ${fechaLarga(fecha)} a las 10.',
+      ResultadoRecordatorio.yaSemanal =>
+        'Ya te avisamos todos los jueves a las 10.',
       ResultadoRecordatorio.muyPronto => 'Ese encuentro es muy pronto.',
       ResultadoRecordatorio.sinPermiso => 'Sin permiso no podemos avisarte.',
       ResultadoRecordatorio.fallo => 'No se pudo programar el aviso.',

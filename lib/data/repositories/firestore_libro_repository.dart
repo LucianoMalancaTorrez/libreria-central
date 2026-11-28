@@ -17,11 +17,15 @@ class FirestoreLibroRepository
   Stream<List<Libro>> observarLibros() => observarPublicados();
 
   @override
-  Stream<List<Libro>> observarPublicados() => _libros.snapshots().map(
-    (consulta) => [
-      for (final doc in consulta.docs) Libro.fromJson(doc.data(), id: doc.id),
-    ]..sort((a, b) => a.titulo.compareTo(b.titulo)),
-  );
+  Stream<List<Libro>> observarPublicados() => _libros.snapshots().map(_aLibros);
+
+  /// Una sola lectura directa al servidor, sin usar la caché.
+  Future<List<Libro>> descargar() async =>
+      _aLibros(await _libros.get(const GetOptions(source: Source.server)));
+
+  List<Libro> _aLibros(QuerySnapshot<Map<String, dynamic>> consulta) =>
+      [for (final doc in consulta.docs) Libro.fromJson(doc.data(), id: doc.id)]
+        ..sort((a, b) => a.titulo.compareTo(b.titulo));
 
   @override
   Future<void> guardar(Libro libro) => libro.id.isEmpty
