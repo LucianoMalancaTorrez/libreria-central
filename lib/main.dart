@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/app.dart';
 import 'package:libreria/app/servicios_firebase.dart';
-import 'package:libreria/core/services/push.dart';
+import 'package:libreria/data/services/push_firebase.dart';
 import 'package:libreria/firebase_options.dart';
 
 Future<void> main() async {

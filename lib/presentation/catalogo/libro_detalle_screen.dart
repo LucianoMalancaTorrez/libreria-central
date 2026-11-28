@@ -3,12 +3,12 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:libreria/core/widgets/responsive_center.dart';
-import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/presentation/catalogo/widgets/boton_favorito.dart';
 import 'package:libreria/presentation/catalogo/widgets/dato_libro.dart';
 import 'package:libreria/presentation/catalogo/widgets/hoja_consulta.dart';
 import 'package:libreria/presentation/catalogo/widgets/info_externa_libro.dart';
+import 'package:libreria/presentation/comun/tapa_libro.dart';
 
 class LibroDetalleScreen extends StatelessWidget {
   const LibroDetalleScreen({super.key, required this.libro});

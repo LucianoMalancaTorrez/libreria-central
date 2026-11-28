@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
-import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/theme/app_theme.dart';
+import 'package:libreria/domain/services/avisos.dart';
 import 'package:libreria/presentation/eventos/eventos_screen.dart';
 import 'package:libreria/presentation/principal/principal_screen.dart';
 

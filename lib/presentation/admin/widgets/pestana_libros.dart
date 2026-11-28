@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
-import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:libreria/core/widgets/vista_estado.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/presentation/admin/libro_form_screen.dart';
 import 'package:libreria/presentation/admin/viewmodels/libros_admin_view_model.dart';
+import 'package:libreria/presentation/comun/tapa_libro.dart';
 
 /// Solo dibuja y pregunta; las decisiones están en el ViewModel.
 class PestanaLibros extends StatefulWidget {

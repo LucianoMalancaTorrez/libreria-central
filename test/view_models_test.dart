@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/data/repositories/asset_libro_repository.dart';
 import 'package:libreria/data/repositories/in_memory_escuela_repository.dart';
 import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
+import 'package:libreria/data/services/sin_push.dart';
 import 'package:libreria/domain/logic/club_lectura.dart';
 import 'package:libreria/domain/logic/horario_comercial.dart';
 import 'package:libreria/domain/models/horario_atencion.dart';
 import 'package:libreria/domain/models/libro.dart';
+import 'package:libreria/domain/services/avisos.dart';
 import 'package:libreria/presentation/admin/viewmodels/acceso_view_model.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
 import 'package:libreria/presentation/catalogo/viewmodels/catalogo_view_model.dart';
@@ -127,7 +128,11 @@ void main() {
   group('Avisos del club', () {
     test('sin permiso no se activan', () async {
       final avisos = AvisosFalsos(ResultadoPermiso.denegado);
-      final ajustes = AjustesViewModel(PreferenciasEnMemoria(), avisos);
+      final ajustes = AjustesViewModel(
+        PreferenciasEnMemoria(),
+        avisos,
+        const SinPush(),
+      );
 
       await ajustes.cambiarAvisosClub(true);
 
@@ -137,7 +142,11 @@ void main() {
 
     test('con permiso programa la revisión', () async {
       final avisos = AvisosFalsos();
-      final ajustes = AjustesViewModel(PreferenciasEnMemoria(), avisos);
+      final ajustes = AjustesViewModel(
+        PreferenciasEnMemoria(),
+        avisos,
+        const SinPush(),
+      );
 
       await ajustes.cambiarAvisosClub(true);
 

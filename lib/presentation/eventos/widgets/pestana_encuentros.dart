@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/config/libreria_config.dart';
-import 'package:libreria/core/services/avisos.dart';
 import 'package:libreria/core/utils/abrir_enlace.dart';
 import 'package:libreria/domain/logic/club_lectura.dart';
-import 'package:libreria/domain/logic/recordatorio.dart';
+import 'package:libreria/presentation/eventos/viewmodels/club_view_model.dart';
 
 class PestanaEncuentros extends StatelessWidget {
   const PestanaEncuentros({super.key});
@@ -30,27 +29,16 @@ class PestanaEncuentros extends StatelessWidget {
   }
 
   Future<void> _recordar(BuildContext context, DateTime fecha) async {
-    final avisos = Dependencias.of(context).avisos;
+    final club = Dependencias.of(context).club;
     final mensajero = ScaffoldMessenger.of(context);
-    void decir(String texto) =>
-        mensajero.showSnackBar(SnackBar(content: Text(texto)));
-
-    final hora = horaDelRecordatorio(fecha, DateTime.now());
-    if (hora == null) return decir('Ese encuentro es muy pronto.');
-    try {
-      if (await avisos.pedirPermiso() != ResultadoPermiso.concedido) {
-        return decir('Sin permiso no podemos avisarte.');
-      }
-      await avisos.programar(
-        hora,
-        'Hoy hay club de lectura',
-        'Te esperamos en Librería Central.',
-      );
-      decir('Te avisamos el ${fechaLarga(fecha)} a las 10.');
-    } catch (e) {
-      debugPrint('Recordatorio: $e');
-      decir('No se pudo programar el aviso.');
-    }
+    final texto = switch (await club.recordar(fecha)) {
+      ResultadoRecordatorio.programado =>
+        'Te avisamos el ${fechaLarga(fecha)} a las 10.',
+      ResultadoRecordatorio.muyPronto => 'Ese encuentro es muy pronto.',
+      ResultadoRecordatorio.sinPermiso => 'Sin permiso no podemos avisarte.',
+      ResultadoRecordatorio.fallo => 'No se pudo programar el aviso.',
+    };
+    mensajero.showSnackBar(SnackBar(content: Text(texto)));
   }
 
   @override
@@ -69,7 +57,7 @@ class PestanaEncuentros extends StatelessWidget {
               leading: const Icon(Icons.event),
               title: Text(fechaLarga(fecha)),
               subtitle: const Text(LibreriaConfig.direccion),
-              trailing: Dependencias.of(context).avisos.soportaSegundoPlano
+              trailing: Dependencias.of(context).club.puedeAvisar
                   ? IconButton(
                       tooltip: 'Recordármelo',
                       icon: const Icon(Icons.alarm_add),

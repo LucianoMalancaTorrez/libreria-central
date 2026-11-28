@@ -1,22 +1,26 @@
 import 'package:flutter/widgets.dart';
-import 'package:libreria/core/services/avisos.dart';
-import 'package:libreria/core/services/conexion.dart';
-import 'package:libreria/core/services/push.dart';
 import 'package:libreria/data/repositories/asset_libro_repository.dart';
 import 'package:libreria/data/repositories/in_memory_escuela_repository.dart';
 import 'package:libreria/data/repositories/in_memory_horarios_repository.dart';
 import 'package:libreria/data/repositories/shared_preferencias_repository.dart';
 import 'package:libreria/data/services/archivo_borrador_foto.dart';
+import 'package:libreria/data/services/avisos_dispositivo.dart';
+import 'package:libreria/data/services/conexion_dispositivo.dart';
 import 'package:libreria/data/services/image_picker_fuente.dart';
 import 'package:libreria/data/services/open_library_service.dart';
+import 'package:libreria/data/services/sin_push.dart';
 import 'package:libreria/domain/repositories/escuela_repository.dart';
 import 'package:libreria/domain/repositories/horarios_repository.dart';
 import 'package:libreria/domain/repositories/libro_repository.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
 import 'package:libreria/domain/services/auth_service.dart';
+import 'package:libreria/domain/services/avisos.dart';
+import 'package:libreria/domain/services/conexion.dart';
 import 'package:libreria/domain/services/fotos.dart';
 import 'package:libreria/domain/services/info_libro_service.dart';
+import 'package:libreria/domain/services/push.dart';
 import 'package:libreria/presentation/ajustes/viewmodels/ajustes_view_model.dart';
+import 'package:libreria/presentation/eventos/viewmodels/club_view_model.dart';
 import 'package:libreria/presentation/favoritos/viewmodels/favoritos_view_model.dart';
 
 /// Lo necesario para el panel; solo existe si hay conexión con Firebase.
@@ -44,7 +48,7 @@ class Servicios {
     PreferenciasRepository? preferencias,
     InfoLibroService? infoLibros,
     ServicioAvisos? avisos,
-    Stream<bool> Function()? conexion,
+    ObservarConexion? conexion,
     ServicioPush? push,
     FuenteFotos? fotos,
     BorradorFoto? borradorFoto,
@@ -66,11 +70,13 @@ class Servicios {
   final PreferenciasRepository preferencias;
   final InfoLibroService infoLibros;
   final ServicioAvisos avisos;
-  final Stream<bool> Function() conexion;
+  final ObservarConexion conexion;
   final ServicioPush push;
   final FuenteFotos fotos;
   final BorradorFoto borradorFoto;
   final Administracion? administracion;
+
+  late final club = ClubViewModel(avisos);
 
   /// Estado compartido por varias pantallas.
   late final favoritos = FavoritosViewModel(preferencias)..cargar();

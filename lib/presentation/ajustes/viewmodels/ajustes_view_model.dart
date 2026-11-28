@@ -1,15 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:libreria/core/services/avisos.dart';
-import 'package:libreria/core/services/push.dart';
 import 'package:libreria/domain/repositories/preferencias_repository.dart';
+import 'package:libreria/domain/services/avisos.dart';
+import 'package:libreria/domain/services/push.dart';
 
 /// Preferencias de la persona: tamaño de letra y avisos del club de lectura.
 class AjustesViewModel extends ChangeNotifier {
-  AjustesViewModel(
-    this._preferencias,
-    this._avisos, [
-    this._push = const SinPush(),
-  ]);
+  AjustesViewModel(this._preferencias, this._avisos, this._push);
 
   static const _escalas = [1.0, 1.2, 1.4];
 

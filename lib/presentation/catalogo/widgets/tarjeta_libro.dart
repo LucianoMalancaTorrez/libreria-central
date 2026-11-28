@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
 import 'package:libreria/core/theme/app_theme.dart';
 import 'package:libreria/core/widgets/resaltar_al_pasar.dart';
-import 'package:libreria/core/widgets/tapa_libro.dart';
 import 'package:libreria/domain/models/libro.dart';
 import 'package:libreria/presentation/catalogo/libro_detalle_screen.dart';
 import 'package:libreria/presentation/catalogo/widgets/boton_favorito.dart';
 import 'package:libreria/presentation/catalogo/widgets/hoja_consulta.dart';
+import 'package:libreria/presentation/comun/tapa_libro.dart';
 
 void abrirDetalle(BuildContext context, Libro libro) => Navigator.push(
   context,

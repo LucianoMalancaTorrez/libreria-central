@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/app/dependencias.dart';
-import 'package:libreria/core/services/avisos.dart';
+import 'package:libreria/domain/services/avisos.dart';
 
 class PestanaAvisos extends StatelessWidget {
   const PestanaAvisos({super.key});
@@ -18,7 +18,7 @@ class PestanaAvisos extends StatelessWidget {
           action: permiso == ResultadoPermiso.bloqueado
               ? SnackBarAction(
                   label: 'Abrir ajustes',
-                  onPressed: servicios.avisos.abrirAjustes,
+                  onPressed: servicios.club.abrirAjustes,
                 )
               : null,
         ),
@@ -32,19 +32,12 @@ class PestanaAvisos extends StatelessWidget {
   }
 
   Future<void> _probar(BuildContext context) async {
-    final servicios = Dependencias.of(context);
+    final club = Dependencias.of(context).club;
     final mensajero = ScaffoldMessenger.of(context);
-    try {
-      await servicios.avisos.mostrar(
-        'Club de lectura',
-        'Así te vamos a avisar los jueves.',
-      );
-    } catch (e) {
-      debugPrint('Aviso de prueba: $e');
-      mensajero.showSnackBar(
-        const SnackBar(content: Text('No se pudo mostrar el aviso.')),
-      );
-    }
+    if (await club.probarAviso()) return;
+    mensajero.showSnackBar(
+      const SnackBar(content: Text('No se pudo mostrar el aviso.')),
+    );
   }
 
   @override
@@ -58,7 +51,7 @@ class PestanaAvisos extends StatelessWidget {
           SwitchListTile(
             title: const Text('Avisarme los jueves'),
             subtitle: Text(
-              servicios.avisos.soportaSegundoPlano
+              servicios.club.puedeAvisar
                   ? 'Te llega aunque la app esté cerrada.'
                   : 'El aviso automático funciona en la app para Android.',
             ),

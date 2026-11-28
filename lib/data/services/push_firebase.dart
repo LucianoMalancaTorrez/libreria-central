@@ -1,32 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:libreria/core/services/avisos.dart';
+import 'package:libreria/domain/services/avisos.dart';
+import 'package:libreria/domain/services/push.dart';
 import 'package:libreria/firebase_options.dart';
-
-/// Un mensaje que llegó con la app abierta.
-typedef AvisoPush = ({String titulo, String cuerpo});
-
-/// Notificaciones enviadas desde la consola de Firebase.
-abstract class ServicioPush {
-  Future<void> suscribir(bool activo);
-  Stream<AvisoPush> get recibidos;
-  Stream<String> get toques;
-  Future<String?> tocadoAlAbrir();
-}
-
-/// Web, iPhone y tests: no hay push.
-class SinPush implements ServicioPush {
-  const SinPush();
-
-  @override
-  Future<void> suscribir(bool activo) async {}
-  @override
-  Stream<AvisoPush> get recibidos => const Stream.empty();
-  @override
-  Stream<String> get toques => const Stream.empty();
-  @override
-  Future<String?> tocadoAlAbrir() async => null;
-}
 
 /// Android. Todos los suscriptos al tema `club` reciben el mismo aviso.
 class PushFirebase implements ServicioPush {

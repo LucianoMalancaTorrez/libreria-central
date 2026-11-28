@@ -15,7 +15,9 @@ error tal como salió.
 5. Archivos delicados: `git ls-files` no debe incluir `key.properties`, `*.jks`,
    `*.keystore`, `local.properties` ni `build/`.
 6. Capas: `lib/presentation` no importa `package:libreria/data/`; `lib/domain`
-   solo importa `domain`; `lib/core` no importa `app`, `data` ni `presentation`.
+   solo importa `domain`; `lib/core` no importa `domain`, `data` ni `presentation`
+   (de `app` tampoco); en `lib/presentation` los widgets no llaman a servicios
+   (`.avisos.` y `.push.` solo se usan desde ViewModels).
 7. Colores: fuera de `lib/core/theme` no aparece `AppColors.`.
 
 Terminar con una tabla: paso, resultado y, si falló, el motivo. No publicar ni
